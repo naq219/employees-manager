@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Quản lý nhân viên</string>
+    <string name="menu_settings">Settings</string>
+
+    <string-array name="reminder">
+        <item>Không nhắc trước</item>
+        <item>5 phút</item>
+        <item>10 phút</item>
+        <item>20 phút</item>
+        <item>30 phút</item>
+        <item>60 phút</item>
+    </string-array>
+    <string-array name="day_of_week">
+        <item>Chủ nhật</item>
+        <item>Thứ 2</item>
+        <item>Thứ 3</item>
+        <item>Thứ 4</item>
+        <item>Thứ 5</item>
+        <item>Thứ 6</item>
+        <item>Thứ 7</item>
+    </string-array>
+
+    <string name="save">Lưu</string>
+    <string name="save_and_more">Lưu &amp; Thêm</string>
+    <string name="repeat">Lặp lại: </string>
+    <string name="before">Nhắc nhở trước: </string>
+    <string name="content_work">Nội dung công việc</string>
+    <string name="input_name">Nhập tên nhân viên</string>
+    <string name="to">Đến: </string>
+    <string name="from">Từ: </string>
+    <string name="morning">Sáng</string>
+    <string name="afternoon">Chiều</string>
+    <string name="add_hc">Thêm nhân viên hành chính</string>
+    <string name="add_ld">Thêm nhân viên lắp đặt</string>
+    <string name="add_tt">Thêm nhân viên thực tập</string>
+    <string name="add_kd">Thêm nhân viên kinh doanh</string>
+    <string name="add_kt">Thêm nhân viên kế toán</string>
+    <string name="add_hd">Thêm nhân viên hợp đồng</string>
+    <string name="ok">Chấp nhận</string>
+    <string name="cancel">Hủy bỏ</string>
+
+</resources>
