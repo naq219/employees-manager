@@ -1,4 +1,4 @@
-package haivu.qlnv.adapter;
+/*package haivu.qlnv.adapter;
 
 import haivu.qlnv.R;
 import haivu.qlnv.object.MenuObject;
@@ -60,3 +60,4 @@ public class MenuAdapter extends BaseAdapter {
 		return view;
 	}
 }
+*/

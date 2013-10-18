@@ -1,4 +1,4 @@
-package haivu.qlnv.database;
+/*package haivu.qlnv.database;
 
 import java.util.ArrayList;
 
@@ -318,3 +318,4 @@ public class Database {
 	}
 
 }
+*/

@@ -1,4 +1,4 @@
-package haivu.qlnv.adapter;
+/*package haivu.qlnv.adapter;
 
 import haivu.qlnv.R;
 import haivu.qlnv.object.HanhChinhObject;
@@ -61,3 +61,4 @@ public class HanhChinhAdapter extends BaseAdapter {
 		return view;
 	}
 }
+*/
