@@ -143,15 +143,6 @@
             </LinearLayout>
 
             <EditText
-                android:id="@+id/edtInsertName_hc"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:ems="10"
-                android:hint="@string/input_name"
-                android:padding="10dp" />
-
-            <EditText
                 android:id="@+id/edtInsertWork_hc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

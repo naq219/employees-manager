@@ -1,4 +1,4 @@
-package haivu.qlnv;
+/*package haivu.qlnv;
 
 import haivu.qlnv.database.Database;
 
@@ -277,3 +277,4 @@ public class InsertNVActivity extends Activity implements OnClickListener {
 		startActivity(new Intent(this, MainActivity.class));
 	}
 }
+*/

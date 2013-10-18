@@ -1,44 +1,37 @@
 package haivu.qlnv;
 
-import haivu.qlnv.adapter.HanhChinhAdapter;
-import haivu.qlnv.adapter.MenuAdapter;
-import haivu.qlnv.database.Database;
-import haivu.qlnv.database.Group;
-import haivu.qlnv.object.Cons;
-import haivu.qlnv.object.HanhChinhObject;
-import haivu.qlnv.object.MenuObject;
+import haivu.qlnv.object.DbSupport;
+import haivu.qlnv.utils.DbTable;
 
 import java.util.ArrayList;
 
 import android.app.Dialog;
-import android.content.Intent;
+import android.content.Context;
 import android.os.Bundle;
-import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.Window;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
 import com.google.ads.AdRequest;
 import com.google.ads.AdView;
 import com.slidingmenu.lib.SlidingMenu;
+import com.telpoo.frame.database.BaseDBSupport;
+import com.telpoo.frame.model.BaseModel;
+import com.telpoo.frame.model.ModelListener;
 
-public class MainActivity extends SherlockFragmentActivity implements
-		OnItemClickListener, OnClickListener {
+public class MainActivity extends SherlockFragmentActivity implements ModelListener {
+	public static BaseModel model = null;
+	public static BaseDBSupport db = null;
+	
 	SlidingMenu menu;
 	ImageView btnMenu;
-	ArrayList<MenuObject> listMenu = new ArrayList<MenuObject>();
-	ArrayList<HanhChinhObject> listHanhChinh = new ArrayList<HanhChinhObject>();
-	MenuAdapter menuAdapter;
-	HanhChinhAdapter hanhChinhAdapter;
 	AdView ads;
 	TextView tvTitle;
 	TextView tvNumber_title;
@@ -46,32 +39,27 @@ public class MainActivity extends SherlockFragmentActivity implements
 	EditText edtSearch;
 	boolean stt_search = false;
 	RadioButton radHC, radLD, radTT, radKD, radKT, radHD;
-	Database db;
 	Button btnOk_dialog, btnCancel_dialog;
 	Dialog dl;
 	ListView lvContent;
+	private Context mct;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		mct=MainActivity.this;
+		db= DbSupport.getInstance(mct);
+		setTheme(R.style.Theme_Sherlock);
+		if (model == null) {
+			model = new BaseModel();
+			model.setModelListener1(this);
+		}
+
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_main);
-		db = new Database(this);
-		createGroup();
 
 		initSlidingMenu();
-		initView();
-	}
-
-	public void createGroup() {
-		if (db.listgroup().size() <= 1) {
-			db.insertgroup(Cons.NHOM_HANH_CHINH.toUpperCase());
-			db.insertgroup(Cons.NHOM_LAP_DAT.toUpperCase());
-			db.insertgroup(Cons.NHOM_THUC_TAP.toUpperCase());
-			db.insertgroup(Cons.NHOM_KINH_DOANH.toUpperCase());
-			db.insertgroup(Cons.NHOM_KE_TOAN.toUpperCase());
-			db.insertgroup(Cons.NHOM_HOP_DONG.toUpperCase());
-		}
+		// initView();
 	}
 
 	public void initView() {
@@ -81,47 +69,27 @@ public class MainActivity extends SherlockFragmentActivity implements
 		ads.loadAd(new AdRequest());
 
 		btnAdd_menu = (ImageView) menu.findViewById(R.id.btnAdd_menu);
-		btnAdd_menu.setOnClickListener(this);
 
 		btnMenu = (ImageView) findViewById(R.id.btnMenu);
-		btnMenu.setOnClickListener(this);
 
 		tvTitle = (TextView) findViewById(R.id.tvTitle);
 		tvNumber_title = (TextView) findViewById(R.id.tvNumber_title);
 		edtSearch = (EditText) findViewById(R.id.edtSearch);
 		btnSearch = (ImageView) findViewById(R.id.btnSearch);
-		btnSearch.setOnClickListener(this);
-
-		ListView lvMenu = (ListView) menu.findViewById(R.id.lvMenu);
-		ArrayList<Group> group_property = db.listgroup();
-		for (int i = 0; i < db.listgroup().size(); i++) {
-			listMenu.add(new MenuObject(group_property.get(i).getGroupname(),
-					"" + group_property.get(i).getNumberMember()));
-		}
-		menuAdapter = new MenuAdapter(this, listMenu);
-		lvMenu.setAdapter(menuAdapter);
-		lvMenu.setOnItemClickListener(this);
-
-		tvTitle.setText(Cons.NHOM_HANH_CHINH);
-		tvNumber_title.setText(String.valueOf(group_property.get(0)
-				.getNumberMember()));
 
 		lvContent = (ListView) findViewById(R.id.lvContent);
-		ArrayList<HanhChinhObject> hanhChinh_property = db.listhanhchinh(1);
+		dl = new Dialog(this);
+		dl.setTitle("Chọn loại nhân viên: ");
+		dl.setContentView(R.layout.dialog_select_loainv);
+		radHC = (RadioButton) dl.findViewById(R.id.radHC);
+		radHD = (RadioButton) dl.findViewById(R.id.radHD);
+		radKD = (RadioButton) dl.findViewById(R.id.radKD);
+		radKT = (RadioButton) dl.findViewById(R.id.radKT);
+		radLD = (RadioButton) dl.findViewById(R.id.radLD);
+		radTT = (RadioButton) dl.findViewById(R.id.radTT);
+		btnOk_dialog = (Button) dl.findViewById(R.id.btnOK_dialog);
+		btnCancel_dialog = (Button) dl.findViewById(R.id.btnCancel_dialog);
 
-		for (int i = 0; i < hanhChinh_property.size(); i++) {
-			listHanhChinh.add(new HanhChinhObject(hanhChinh_property.get(i)
-					.getName(), hanhChinh_property.get(i).getDay(),
-					hanhChinh_property.get(i).getMorning(), hanhChinh_property
-							.get(i).getTime_begin(), hanhChinh_property.get(i)
-							.getTime_end(), hanhChinh_property.get(i)
-							.getContent_work(), hanhChinh_property.get(i)
-							.getReminder(), hanhChinh_property.get(i)
-							.getRepeat()));
-		}
-		hanhChinhAdapter = new HanhChinhAdapter(this, listHanhChinh);
-		tvNumber_title.setText(listMenu.get(0).getSo());
-		lvContent.setAdapter(hanhChinhAdapter);
 	}
 
 	// khởi tạo menu
@@ -145,72 +113,42 @@ public class MainActivity extends SherlockFragmentActivity implements
 		return super.onOptionsItemSelected(item);
 	}
 
-	@Override
-	public void onItemClick(AdapterView<?> parent, View view, int position,
-			long id) {
-		// TODO Auto-generated method stub
-		switch (parent.getId()) {
-		case R.id.lvMenu:
-			tvTitle.setText(listMenu.get(position).getLoai());
-			tvNumber_title.setText(listMenu.get(position).getSo());
-			menu.showContent();
-			break;
-		}
-	}
+	public void showDialogChoose() {
 
-	@Override
-	public void onClick(View v) {
-		// TODO Auto-generated method stub
-		switch (v.getId()) {
-		case R.id.btnAdd_menu:
-			showDialog();
-			break;
-		case R.id.btnSearch:
-			if (stt_search) {
-				edtSearch.setVisibility(View.GONE);
-				stt_search = !stt_search;
-			} else {
-				edtSearch.setVisibility(View.VISIBLE);
-				stt_search = !stt_search;
-			}
-			break;
-		case R.id.btnMenu:
-			if (menu.isMenuShowing()) {
-				menu.showContent(true);
-			} else {
-				menu.showMenu(true);
-			}
-			break;
-		case R.id.btnOK_dialog:
-			if (radHC.isChecked()) {
-				startActivity(new Intent(getApplicationContext(),
-						InsertHCActivity.class));
-			} else {
-				startActivity(new Intent(getApplicationContext(),
-						InsertNVActivity.class));
-			}
-			dl.dismiss();
-			finish();
-			break;
-		case R.id.btnCancel_dialog:
-			dl.dismiss();
-		}
-	}
-
-	public void showDialog() {
-		dl = new Dialog(this);
-		dl.setTitle("Chọn loại nhân viên: ");
-		dl.setContentView(R.layout.dialog_select_loainv);
-		radHC = (RadioButton) dl.findViewById(R.id.radHC);
-		radHD = (RadioButton) dl.findViewById(R.id.radHD);
-		radKD = (RadioButton) dl.findViewById(R.id.radKD);
-		radKT = (RadioButton) dl.findViewById(R.id.radKT);
-		radLD = (RadioButton) dl.findViewById(R.id.radLD);
-		radTT = (RadioButton) dl.findViewById(R.id.radTT);
-		btnOk_dialog = (Button) dl.findViewById(R.id.btnOK_dialog);
-		btnCancel_dialog = (Button) dl.findViewById(R.id.btnCancel_dialog);
-		btnOk_dialog.setOnClickListener(this);
-		btnCancel_dialog.setOnClickListener(this);
 		dl.show();
+	}
+
+	@Override
+	public Context getContext() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void onSuccess(int taskType, ArrayList<?> list, String msg) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onFail(int taskType, String msg) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onProgress(int taskType, int progress) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	protected void onResume() {
+		model.setModelListener1(this);
+		super.onResume();
+	}
+
+	protected void showToast(int msg) {
+		Toast.makeText(getBaseContext(), getString(msg), Toast.LENGTH_LONG).show();
 	}
 }
