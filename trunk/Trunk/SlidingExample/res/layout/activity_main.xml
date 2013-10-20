@@ -3,6 +3,7 @@
     xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#ffffff"
     tools:context=".MainActivity" >
 
     <RelativeLayout
@@ -20,9 +21,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:text="5"
+            android:text="0"
             android:textColor="@android:color/white" />
 
         <ImageView
@@ -52,7 +52,7 @@
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/btnSearch"
             android:layout_toRightOf="@+id/btnMenu"
-            android:gravity="center"
+            android:gravity="right"
             android:text="Nhân viên hành chính"
             android:textColor="@android:color/white"
             android:textStyle="bold" />
@@ -86,7 +86,10 @@
         android:layout_above="@+id/ad"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/linearLayout1"
-        android:layout_margin="10dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="1dp"
+        android:layout_marginRight="1dp"
+        android:layout_marginTop="10dp"
         android:divider="#00ffffff"
         android:dividerHeight="5dp"
         android:drawSelectorOnTop="true" >
@@ -102,7 +105,8 @@
         ads:adUnitId="a15237f9dde5b8e"
         ads:loadAdOnCreate="true"
         ads:testDevices="TEST_EMULATOR,TEST_DEVICE_ID_GOES_HERE"
-        android:gravity="center_horizontal" >
+        android:gravity="center_horizontal"
+        android:visibility="gone" >
     </com.google.ads.AdView>
 
 </RelativeLayout>
