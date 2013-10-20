@@ -1,13 +1,17 @@
 package haivu.qlnv.utils;
 
+import haivu.qlnv.InsertHCActivity;
+import haivu.qlnv.InsertNVActivity;
 import haivu.qlnv.R;
 
 import java.util.Calendar;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -16,7 +20,7 @@ import android.widget.RadioButton;
 
 public class DialogUtils  {
 
-	public static void showDialogChoose(final Context ct, final IDialogChoose choose) {
+	public static void showDialogChoose(final Context ct) {
 		final Dialog dl;
 		dl = new Dialog(ct);
 		dl.setTitle("Chọn loại nhân viên: ");
@@ -35,23 +39,27 @@ public class DialogUtils  {
 			public void onClick(View arg0) {
 				dl.dismiss();
 				if (radHC.isChecked()) {
-					choose.onChoose(Mcon.Group.NHOM_HANH_CHINH);
+					//choose.onChoose(Mcon.Group.NHOM_HANH_CHINH);
+					//Intent it=;
+					((Activity)ct).startActivity(new Intent(ct, InsertHCActivity.class));
 				}
 				if (radHD.isChecked()) {
-					choose.onChoose(Mcon.Group.NHOM_HOP_DONG);
+					
+					//choose.onChoose(Mcon.Group.NHOM_HOP_DONG);
 				}
 				if (radKD.isChecked()) {
-					choose.onChoose(Mcon.Group.NHOM_KINH_DOANH);
+					//choose.onChoose(Mcon.Group.NHOM_KINH_DOANH);
 				}
 				if (radKT.isChecked()) {
-					choose.onChoose(Mcon.Group.NHOM_KE_TOAN);
+					//choose.onChoose(Mcon.Group.NHOM_KE_TOAN);
 				}
 				if (radLD.isChecked()) {
-					choose.onChoose(Mcon.Group.NHOM_LAP_DAT);
+					((Activity)ct).startActivity(new Intent(ct, InsertNVActivity.class));
+					//choose.onChoose(Mcon.Group.NHOM_LAP_DAT);
 				}
 				
 				if (radTT.isChecked()) {
-					choose.onChoose(Mcon.Group.NHOM_THUC_TAP);
+					//choose.onChoose(Mcon.Group.NHOM_THUC_TAP);
 				}
 				
 				
