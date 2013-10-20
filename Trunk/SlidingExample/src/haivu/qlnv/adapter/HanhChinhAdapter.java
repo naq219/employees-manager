@@ -1,29 +1,41 @@
-/*package haivu.qlnv.adapter;
+package haivu.qlnv.adapter;
 
 import haivu.qlnv.R;
-import haivu.qlnv.object.HanhChinhObject;
+import haivu.qlnv.object.Empl;
+import haivu.qlnv.utils.Mcon;
+
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
 
 import android.content.Context;
-import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-public class HanhChinhAdapter extends BaseAdapter {
-	private ArrayList<HanhChinhObject> listHanhChinh;
-	private FragmentActivity activity;
-	LayoutInflater inflater;
+import com.telpoo.frame.object.BaseObject;
 
-	public HanhChinhAdapter(FragmentActivity activity,
-			ArrayList<HanhChinhObject> listHanhChinh) {
-		// TODO Auto-generated constructor stub
-		this.activity = activity;
-		this.listHanhChinh = listHanhChinh;
-		inflater = (LayoutInflater) this.activity
-				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+public class HanhChinhAdapter extends ArrayAdapter<BaseObject> {
+
+	
+
+	private List<BaseObject> listHanhChinh;
+	private Context mcontext;
+	private final LayoutInflater inflater;
+	int group;
+	int resource;
+	
+	public HanhChinhAdapter(Context context, int textViewResourceId, List<BaseObject> objects,int group) {
+		super(context, textViewResourceId, objects);
+		this.resource=textViewResourceId;
+		this.listHanhChinh=objects;
+		this.group=group;
+		this.mcontext=context;
+		this.inflater=(LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	
 	}
 
 	@Override
@@ -33,7 +45,7 @@ public class HanhChinhAdapter extends BaseAdapter {
 	}
 
 	@Override
-	public Object getItem(int position) {
+	public BaseObject getItem(int position) {
 		// TODO Auto-generated method stub
 		return listHanhChinh.get(position);
 	}
@@ -46,19 +58,49 @@ public class HanhChinhAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		// TODO Auto-generated method stub
 		View view = convertView;
-		if (convertView == null) {
-			view = inflater.inflate(R.layout.item_list_hanhchinh, null);
+
+		switch (group) {
+		case Mcon.Group.NHOM_HANH_CHINH:
+			return getViewHC(view,position,parent);
+
+		default:
+			break;
 		}
-		TextView tvItem_date_HC = (TextView) view
-				.findViewById(R.id.tvItem_date_HC);
-		tvItem_date_HC.setText(listHanhChinh.get(position).getDay());
-		TextView tvItem_content_HC = (TextView) view
-				.findViewById(R.id.tvItem_content_HC);
-		tvItem_content_HC.setText(listHanhChinh.get(position).getName() + ": "
-				+ listHanhChinh.get(position).getContent_work());
+
 		return view;
 	}
+
+	View getViewHC(View view, int position,ViewGroup parent) {
+		View convertView1 = view;
+		if (convertView1 == null) {
+			convertView1 = inflater.inflate(resource, parent,false);
+		}
+		TextView tvItem_date_HC = (TextView) convertView1.findViewById(R.id.tvItem_date_HC);
+		tvItem_date_HC.setText(listHanhChinh.get(position).get(Empl.START_DATE));
+		TextView tvItem_content_HC = (TextView) convertView1.findViewById(R.id.tvItem_content_HC);
+		tvItem_content_HC.setText(listHanhChinh.get(position).get(Empl.CONTENT));
+		
+		ImageView img=(ImageView) convertView1.findViewById(R.id.alarm);
+		if(!"0".equalsIgnoreCase(listHanhChinh.get(position).get(Empl.ALERT))){
+			img.setVisibility(View.VISIBLE);
+		}
+		
+		return convertView1;
+	}
+	
+	public void SetItems(ArrayList<BaseObject> items) {
+		clear();
+		AddAll1(items);
+	}
+
+	private void AddAll1(ArrayList<BaseObject> items) {
+		if (items != null) {
+			if(items.size()>0){
+				for (BaseObject item : items) {
+					add(item);
+				}
+			}
+		}
+	}
 }
-*/

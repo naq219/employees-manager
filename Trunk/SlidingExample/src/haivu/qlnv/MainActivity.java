@@ -1,13 +1,15 @@
 package haivu.qlnv;
 
 import haivu.qlnv.object.DbSupport;
-import haivu.qlnv.utils.DbTable;
 
 import java.util.ArrayList;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
@@ -39,10 +41,10 @@ public class MainActivity extends SherlockFragmentActivity implements ModelListe
 	EditText edtSearch;
 	boolean stt_search = false;
 	RadioButton radHC, radLD, radTT, radKD, radKT, radHD;
-	Button btnOk_dialog, btnCancel_dialog;
-	Dialog dl;
+	
 	ListView lvContent;
-	private Context mct;
+	public Context mct;
+	ProgressDialog loadingProgress;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -78,17 +80,7 @@ public class MainActivity extends SherlockFragmentActivity implements ModelListe
 		btnSearch = (ImageView) findViewById(R.id.btnSearch);
 
 		lvContent = (ListView) findViewById(R.id.lvContent);
-		dl = new Dialog(this);
-		dl.setTitle("Chọn loại nhân viên: ");
-		dl.setContentView(R.layout.dialog_select_loainv);
-		radHC = (RadioButton) dl.findViewById(R.id.radHC);
-		radHD = (RadioButton) dl.findViewById(R.id.radHD);
-		radKD = (RadioButton) dl.findViewById(R.id.radKD);
-		radKT = (RadioButton) dl.findViewById(R.id.radKT);
-		radLD = (RadioButton) dl.findViewById(R.id.radLD);
-		radTT = (RadioButton) dl.findViewById(R.id.radTT);
-		btnOk_dialog = (Button) dl.findViewById(R.id.btnOK_dialog);
-		btnCancel_dialog = (Button) dl.findViewById(R.id.btnCancel_dialog);
+		
 
 	}
 
@@ -113,10 +105,7 @@ public class MainActivity extends SherlockFragmentActivity implements ModelListe
 		return super.onOptionsItemSelected(item);
 	}
 
-	public void showDialogChoose() {
 
-		dl.show();
-	}
 
 	@Override
 	public Context getContext() {
@@ -151,4 +140,35 @@ public class MainActivity extends SherlockFragmentActivity implements ModelListe
 	protected void showToast(int msg) {
 		Toast.makeText(getBaseContext(), getString(msg), Toast.LENGTH_LONG).show();
 	}
+	
+	protected void showToast(String msg) {
+		Toast.makeText(getBaseContext(), msg, Toast.LENGTH_LONG).show();
+	}
+	
+	public void showProgressDialog(Context context, String message) {
+		closeProgressDialog();
+
+		 loadingProgress = new ProgressDialog(context);
+		loadingProgress.setMessage(message);
+		loadingProgress.setCanceledOnTouchOutside(false);
+		loadingProgress.show();
+	}
+
+	public void showProgressDialog(Context context) {
+		closeProgressDialog();
+
+		loadingProgress = new ProgressDialog(context);
+		loadingProgress.setMessage("Đang tải...");
+		loadingProgress.setCanceledOnTouchOutside(false);
+		loadingProgress.show();
+	}
+
+	public void closeProgressDialog() {
+		if (loadingProgress != null) {
+			if (loadingProgress.isShowing())
+				loadingProgress.dismiss();
+			loadingProgress = null;
+		}
+	}
+	
 }

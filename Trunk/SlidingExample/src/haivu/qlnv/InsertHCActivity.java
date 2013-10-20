@@ -4,27 +4,24 @@ import haivu.qlnv.object.DbSupport;
 import haivu.qlnv.object.Empl;
 import haivu.qlnv.object.HcOj;
 import haivu.qlnv.utils.DbTable;
-import haivu.qlnv.utils.ListB;
+import haivu.qlnv.utils.Mutils;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
-import com.telpoo.frame.database.BaseDBSupport;
-import com.telpoo.frame.object.BaseObject;
-import com.telpoo.frame.ui.BaseActivity;
-
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.app.TimePickerDialog.OnTimeSetListener;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -37,10 +34,14 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.telpoo.frame.database.BaseDBSupport;
+import com.telpoo.frame.object.BaseObject;
+import com.telpoo.frame.ui.BaseActivity;
+
 public class InsertHCActivity extends BaseActivity implements OnClickListener {
 	public static BaseDBSupport db = null;
-	private Context mct=null;
-	
+	private Context mct = null;
+
 	TextView tvCalendar_hanhChinh, tvBegin_time, tvEnd_time, tvRepeat;
 	Calendar calendar;
 	ListView lvDayOfWeek;
@@ -57,7 +58,9 @@ public class InsertHCActivity extends BaseActivity implements OnClickListener {
 	boolean isSelected_startTime = false, isSelected_endTime = false;
 
 	// Naq219
-	ListB ojAdd = new ListB();
+	ArrayList<BaseObject> ojAdd = new ArrayList<BaseObject>();
+	int timeAlert = 0;
+	int[] arrayAlert = { 0, 5, 10, 20, 30, 60 };
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -66,9 +69,9 @@ public class InsertHCActivity extends BaseActivity implements OnClickListener {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_insert_hanhchinh);
 		calendar = Calendar.getInstance();
-		
-		mct=InsertHCActivity.this;
-		db=DbSupport.getInstance(mct);
+
+		mct = InsertHCActivity.this;
+		db = DbSupport.getInstance(mct);
 		initView();
 	}
 
@@ -94,31 +97,23 @@ public class InsertHCActivity extends BaseActivity implements OnClickListener {
 		tvRepeat.setOnClickListener(this);
 		ArrayAdapter<String> adapterReminder = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, this.getResources().getStringArray(R.array.reminder));
 		spnReminder.setAdapter(adapterReminder);
+		spnReminder.setOnItemSelectedListener(new OnItemSelectedListener() {
 
+			@Override
+			public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+				timeAlert = arrayAlert[arg2];
+
+			}
+			
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+
+			}
+		});
 		tvCalendar_hanhChinh = (TextView) findViewById(R.id.tvCalendar_hanhchinh);
 		startDate = calendar.get(Calendar.YEAR) + "-" + (calendar.get(Calendar.MONTH) + 1) + "-" + calendar.get(Calendar.DATE);
-		tvCalendar_hanhChinh.setText(pasreDayOfWeek(calendar.get(Calendar.DAY_OF_WEEK)) + ": " + calendar.get(Calendar.DATE) + "/" + (calendar.get(Calendar.MONTH) + 1) + "/"
-				+ calendar.get(Calendar.YEAR));
-	}
-
-	public String pasreDayOfWeek(int id_day) {
-		switch (id_day) {
-		case 1:
-			return "Chủ nhật";
-		case 2:
-			return "Thứ 2";
-		case 3:
-			return "Thứ 3";
-		case 4:
-			return "Thứ 4";
-		case 5:
-			return "Thứ 5";
-		case 6:
-			return "Thứ 6";
-		case 7:
-			return "Thứ 7";
-		}
-		return null;
+		tvCalendar_hanhChinh.setText(Mutils.pasreDayOfWeek(calendar.get(Calendar.DAY_OF_WEEK)) + ": " + calendar.get(Calendar.DATE) + "/" + (calendar.get(Calendar.MONTH) + 1)
+				+ "/" + calendar.get(Calendar.YEAR));
 	}
 
 	public void showTimePicker(final TextView tv) {
@@ -199,72 +194,55 @@ public class InsertHCActivity extends BaseActivity implements OnClickListener {
 			showDatePicker();
 			break;
 		case R.id.btnLuu_hc:
-			if (isSelected_startTime) {
-
-				if (edtContent.getText().toString().equals("") || edtContent.getText().toString() == null) {
-					Toast.makeText(this, "Chưa nhập nội dung công việc!", Toast.LENGTH_SHORT).show();
-				} else {
-
-					BaseObject oj = new HcOj();
-					oj.set(Empl.CONTENT, edtContent.getText()+"");
-					oj.set(Empl.START_DATE, startDate);
-					oj.set(Empl.START_TIME, startTime);
-					oj.set(Empl.END_TIME, endTime);
-					oj.set(Empl.END_DATE, startDate);
-					
-					ojAdd.add(oj);
-					boolean adddb=DbSupport.addToTable(ojAdd, DbTable.EMPL, false, null);
-					if(!adddb) showToast("loi ruif");
-					
-					// oj.set(key, value)
-
-					// db = new Database(this);
-					// int a = db.insertmembership(edtName.getText()
-					// .toString(), 1);
-					// // Log.i("HAI", "id = " + a);
-					// Log.i("HAI", "content = "
-					// + edtContent.getText().toString());
-					// Log.i("HAI", "morning = " + morning);
-					// Log.i("HAI", "startdate = " + startDate
-					// + " - startTime:" + startTime + " - endTime:"
-					// + endTime);
-					// try {
-					// //
-					// // sau repeat ở đây
-					// //
-					// //
-					// String repeat = ""
-					// + calendar.get(Calendar.DAY_OF_WEEK);
-					// db.insertwork(0, a,
-					// edtContent.getText().toString(), startDate,
-					// "", morning, startTime, endTime, 0, repeat);
-					// } catch (Exception e) {
-					// e.printStackTrace();
-					//
-					// }
-					// db.closeConnect();
-					// Toast.makeText(this, "Thêm nhân viên thành công!",
-					// Toast.LENGTH_SHORT).show();
-					// startActivity(new Intent(InsertHCActivity.this,
-					// MainActivity.class));
-					// finish();
-				}
-
-			} else {
-				Toast.makeText(this, "Chưa chọn giờ bắt đầu!", Toast.LENGTH_SHORT).show();
-			}
+			exeSave(0);
 			break;
 		case R.id.btnLuuVaThem_hc:
-
+			exeSave(1);
 			break;
 		}
 	}
 
-	@Override
-	public void onBackPressed() {
-		// TODO Auto-generated method stub
-		super.onBackPressed();
-		startActivity(new Intent(InsertHCActivity.this, MainActivity.class));
-		finish();
+	void exeSave(int where){
+		if (isSelected_startTime) {
+
+			if (edtContent.getText().toString().equals("") || edtContent.getText().toString() == null) {
+				Toast.makeText(this, "Chưa nhập nội dung công việc!", Toast.LENGTH_SHORT).show();
+			} else {
+
+				BaseObject oj = new HcOj();
+				oj.set(Empl.CONTENT, edtContent.getText() + "");
+				oj.set(Empl.START_DATE, startDate);
+				oj.set(Empl.START_TIME, startTime);
+				oj.set(Empl.END_TIME, endTime);
+				oj.set(Empl.END_DATE, startDate);
+				oj.set(Empl.ALERT, timeAlert + "");
+				
+				if(radChieu.isChecked())
+				oj.set(Empl.SESSION, 1+"");
+				else
+				oj.set(Empl.SESSION, 0+"");
+				ojAdd.add(oj);
+
+				insertDb(ojAdd);
+				if(where==0)finish();
+				else{
+					edtContent.setText("");
+				}
+
+			}
+
+		} else {
+			Toast.makeText(this, "Chưa chọn giờ bắt đầu!", Toast.LENGTH_SHORT).show();
+		}
 	}
+	
+	void insertDb(ArrayList<BaseObject> ojAdd) {
+		boolean adddb = DbSupport.addToTable(ojAdd, DbTable.EMPL, false, null);
+		if (!adddb)
+			showToast("Có lỗi xảy ra");
+		else
+			showToast("Thêm thành công!");
+		ojAdd = new ArrayList<BaseObject>();
+	}
+
 }

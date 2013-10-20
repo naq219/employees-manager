@@ -1,57 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical" >
 
-    <RadioGroup
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:background="@drawable/list_item_bg"
-        android:orientation="vertical" >
+   
 
-        <RadioButton
-            android:id="@+id/radHC"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:checked="true"
-            android:text="@string/add_hc" />
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_above="@+id/temp_bt"
+                android:background="@drawable/list_item_bg"
+                android:orientation="vertical" >
 
-        <RadioButton
-            android:id="@+id/radLD"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/add_ld" />
+                <RadioButton
+                    android:id="@+id/radHC"
+                    style="@style/radio"
+                    android:checked="true"
+                    android:text="@string/add_hc" />
 
-        <RadioButton
-            android:id="@+id/radTT"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/add_tt" />
+                <RadioButton
+                    android:id="@+id/radLD"
+                    style="@style/radio"
+                    android:text="@string/add_ld" />
 
-        <RadioButton
-            android:id="@+id/radKD"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/add_kd" />
+                <RadioButton
+                    android:id="@+id/radTT"
+                    style="@style/radio"
+                    android:text="@string/add_tt" />
 
-        <RadioButton
-            android:id="@+id/radKT"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/add_kt" />
+                <RadioButton
+                    android:id="@+id/radKD"
+                    style="@style/radio"
+                    android:text="@string/add_kd" />
 
-        <RadioButton
-            android:id="@+id/radHD"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/add_hd" />
-    </RadioGroup>
+                <RadioButton
+                    android:id="@+id/radKT"
+                    style="@style/radio"
+                    android:text="@string/add_kt" />
 
+                <RadioButton
+                    android:id="@+id/radHD"
+                    style="@style/radio"
+                    android:text="@string/add_hd" />
+            </RadioGroup>
+        
     <LinearLayout
+        android:id="@+id/temp_bt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:orientation="horizontal" >
 
         <Button
@@ -75,4 +74,4 @@
             android:textColor="@android:color/white" />
     </LinearLayout>
 
-</LinearLayout>
+</RelativeLayout>

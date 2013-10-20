@@ -1,5 +1,7 @@
 package haivu.qlnv.object;
 
+import haivu.qlnv.utils.Mcon;
+
 import com.telpoo.frame.object.BaseObject;
 
 public class Empl extends BaseObject implements Mcon.Group {
@@ -20,5 +22,8 @@ public class Empl extends BaseObject implements Mcon.Group {
 	public static String SESSION = keys[7];
 	public static String START_TIME = keys[8];
 	public static String END_TIME = keys[9];
+	
+	public static String KEY_SANG = "0";
+	public static String KEY_CHIEU = "1";
 
 }
