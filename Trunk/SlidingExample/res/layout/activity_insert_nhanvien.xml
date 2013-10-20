@@ -4,17 +4,17 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/addNhanVien"
+    <EditText
+        android:id="@+id/edtInsertName_nv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:background="@color/background"
+        android:ems="10"
         android:gravity="center_horizontal"
-        android:paddingBottom="10dp"
-        android:paddingTop="10dp"
-        android:text="Thêm Nhân Viên Lắp Đặt"
-        android:textColor="@android:color/white"
-        android:textStyle="bold" />
+        android:hint="Tên Nhân Viên Lắp Đặt"
+        android:padding="10dp"
+        android:textColor="#ffffff" />
 
     <ScrollView
         android:id="@+id/scrollView1"
@@ -187,20 +187,11 @@
             </LinearLayout>
 
             <EditText
-                android:id="@+id/edtInsertName_nv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:ems="10"
-                android:hint="Tên Nhân Viên"
-                android:padding="10dp" />
-
-            <EditText
                 android:id="@+id/edtInsertWork_nv2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="Nội Dung Công Việc"
+                android:hint="Nội Dung"
                 android:lines="4" />
 
             <RelativeLayout
@@ -238,9 +229,9 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@color/background"
+                    android:onClick="OnclickinsertandmoreNV"
                     android:text="Lưu &amp; Thêm"
                     android:textColor="@android:color/white"
-                    android:onClick="OnclickinsertandmoreNV"
                     android:textStyle="bold" />
 
                 <View
@@ -254,8 +245,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@color/background"
-                    android:text="Lưu"
                     android:onClick="OnclickinsertNV"
+                    android:text="Lưu"
                     android:textColor="@android:color/white"
                     android:textStyle="bold" />
             </LinearLayout>

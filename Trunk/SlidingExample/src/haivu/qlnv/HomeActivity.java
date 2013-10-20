@@ -1,7 +1,6 @@
 package haivu.qlnv;
 
 import haivu.qlnv.adapter.AllAdapter;
-import haivu.qlnv.adapter.HanhChinhAdapter;
 import haivu.qlnv.detail.HcDayly;
 import haivu.qlnv.object.DbSupport;
 import haivu.qlnv.object.Empl;
@@ -93,7 +92,7 @@ public class HomeActivity extends MainActivity implements OnItemClickListener, M
 
 				switch (v.getId()) {
 				case R.id.btnAdd_menu:
-					DialogUtils.showDialogChoose(mct, actionDialog);
+					DialogUtils.showDialogChoose(mct);
 					break;
 				case R.id.btnSearch:
 					if (stt_search) {

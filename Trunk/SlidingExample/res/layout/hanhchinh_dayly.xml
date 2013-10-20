@@ -82,6 +82,12 @@
 
         <TextView
             style="@style/form_f_w"
+            android:background="#ffffff"
+            android:text="Sáng"
+            android:textColor="#ffffff" />
+
+        <TextView
+            style="@style/form_f_w"
             android:background="#0d3327"
             android:gravity="center"
             android:text="Chiều"
@@ -93,6 +99,12 @@
             android:layout_height="0dp"
             android:layout_weight="1" >
         </ListView>
+
+        <TextView
+            style="@style/form_f_w"
+            android:background="#ffffff"
+            android:text="Sáng"
+            android:textColor="#ffffff" />
     </LinearLayout>
 
 </RelativeLayout>
