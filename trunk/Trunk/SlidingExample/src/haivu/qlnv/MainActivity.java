@@ -1,6 +1,6 @@
 package haivu.qlnv;
 
-import haivu.qlnv.object.DbSupport;
+import haivu.qlnv.database.DbSupport;
 
 import java.util.ArrayList;
 
@@ -8,8 +8,10 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -28,11 +30,12 @@ public class MainActivity extends BaseFragmentActivity implements ModelListener 
 	public static BaseDBSupport db = null;
 
 	SlidingMenu menu;
-	ImageView btnMenu;
+	LinearLayout btnMenu;
 	AdView ads;
 	TextView tvTitle;
 	TextView tvNumber_title;
-	ImageView btnSearch, btnAdd_menu, btnAddActionbar;
+	ImageView btnSearch,  btnAddActionbar;
+	Button btnAdd_menu;
 	EditText edtSearch;
 	boolean stt_search = false;
 	RadioButton radHC, radLD, radTT, radKD, radKT, radHD;
@@ -65,9 +68,9 @@ public class MainActivity extends BaseFragmentActivity implements ModelListener 
 		// Look up the AdView as a resource and load a request.
 		ads.loadAd(new AdRequest());
 
-		btnAdd_menu = (ImageView) menu.findViewById(R.id.btnAdd_menu);
+		btnAdd_menu = (Button) menu.findViewById(R.id.btnAdd_menu);
 
-		btnMenu = (ImageView) findViewById(R.id.btnMenu);
+		btnMenu = (LinearLayout) findViewById(R.id.btnMenu);
 
 		tvTitle = (TextView) findViewById(R.id.tvTitle);
 		tvNumber_title = (TextView) findViewById(R.id.tvNumber_title);

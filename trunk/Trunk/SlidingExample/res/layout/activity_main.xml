@@ -13,37 +13,41 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:background="@color/background" >
+        android:background="@color/bg_layout_title" >
 
         <TextView
             android:id="@+id/tvNumber_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="2dp"
+            android:background="@drawable/bg_around"
+            android:gravity="center"
             android:text="0"
-            android:textColor="@android:color/white" />
+            android:textColor="#ffffff"
+            android:textSize="12sp" />
 
         <ImageView
             android:id="@+id/btnAddActionBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="21dp"
+            android:layout_height="21dp"
             android:layout_alignParentTop="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="4dp"
             android:layout_toLeftOf="@+id/tvNumber_title"
-            android:paddingBottom="10dp"
-            android:paddingTop="10dp"
-            android:src="@android:drawable/ic_menu_add" />
+            android:src="@drawable/ic_menu_add" />
 
         <ImageView
             android:id="@+id/btnSearch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
+            android:layout_width="20dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginBottom="4dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/btnAddActionBar"
-            android:paddingBottom="10dp"
-            android:paddingTop="10dp"
-            android:src="@android:drawable/ic_menu_search" />
+            android:src="@drawable/ic_menu_search_holo_dark" />
 
         <TextView
             android:id="@+id/tvTitle"
@@ -52,8 +56,8 @@
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/btnSearch"
             android:layout_toRightOf="@+id/btnMenu"
-            android:gravity="right"
-            android:text="Nhân viên hành chính"
+            android:gravity="center"
+            android:text="NHÂN VIÊN HÀNH CHÍNH"
             android:textColor="@android:color/white"
             android:textStyle="bold" />
 
@@ -69,14 +73,23 @@
             android:padding="5dp"
             android:visibility="gone" />
 
-        <ImageView
+        <LinearLayout
             android:id="@+id/btnMenu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:padding="10dp"
-            android:src="@drawable/ic_drawer" />
+            android:layout_marginBottom="7dp"
+            android:layout_marginTop="7dp"
+            android:paddingBottom="0dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="10dp"
+            android:paddingTop="2dp" >
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="27dp"
+                android:background="@drawable/feed_icon" />
+        </LinearLayout>
     </RelativeLayout>
 
     <ListView

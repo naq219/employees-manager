@@ -34,14 +34,14 @@
                 android:orientation="horizontal" >
 
                 <RelativeLayout
-                    android:id="@+id/gr"
+                    android:id="@+id/btn_start_date"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:padding="10dp" >
 
                     <TextView
-                        android:id="@+id/tvCalendar_nhanvien1"
+                        android:id="@+id/tv_start_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
@@ -50,7 +50,6 @@
                         android:textSize="18sp" />
 
                     <ImageView
-                        android:id="@+id/btnCalendar_nhanvien1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
@@ -63,13 +62,14 @@
                     android:background="@color/background" />
 
                 <RelativeLayout
+                    android:id="@+id/lay_end_date"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:padding="10dp" >
 
                     <TextView
-                        android:id="@+id/tvCalendar_nhanvien2"
+                        android:id="@+id/tv_end_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
@@ -78,7 +78,6 @@
                         android:textSize="18sp" />
 
                     <ImageView
-                        android:id="@+id/btnCalendar_nhanvien2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
@@ -87,12 +86,12 @@
             </LinearLayout>
 
             <EditText
-                android:id="@+id/edtInsertWork_nv1"
+                android:id="@+id/ed_title_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:ems="10"
-                android:hint="Nội Dung Công Việc"
+                android:hint="Nhập tên Công Việc"
                 android:lines="1"
                 android:paddingLeft="10dp" />
 
@@ -128,6 +127,7 @@
             </RadioGroup>
 
             <LinearLayout
+                android:id="@+id/btnBeginTime_nv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -140,19 +140,19 @@
                     android:padding="10dp" >
 
                     <ImageView
-                        android:id="@+id/btnBeginTime_nv"
+                        android:id="@+id/btnBeginTime_nv1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:src="@android:drawable/ic_menu_today" />
 
                     <TextView
-                        android:id="@+id/tvBeginTime_nv"
+                        android:id="@+id/tv_start_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
-                        android:layout_toLeftOf="@+id/btnBeginTime_nv"
+                        android:layout_toLeftOf="@+id/btnBeginTime_nv1"
                         android:text="Bắt Đầu" />
                 </RelativeLayout>
 
@@ -162,36 +162,36 @@
                     android:background="@color/background" />
 
                 <RelativeLayout
-                    android:id="@+id/gr2"
+                    android:id="@+id/btnEndTime_nv"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:padding="10dp" >
 
                     <ImageView
-                        android:id="@+id/btnEndTime_nv"
+                        android:id="@+id/btnEndTime_nv11"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:src="@android:drawable/ic_menu_today" />
 
                     <TextView
-                        android:id="@+id/tvEndTime_nv"
+                        android:id="@+id/tv_end_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
-                        android:layout_toLeftOf="@+id/btnEndTime_nv"
+                        android:layout_toLeftOf="@+id/btnEndTime_nv11"
                         android:text="Kết Thúc" />
                 </RelativeLayout>
             </LinearLayout>
 
             <EditText
-                android:id="@+id/edtInsertWork_nv2"
+                android:id="@+id/ed_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="Nội Dung"
+                android:hint="Nhập nội Dung"
                 android:lines="4" />
 
             <RelativeLayout
@@ -229,7 +229,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@color/background"
-                    android:onClick="OnclickinsertandmoreNV"
+                    android:onClick="onClickSaveAndNew"
                     android:text="Lưu &amp; Thêm"
                     android:textColor="@android:color/white"
                     android:textStyle="bold" />

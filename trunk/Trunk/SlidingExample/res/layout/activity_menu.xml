@@ -2,41 +2,45 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/menu_backgroud_grey"
     android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/textView1"
+    <LinearLayout
+        android:id="@+id/top_menu_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:background="@drawable/list_item_bg"
-        android:gravity="center_horizontal"
-        android:paddingBottom="10dp"
-        android:paddingTop="10dp"
-        android:text="Quản lý nhân viên"
-        android:textStyle="bold" />
+        android:layout_height="60dp"
+        android:layout_alignParentTop="true"
+        android:gravity="center"
+        android:orientation="horizontal" >
 
-    <ImageView
+        <ImageView
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:padding="5dp"
+            android:src="@drawable/icon" />
+
+        <TextView
+            android:id="@+id/tv_fromname"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center"
+            android:text="QUẢN LÝ NHÂN SỰ"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <Button
         android:id="@+id/btnAdd_menu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:background="@drawable/list_item_selector"
+        android:background="#013235"
         android:clickable="true"
+        android:drawableTop="@drawable/personal"
         android:gravity="center_horizontal"
         android:paddingBottom="10dp"
         android:paddingTop="10dp"
-        android:src="@drawable/personal" />
-
-    <ListView
-        android:id="@+id/lvMenu"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:divider="#00ffffff"
-        android:dividerHeight="5dp"
-        android:drawSelectorOnTop="true" >
-    </ListView>
+        android:text="Thêm nhân sự"
+        android:textColor="#ffffff" />
 
 </LinearLayout>
