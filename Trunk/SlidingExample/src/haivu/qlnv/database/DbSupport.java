@@ -1,4 +1,4 @@
-package haivu.qlnv.object;
+package haivu.qlnv.database;
 
 import android.content.Context;
 
@@ -9,8 +9,5 @@ public class DbSupport extends BaseDBSupport {
 	protected DbSupport(Context context) {
 		super(context);
 	}
-	
-	
-	
 
 }

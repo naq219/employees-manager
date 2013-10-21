@@ -1,8 +1,8 @@
 package haivu.qlnv;
 
 import haivu.qlnv.adapter.AllAdapter;
+import haivu.qlnv.database.DbSupport;
 import haivu.qlnv.detail.HcDayly;
-import haivu.qlnv.object.DbSupport;
 import haivu.qlnv.object.Empl;
 import haivu.qlnv.utils.DbTable;
 import haivu.qlnv.utils.DialogUtils;

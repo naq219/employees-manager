@@ -1,6 +1,6 @@
 package haivu.qlnv;
 
-import haivu.qlnv.object.DbSupport;
+import haivu.qlnv.database.DbSupport;
 import haivu.qlnv.object.Empl;
 import haivu.qlnv.object.HcOj;
 import haivu.qlnv.utils.DbTable;

@@ -18,7 +18,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.RadioButton;
 
-public class DialogUtils  {
+public class DialogUtils implements Mcon.Group {
 
 	public static void showDialogChoose(final Context ct) {
 		final Dialog dl;
@@ -44,22 +44,30 @@ public class DialogUtils  {
 					((Activity)ct).startActivity(new Intent(ct, InsertHCActivity.class));
 				}
 				if (radHD.isChecked()) {
-					
-					//choose.onChoose(Mcon.Group.NHOM_HOP_DONG);
+					Intent it=new Intent(ct, InsertNVActivity.class);
+					it.putExtra("group",NHOM_HOP_DONG );
+					ct.startActivity(it);
 				}
 				if (radKD.isChecked()) {
-					//choose.onChoose(Mcon.Group.NHOM_KINH_DOANH);
+					Intent it=new Intent(ct, InsertNVActivity.class);
+					it.putExtra("group",NHOM_KINH_DOANH );
+					ct.startActivity(it);
 				}
 				if (radKT.isChecked()) {
-					//choose.onChoose(Mcon.Group.NHOM_KE_TOAN);
+					Intent it=new Intent(ct, InsertNVActivity.class);
+					it.putExtra("group",NHOM_KE_TOAN );
+					ct.startActivity(it);
 				}
 				if (radLD.isChecked()) {
-					((Activity)ct).startActivity(new Intent(ct, InsertNVActivity.class));
-					//choose.onChoose(Mcon.Group.NHOM_LAP_DAT);
+					Intent it=new Intent(ct, InsertNVActivity.class);
+					it.putExtra("group",NHOM_LAP_DAT );
+					ct.startActivity(it);
 				}
 				
 				if (radTT.isChecked()) {
-					//choose.onChoose(Mcon.Group.NHOM_THUC_TAP);
+					Intent it=new Intent(ct, InsertNVActivity.class);
+					it.putExtra("group",NHOM_THUC_TAP );
+					ct.startActivity(it);
 				}
 				
 				
