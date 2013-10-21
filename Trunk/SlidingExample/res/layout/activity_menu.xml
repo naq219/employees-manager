@@ -43,4 +43,12 @@
         android:text="Thêm nhân sự"
         android:textColor="#ffffff" />
 
+    <ListView
+        android:id="@+id/lv_menu"
+        android:layout_width="fill_parent"
+        android:divider="@null"
+        android:dividerHeight="0dp"
+        android:layout_height="wrap_content" >
+    </ListView>
+
 </LinearLayout>

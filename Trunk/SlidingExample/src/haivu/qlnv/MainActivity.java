@@ -1,13 +1,18 @@
 package haivu.qlnv;
 
+import haivu.qlnv.adapter.MenuListviewAdapter;
 import haivu.qlnv.database.DbSupport;
+import haivu.qlnv.utils.Mcon;
 
 import java.util.ArrayList;
 
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.view.View;
 import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -24,17 +29,18 @@ import com.telpoo.frame.database.BaseDBSupport;
 import com.telpoo.frame.model.BaseModel;
 import com.telpoo.frame.model.ModelListener;
 import com.telpoo.frame.ui.BaseFragmentActivity;
+import com.telpoo.frame.utils.Utils;
 
-public class MainActivity extends BaseFragmentActivity implements ModelListener {
+public class MainActivity extends BaseFragmentActivity implements ModelListener,Mcon.Group {
 	public static BaseModel model = null;
 	public static BaseDBSupport db = null;
-
+	int curentGroup = NHOM_HANH_CHINH;
 	SlidingMenu menu;
 	LinearLayout btnMenu;
 	AdView ads;
 	TextView tvTitle;
 	TextView tvNumber_title;
-	ImageView btnSearch,  btnAddActionbar;
+	ImageView btnSearch, btnAddActionbar;
 	Button btnAdd_menu;
 	EditText edtSearch;
 	boolean stt_search = false;
@@ -43,13 +49,15 @@ public class MainActivity extends BaseFragmentActivity implements ModelListener 
 	ListView lvContent;
 	public Context mct;
 	ProgressDialog loadingProgress;
+	ListView lv_menu;
+	String[] arMenu;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		mct = MainActivity.this;
 		db = DbSupport.getInstance(mct);
-		//setTheme(R.style.Theme_Sherlock_Light_NoActionBar);
+		// setTheme(R.style.Theme_Sherlock_Light_NoActionBar);
 		if (model == null) {
 			model = new BaseModel();
 			model.setModelListener1(this);
@@ -78,6 +86,12 @@ public class MainActivity extends BaseFragmentActivity implements ModelListener 
 		btnSearch = (ImageView) findViewById(R.id.btnSearch);
 
 		lvContent = (ListView) findViewById(R.id.lvContent);
+		lv_menu = (ListView) menu.findViewById(R.id.lv_menu);
+		arMenu = getResources().getStringArray(R.array.menu_list);
+		MenuListviewAdapter adapter = new MenuListviewAdapter(mct, R.layout.itemlist_menu, arMenu,null);
+		lv_menu.setAdapter(adapter);
+		
+		
 
 	}
 
@@ -95,11 +109,11 @@ public class MainActivity extends BaseFragmentActivity implements ModelListener 
 		menu.setSlidingEnabled(true);
 	}
 
-//	@Override
-//	public boolean onOptionsItemSelected(MenuItem item) {
-//		menu.toggle();
-//		return super.onOptionsItemSelected(item);
-//	}
+	// @Override
+	// public boolean onOptionsItemSelected(MenuItem item) {
+	// menu.toggle();
+	// return super.onOptionsItemSelected(item);
+	// }
 
 	@Override
 	public Context getContext() {
