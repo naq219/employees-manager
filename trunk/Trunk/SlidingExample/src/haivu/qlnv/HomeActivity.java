@@ -1,6 +1,7 @@
 package haivu.qlnv;
 
 import haivu.qlnv.adapter.AllAdapter;
+import haivu.qlnv.adapter.MenuListviewAdapter;
 import haivu.qlnv.database.DbSupport;
 import haivu.qlnv.detail.HcDayly;
 import haivu.qlnv.object.Empl;
@@ -27,13 +28,14 @@ import com.telpoo.frame.utils.Utils;
 
 public class HomeActivity extends MainActivity implements OnItemClickListener, Mcon.Group {
 	OnClickListener clickListener;
-	int curentGroup = NHOM_HANH_CHINH;
+
 	int count_data = 0;
 	ArrayList<BaseObject> data;
 
 	ArrayList<BaseObject> dataHC;
-	AllAdapter HcAdapter = null;
+	AllAdapter allAdapter = null;
 	ArrayList<BaseObject> curData;
+	HashMap<Integer, ArrayList<BaseObject>> hmData;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -49,33 +51,42 @@ public class HomeActivity extends MainActivity implements OnItemClickListener, M
 
 	private void init() {
 
+		Utils.saveStringSPR(Mcon.spr.GROUP, NHOM_HANH_CHINH + "", HomeActivity.this);
 		// init database
 		boolean init = DbSupport.init(DbTable.tables, DbTable.keys, getBaseContext(), Mcon.dbPath, 3);
 		if (!init)
 			Mlog.E("init database fail!!");
-		try {
-			curentGroup = Integer.parseInt(Utils.getStringSPR(Mcon.spr.GROUP, mct));
-		} catch (Exception e) {
-			curentGroup = NHOM_HANH_CHINH;
-		}
+
 		initView();
 		IniOnclick();
 		btnAdd_menu.setOnClickListener(clickListener);
 		btnMenu.setOnClickListener(clickListener);
 		btnSearch.setOnClickListener(clickListener);
-		HcAdapter = new AllAdapter(mct, R.layout.item_list_all, new ArrayList<BaseObject>(), curentGroup);
-		//allAdapter=new  AllAdapter(mct, R.layout.item_list_hanhchinh, new ArrayList<BaseObject>(), curentGroup);
-		
+		allAdapter = new AllAdapter(mct, R.layout.item_list_all, new ArrayList<BaseObject>(), curentGroup);
+
 		lvContent.setOnItemClickListener(this);
-		
+
+		lv_menu.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+
+				curentGroup = position;
+				Utils.saveStringSPR(Mcon.spr.GROUP, curentGroup + "", getBaseContext());
+				updateUI();
+				menu.toggle();
+
+			}
+		});
+
 	}
 
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		switch (curentGroup) {
 		case NHOM_HANH_CHINH:
-			Sdata.hcDayly=curData;
-			Sdata.hcDayly_dataline=curData.get(position);
+			Sdata.hcDayly = curData;
+			Sdata.hcDayly_dataline = curData.get(position);
 			startActivity(new Intent(mct, HcDayly.class));
 			break;
 
@@ -131,18 +142,23 @@ public class HomeActivity extends MainActivity implements OnItemClickListener, M
 		showProgressDialog(mct);
 
 		data = DbSupport.getAllOfTable(DbTable.EMPL, Empl.keys);
-		HashMap<Integer, ArrayList<BaseObject>> hmData = Mutils.filterData(data);
+		hmData = Mutils.filterData(data);
 
-		 curData = hmData.get(curentGroup);
+		curData = hmData.get(curentGroup);
 
 		count_data = curData.size();
 
 		tvNumber_title.setText(count_data + "");
-		
-		
-		HcAdapter.SetItems(curData);
-		HcAdapter.notifyDataSetChanged();
-		lvContent.setAdapter(HcAdapter);
+
+		allAdapter.SetItems(curData);
+		allAdapter.notifyDataSetChanged();
+		lvContent.setAdapter(allAdapter);
+
+		MenuListviewAdapter adapter = new MenuListviewAdapter(mct, R.layout.itemlist_menu, arMenu, hmData);
+		lv_menu.setAdapter(adapter);
+
+		tvTitle.setText(Mcon.nameGroup[curentGroup]);
+
 		closeProgressDialog();
 	}
 

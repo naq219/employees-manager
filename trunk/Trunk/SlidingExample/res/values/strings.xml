@@ -21,6 +21,14 @@
         <item>Thứ 6</item>
         <item>Thứ 7</item>
     </string-array>
+    <string-array name="menu_list">
+        <item>Nhóm hành chính</item>
+        <item>Nhóm thực tập</item>
+        <item>Nhóm lắp đặt</item>
+        <item>Nhóm kinh doanh</item>
+        <item>Nhóm kế toán</item>
+        <item>Nhóm hợp đồng</item>
+    </string-array>
 
     <string name="save">Lưu</string>
     <string name="save_and_more">Lưu &amp; Thêm</string>

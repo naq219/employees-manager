@@ -3,6 +3,7 @@ package haivu.qlnv.utils;
 import haivu.qlnv.object.AdapterOj;
 import haivu.qlnv.object.Empl;
 import haivu.qlnv.object.HcOj;
+import haivu.qlnv.object.NvOj;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -95,6 +96,20 @@ public class Mutils implements Mcon.Group {
 			}
 
 			break;
+		case Mcon.Group.NHOM_HOP_DONG:
+		case Mcon.Group.NHOM_KE_TOAN:
+		case Mcon.Group.NHOM_KINH_DOANH:
+		case Mcon.Group.NHOM_THUC_TAP:
+		case Mcon.Group.NHOM_LAP_DAT:
+			for (BaseObject base : oj) {
+				BaseObject tem = new BaseObject();
+				tem.set(AdapterOj.ALERT, base.get(NvOj.ALERT));
+				tem.set(AdapterOj.TIME, base.get(NvOj.NAME));
+				tem.set(AdapterOj.COUNT, "0");
+				tem.set(AdapterOj.CONTENT, base.get(NvOj.START_DATE) + " - " + base.get(NvOj.END_DATE));
+				oj1.add(tem);
+
+			}
 
 		default:
 			break;
