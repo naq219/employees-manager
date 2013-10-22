@@ -30,6 +30,7 @@ import android.widget.TextView;
 
 import com.telpoo.frame.object.BaseObject;
 import com.telpoo.frame.ui.BaseActivity;
+import com.telpoo.frame.utils.Mlog;
 
 public class InsertNVActivity extends BaseActivity implements OnClickListener, Mcon.Group {
 	private TextView startdate;
@@ -80,7 +81,13 @@ public class InsertNVActivity extends BaseActivity implements OnClickListener, M
 			btnLuu_nv = (Button) findViewById(R.id.btnLuu_nv);
 			btnLuuVaThem_nv.setText("Hủy");
 			btnLuu_nv.setText("Cập nhật");
-
+			
+			try {
+				group=Integer.parseInt(ojEdit.get(Empl.GROUP));
+			} catch (Exception e) {
+				Mlog.E("34234234 = Integer.parseInt(ojEdit.get(Empl.GROUP))= "+e);
+			}
+			
 			if (Empl.KEY_ONE_DAY.equalsIgnoreCase(ojEdit.get(Empl.MANYDAY))) {
 				oneday.setChecked(true);
 			}
