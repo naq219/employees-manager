@@ -40,7 +40,7 @@ public class HcDaylyLayout extends BaseActivity implements Mcon.Group {
 		mct = HcDaylyLayout.this;
 		setContentView(R.layout.hanhchinh_dayly);
 		initViewHcDaylyLayout();
-		initData();
+		
 
 	}
 
@@ -60,7 +60,8 @@ public class HcDaylyLayout extends BaseActivity implements Mcon.Group {
 		String keyDate = dataLine.get(Empl.START_DATE);
 		filterDate(keyDate);
 		tv_calendar.setText(dataLine.get(HcOj.START_DATE));
-
+		
+		showToast(dataLine.get(Empl.ROW_ID));
 	}
 
 	protected void filterDate(String keyDate) {

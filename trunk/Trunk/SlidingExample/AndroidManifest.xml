@@ -14,7 +14,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/icon"
         android:label="@string/app_name"
         android:theme="@android:style/Theme.Holo.Light" >
         <activity
@@ -37,6 +37,7 @@
             android:name="haivu.qlnv.detail.HcDayly"
             android:label="@string/title_activity_hc_dayly" >
         </activity>
+        
     </application>
 
 </manifest>

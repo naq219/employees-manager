@@ -9,18 +9,19 @@ import haivu.qlnv.utils.Mutils;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import android.R.integer;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.app.TimePickerDialog.OnTimeSetListener;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -37,12 +38,13 @@ import android.widget.Toast;
 import com.telpoo.frame.database.BaseDBSupport;
 import com.telpoo.frame.object.BaseObject;
 import com.telpoo.frame.ui.BaseActivity;
+import com.telpoo.frame.utils.Mlog;
 
 public class InsertHCActivity extends BaseActivity implements OnClickListener {
 	public static BaseDBSupport db = null;
 	private Context mct = null;
 
-	TextView tvCalendar_hanhChinh, tvBegin_time, tvEnd_time, tvRepeat;
+	TextView tvCalendar_hanhChinh, tvBegin_time, tvEnd_time, tvRepeat, title;
 	Calendar calendar;
 	ListView lvDayOfWeek;
 	ImageView btnBeginTime, btnEndTime, btnDate;
@@ -61,10 +63,11 @@ public class InsertHCActivity extends BaseActivity implements OnClickListener {
 	ArrayList<BaseObject> ojAdd = new ArrayList<BaseObject>();
 	int timeAlert = 0;
 	int[] arrayAlert = { 0, 5, 10, 20, 30, 60 };
+	int action = 0;
+	BaseObject ojEdit = new BaseObject();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_insert_hanhchinh);
@@ -73,10 +76,54 @@ public class InsertHCActivity extends BaseActivity implements OnClickListener {
 		mct = InsertHCActivity.this;
 		db = DbSupport.getInstance(mct);
 		initView();
+		initData();
+	}
+
+	private void initData() {
+		Intent it = getIntent();
+		action = it.getIntExtra("key", 0);
+		if (action == 1) // update
+		{
+			ojEdit = it.getExtras().getParcelable("boj");
+			title.setText("SỬA THÔNG TIN NV" );
+			btnSaveAndMore.setText("Hủy");
+			btnSave.setText("Cập nhật");
+			
+			edtContent.setText(ojEdit.get(Empl.CONTENT));
+			
+			startTime=ojEdit.get(Empl.START_TIME);
+			tvBegin_time.setText(startTime);
+			endTime=ojEdit.get(Empl.END_TIME);
+			tvEnd_time.setText(endTime);
+			
+			startDate=ojEdit.get(Empl.START_DATE);
+			tvCalendar_hanhChinh.setText(startDate);
+			
+			isSelected_endTime=true;
+			isSelected_startTime=true;
+			
+			try {
+				timeAlert=Integer.parseInt(ojEdit.get(Empl.ALERT));
+				
+			} catch (Exception e) {
+				Mlog.E("=5645656=timeAlert=Integer.parseInt(ojEdit.get(Empl.ALERT));"+e);
+			}
+			
+			if(timeAlert!=0){
+				spnReminder.setContentDescription(timeAlert+" Phút");
+			}
+			spnReminder.setContentDescription(timeAlert+" Phút");
+			if("1".equalsIgnoreCase(ojEdit.get(Empl.SESSION))) radChieu.setChecked(true);
+			else radSang.setChecked(true);
+			
+		}
+
 	}
 
 	public void initView() {
 		btnBeginTime = (ImageView) findViewById(R.id.btnBeginTime_hc);
+
+		title = (TextView) findViewById(R.id.title);
 		btnBeginTime.setOnClickListener(this);
 		btnEndTime = (ImageView) findViewById(R.id.btnEndTime_hc);
 		btnEndTime.setOnClickListener(this);
@@ -104,7 +151,7 @@ public class InsertHCActivity extends BaseActivity implements OnClickListener {
 				timeAlert = arrayAlert[arg2];
 
 			}
-			
+
 			@Override
 			public void onNothingSelected(AdapterView<?> arg0) {
 
@@ -197,12 +244,15 @@ public class InsertHCActivity extends BaseActivity implements OnClickListener {
 			exeSave(0);
 			break;
 		case R.id.btnLuuVaThem_hc:
-			exeSave(1);
+			if (action == 0)
+				exeSave(1);
+			else
+				finish();
 			break;
 		}
 	}
 
-	void exeSave(int where){
+	void exeSave(int where) {
 		if (isSelected_startTime) {
 
 			if (edtContent.getText().toString().equals("") || edtContent.getText().toString() == null) {
@@ -216,16 +266,20 @@ public class InsertHCActivity extends BaseActivity implements OnClickListener {
 				oj.set(Empl.END_TIME, endTime);
 				oj.set(Empl.END_DATE, startDate);
 				oj.set(Empl.ALERT, timeAlert + "");
-				
-				if(radChieu.isChecked())
-				oj.set(Empl.SESSION, 1+"");
+
+				if (action == 1)
+					oj.set(Empl.ROW_ID, ojEdit.get(Empl.ROW_ID));
+
+				if (radChieu.isChecked())
+					oj.set(Empl.SESSION, 1 + "");
 				else
-				oj.set(Empl.SESSION, 0+"");
+					oj.set(Empl.SESSION, 0 + "");
 				ojAdd.add(oj);
 
 				insertDb(ojAdd);
-				if(where==0)finish();
-				else{
+				if (where == 0)
+					finish();
+				else {
 					edtContent.setText("");
 				}
 
@@ -235,9 +289,18 @@ public class InsertHCActivity extends BaseActivity implements OnClickListener {
 			Toast.makeText(this, "Chưa chọn giờ bắt đầu!", Toast.LENGTH_SHORT).show();
 		}
 	}
-	
+
 	void insertDb(ArrayList<BaseObject> ojAdd) {
-		boolean adddb = DbSupport.addToTable(ojAdd, DbTable.EMPL, false, null);
+		
+		for (String key : Empl.keys_include_rowId) {
+			Mlog.T(key+"=="+ojAdd.get(0).get(key));
+		}
+		
+		boolean adddb;
+		if (action == 0)
+			adddb = DbSupport.addToTable(ojAdd, DbTable.EMPL, false, null);
+		else
+			adddb = DbSupport.update(ojAdd.get(0), DbTable.EMPL, Empl.ROW_ID);
 		if (!adddb)
 			showToast("Có lỗi xảy ra");
 		else
