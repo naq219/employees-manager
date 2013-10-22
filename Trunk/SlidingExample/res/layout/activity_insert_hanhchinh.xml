@@ -5,14 +5,14 @@
     android:orientation="vertical" >
 
     <TextView
-        android:id="@+id/addHanhChinh"
+        android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/background"
         android:gravity="center_horizontal"
         android:paddingBottom="10dp"
         android:paddingTop="10dp"
-        android:text="Thêm nhân viên hành chính"
+        android:text="THÊM NV HÀNH CHÍNH"
         android:textColor="@android:color/white"
         android:textStyle="bold" />
 

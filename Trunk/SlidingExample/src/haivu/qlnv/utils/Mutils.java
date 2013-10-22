@@ -8,6 +8,9 @@ import haivu.qlnv.object.NvOj;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import android.content.Context;
+import android.content.Intent;
+
 import com.telpoo.frame.object.BaseObject;
 
 public class Mutils implements Mcon.Group {
@@ -126,6 +129,21 @@ public class Mutils implements Mcon.Group {
 		}
 		return "" + value;
 
+	}
+	
+	public static void startActivity(Context ct,Class<?> cl, BaseObject oj){
+
+		Intent it=new Intent(ct, cl);
+		it.putExtra("boj", oj);
+		ct.startActivity(it);
+	}
+
+	public static void startActivity(Context ct,Class<?> cl, BaseObject oj,int key){
+
+		Intent it=new Intent(ct, cl);
+		it.putExtra("boj", oj);
+		it.putExtra("key", key);
+		ct.startActivity(it);
 	}
 
 }

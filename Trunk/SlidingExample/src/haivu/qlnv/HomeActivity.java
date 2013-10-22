@@ -141,7 +141,7 @@ public class HomeActivity extends MainActivity implements OnItemClickListener, M
 	void updateUI() {
 		showProgressDialog(mct);
 
-		data = DbSupport.getAllOfTable(DbTable.EMPL, Empl.keys);
+		data = DbSupport.getAllOfTable(DbTable.EMPL, Empl.keys_include_rowId);
 		hmData = Mutils.filterData(data);
 
 		curData = hmData.get(curentGroup);
