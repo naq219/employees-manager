@@ -4,6 +4,7 @@ import haivu.qlnv.adapter.AllAdapter;
 import haivu.qlnv.adapter.MenuListviewAdapter;
 import haivu.qlnv.database.DbSupport;
 import haivu.qlnv.detail.HcDayly;
+import haivu.qlnv.detail.NVDayly;
 import haivu.qlnv.object.Empl;
 import haivu.qlnv.utils.DbTable;
 import haivu.qlnv.utils.DialogUtils;
@@ -89,7 +90,15 @@ public class HomeActivity extends MainActivity implements OnItemClickListener, M
 			Sdata.hcDayly_dataline = curData.get(position);
 			startActivity(new Intent(mct, HcDayly.class));
 			break;
-
+		case NHOM_HOP_DONG:
+		case NHOM_KE_TOAN:
+		case NHOM_KINH_DOANH:
+		case NHOM_LAP_DAT:
+		case NHOM_THUC_TAP:
+			Sdata.hcDayly = curData;
+			Sdata.hcDayly_dataline = curData.get(position);
+			startActivity(new Intent(mct, NVDayly.class));
+			
 		default:
 			break;
 		}
@@ -128,23 +137,25 @@ public class HomeActivity extends MainActivity implements OnItemClickListener, M
 	}
 
 	// Dialog show choose create new Empl
-	IDialogChoose actionDialog = new IDialogChoose() {
+	// IDialogChoose actionDialog = new IDialogChoose() {
+	//
+	// @Override
+	// public void onChoose(int group) {
+	// if (NHOM_HANH_CHINH == group)
+	// startActivity(new Intent(getApplicationContext(),
+	// InsertHCActivity.class));
+	//
+	// }
+	// };
 
-		@Override
-		public void onChoose(int group) {
-			if (NHOM_HANH_CHINH == group)
-				startActivity(new Intent(getApplicationContext(), InsertHCActivity.class));
-
-		}
-	};
-
-	void updateUI() {
+	public void updateUI() {
 		showProgressDialog(mct);
 
 		data = DbSupport.getAllOfTable(DbTable.EMPL, Empl.keys_include_rowId);
 		hmData = Mutils.filterData(data);
 
 		curData = hmData.get(curentGroup);
+		Sdata.hcDayly = curData;
 
 		count_data = curData.size();
 

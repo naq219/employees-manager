@@ -1,10 +1,7 @@
 package haivu.qlnv.detail;
 
-import haivu.qlnv.InsertHCActivity;
-import haivu.qlnv.R;
-import haivu.qlnv.layout.HcDaylyLayout;
-import haivu.qlnv.utils.DialogUtils;
-import haivu.qlnv.utils.IdialogDate;
+import haivu.qlnv.InsertNVActivity;
+import haivu.qlnv.layout.NVDaylyLayout;
 import haivu.qlnv.utils.Mutils;
 import android.os.Bundle;
 import android.view.View;
@@ -13,22 +10,22 @@ import android.widget.AdapterView.OnItemClickListener;
 
 import com.telpoo.frame.object.BaseObject;
 
-public class HcDayly extends HcDaylyLayout {
+public class NVDayly extends NVDaylyLayout {
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		idialogDate=new IdialogDate() {
+		/*idialogDate=new IdialogDate() {
 			
 			@Override
 			public void onSet(String text_tv, String text_value) {
 				tv_calendar.setText(text_tv);
 				filterDate(text_value);
 			}
-		};
+		};*/
 		
-		root_calendar.setOnClickListener(DialogUtils.datePickerListener(idialogDate, mct));
+		//root_calendar.setOnClickListener(DialogUtils.datePickerListener(idialogDate, mct));
 		
 		
 	}
@@ -44,7 +41,7 @@ public class HcDayly extends HcDaylyLayout {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
 				BaseObject oj=new BaseObject();
 				oj=dataLvSang.get(position);
-				Mutils.startActivity(mct, InsertHCActivity.class, oj,1);
+				Mutils.startActivity(mct, InsertNVActivity.class, oj,1);
 			}
 		});
 		lv_chieu.setOnItemClickListener(new OnItemClickListener() {
@@ -53,7 +50,7 @@ public class HcDayly extends HcDaylyLayout {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
 				BaseObject oj=new BaseObject();
 				oj=dataLvChieu.get(position);
-				Mutils.startActivity(mct, InsertHCActivity.class, oj,1);
+				Mutils.startActivity(mct, InsertNVActivity.class, oj,1);
 				
 			}
 		});

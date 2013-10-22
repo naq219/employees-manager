@@ -29,5 +29,7 @@ public class Empl extends BaseObject implements Mcon.Group {
 	
 	public static String KEY_SANG = "0";
 	public static String KEY_CHIEU = "1";
+	public static String KEY_MANY_DAY = "0";
+	public static String KEY_ONE_DAY = "1";
 
 }

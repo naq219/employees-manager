@@ -34,7 +34,7 @@ import com.telpoo.frame.utils.Utils;
 public class MainActivity extends BaseFragmentActivity implements ModelListener,Mcon.Group {
 	public static BaseModel model = null;
 	public static BaseDBSupport db = null;
-	int curentGroup = NHOM_HANH_CHINH;
+	public static int curentGroup = NHOM_HANH_CHINH;
 	SlidingMenu menu;
 	LinearLayout btnMenu;
 	AdView ads;

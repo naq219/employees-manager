@@ -5,9 +5,11 @@ import haivu.qlnv.object.Empl;
 import haivu.qlnv.object.HcOj;
 import haivu.qlnv.utils.DbTable;
 import haivu.qlnv.utils.Mutils;
+import haivu.qlnv.utils.Sdata;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 
 import android.R.integer;
 import android.app.DatePickerDialog;
@@ -299,8 +301,16 @@ public class InsertHCActivity extends BaseActivity implements OnClickListener {
 		boolean adddb;
 		if (action == 0)
 			adddb = DbSupport.addToTable(ojAdd, DbTable.EMPL, false, null);
-		else
+		else{
+			
 			adddb = DbSupport.update(ojAdd.get(0), DbTable.EMPL, Empl.ROW_ID);
+			ArrayList<BaseObject> data = DbSupport.getAllOfTable(DbTable.EMPL, Empl.keys_include_rowId);
+			HashMap<Integer, ArrayList<BaseObject>> hmData = Mutils.filterData(data);
+
+			ArrayList<BaseObject> curData = hmData.get(HomeActivity.curentGroup);
+			Sdata.hcDayly = curData;
+
+		}
 		if (!adddb)
 			showToast("Có lỗi xảy ra");
 		else
