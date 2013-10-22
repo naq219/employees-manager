@@ -1,6 +1,7 @@
 package haivu.qlnv;
 
 import haivu.qlnv.database.DbSupport;
+import haivu.qlnv.object.Empl;
 import haivu.qlnv.object.NvOj;
 import haivu.qlnv.utils.DbTable;
 import haivu.qlnv.utils.Mcon;
@@ -10,6 +11,7 @@ import java.util.Calendar;
 
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -17,6 +19,7 @@ import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -28,7 +31,7 @@ import android.widget.TextView;
 import com.telpoo.frame.object.BaseObject;
 import com.telpoo.frame.ui.BaseActivity;
 
-public class InsertNVActivity extends BaseActivity implements OnClickListener,Mcon.Group {
+public class InsertNVActivity extends BaseActivity implements OnClickListener, Mcon.Group {
 	private TextView startdate;
 	private TextView enddate;
 	private TextView starttime;
@@ -41,6 +44,9 @@ public class InsertNVActivity extends BaseActivity implements OnClickListener,Mc
 	private Spinner spnReminder;
 	private boolean flag_start_date, flag_end_date, flag_start_time, flag_end_time;
 	private int group = 1;
+	private int action = 0;
+	BaseObject ojEdit = new BaseObject();
+	Button btnLuuVaThem_nv, btnLuu_nv;
 
 	int timeAlert = 0;
 	int[] arrayAlert = { 0, 5, 10, 20, 30, 60 };
@@ -53,12 +59,40 @@ public class InsertNVActivity extends BaseActivity implements OnClickListener,Mc
 
 		initView();
 		initGroup();
+		initData();
+
+	}
+
+	private void initData() {
+		Intent it = getIntent();
+		action = it.getIntExtra("key", 0);
+		if (action == 1) {
+			ojEdit = it.getExtras().getParcelable("boj");
+			membername.setText(ojEdit.get(Empl.NAME));
+			startdate.setText(ojEdit.get(Empl.START_DATE));
+			enddate.setText(ojEdit.get(Empl.END_DATE));
+			starttime.setText(ojEdit.get(Empl.START_TIME));
+			endtime.setText(ojEdit.get(Empl.END_TIME));
+			ed_title_content.setText(ojEdit.get(Empl.TITLE_CONTENT));
+			ed_content.setText(ojEdit.get(Empl.CONTENT));
+			flag_start_date = flag_end_date = flag_start_time = flag_end_time = true;
+			btnLuuVaThem_nv = (Button) findViewById(R.id.btnLuuVaThem_nv);
+			btnLuu_nv = (Button) findViewById(R.id.btnLuu_nv);
+			btnLuuVaThem_nv.setText("Hủy");
+			btnLuu_nv.setText("Cập nhật");
+
+			if (Empl.KEY_ONE_DAY.equalsIgnoreCase(ojEdit.get(Empl.MANYDAY))) {
+				oneday.setChecked(true);
+			}
+
+		}
+
 	}
 
 	private void initGroup() {
 		group = getIntent().getIntExtra("group", 10);
 		showToast(group + "");
-		
+
 		switch (group) {
 		case NHOM_HOP_DONG:
 			membername.setHint("Tên nhân viên hợp đồng");
@@ -185,8 +219,12 @@ public class InsertNVActivity extends BaseActivity implements OnClickListener,Mc
 	}
 
 	public void onClickSaveAndNew(View v) {
-		exeSave();
-		ed_content.setText("");
+		if (action == 0) {
+
+			exeSave();
+			ed_content.setText("");
+		} else
+			finish();
 	}
 
 	private void exeSave() {
@@ -207,12 +245,14 @@ public class InsertNVActivity extends BaseActivity implements OnClickListener,Mc
 		if (moreday.isChecked())
 			oj.set(NvOj.MANYDAY, 0 + "");
 		else
-			
+
 			oj.set(NvOj.MANYDAY, 1 + "");
 		oj.set(NvOj.NAME, membername.getText() + "");
 		oj.set(NvOj.START_DATE, startdate.getText() + "");
 		oj.set(NvOj.START_TIME, starttime.getText() + "");
 		oj.set(NvOj.TITLE_CONTENT, ed_title_content.getText() + "");
+		if (action == 1)
+			oj.set(NvOj.ROW_ID, ojEdit.get(Empl.ROW_ID));
 
 		ArrayList<BaseObject> ojs = new ArrayList<BaseObject>();
 		ojs.add(oj);
@@ -221,12 +261,17 @@ public class InsertNVActivity extends BaseActivity implements OnClickListener,Mc
 	}
 
 	void insertDb(ArrayList<BaseObject> ojAdd) {
-		boolean adddb = DbSupport.addToTable(ojAdd, DbTable.EMPL, false, null);
+		boolean adddb;
+		if (action == 0)
+			adddb = DbSupport.addToTable(ojAdd, DbTable.EMPL, false, null);
+		else
+			adddb = DbSupport.update(ojAdd.get(0), DbTable.EMPL, Empl.ROW_ID);
 		if (!adddb)
 			showToast("Có lỗi xảy ra!");
 		else
-			showToast("Thêm thành công!");
+			showToast("Thành công!");
 		ojAdd = new ArrayList<BaseObject>();
+		finish();
 	}
 
 }
