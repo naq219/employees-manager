@@ -8,7 +8,6 @@ import haivu.qlnv.detail.NVDayly;
 import haivu.qlnv.object.Empl;
 import haivu.qlnv.utils.DbTable;
 import haivu.qlnv.utils.DialogUtils;
-import haivu.qlnv.utils.IDialogChoose;
 import haivu.qlnv.utils.Mcon;
 import haivu.qlnv.utils.Mutils;
 import haivu.qlnv.utils.Sdata;
@@ -24,6 +23,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 
 import com.telpoo.frame.object.BaseObject;
+import com.telpoo.frame.utils.BUtils;
 import com.telpoo.frame.utils.Mlog;
 import com.telpoo.frame.utils.Utils;
 
@@ -98,7 +98,7 @@ public class HomeActivity extends MainActivity implements OnItemClickListener, M
 			Sdata.hcDayly = curData;
 			Sdata.hcDayly_dataline = curData.get(position);
 			startActivity(new Intent(mct, NVDayly.class));
-			
+
 		default:
 			break;
 		}
@@ -114,13 +114,18 @@ public class HomeActivity extends MainActivity implements OnItemClickListener, M
 				case R.id.btnAdd_menu:
 					DialogUtils.showDialogChoose(mct);
 					break;
+					
 				case R.id.btnSearch:
 					if (stt_search) {
 						edtSearch.setVisibility(View.GONE);
+						BUtils.hideKeyboard(mct, edtSearch);
+						tvTitle.setVisibility(View.VISIBLE);
 						stt_search = !stt_search;
 					} else {
+						tvTitle.setVisibility(View.INVISIBLE);
 						edtSearch.setVisibility(View.VISIBLE);
 						stt_search = !stt_search;
+						edtSearch.requestFocus();
 					}
 					break;
 				case R.id.btnMenu:
@@ -136,17 +141,6 @@ public class HomeActivity extends MainActivity implements OnItemClickListener, M
 		};
 	}
 
-	// Dialog show choose create new Empl
-	// IDialogChoose actionDialog = new IDialogChoose() {
-	//
-	// @Override
-	// public void onChoose(int group) {
-	// if (NHOM_HANH_CHINH == group)
-	// startActivity(new Intent(getApplicationContext(),
-	// InsertHCActivity.class));
-	//
-	// }
-	// };
 
 	public void updateUI() {
 		showProgressDialog(mct);
@@ -172,5 +166,7 @@ public class HomeActivity extends MainActivity implements OnItemClickListener, M
 
 		closeProgressDialog();
 	}
+	
+	
 
 }

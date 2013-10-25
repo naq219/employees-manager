@@ -18,7 +18,7 @@ public class HcDayly extends HcDaylyLayout {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+			overridePendingTransition(R.anim.trans_left_in, R.anim.trans_left_out);
 		idialogDate=new IdialogDate() {
 			
 			@Override
@@ -38,27 +38,15 @@ public class HcDayly extends HcDaylyLayout {
 	protected void onResume() {
 		super.onResume();
 		initData();
-		lv_sang.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-				BaseObject oj=new BaseObject();
-				oj=dataLvSang.get(position);
-				Mutils.startActivity(mct, InsertHCActivity.class, oj,1);
-			}
-		});
-		lv_chieu.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-				BaseObject oj=new BaseObject();
-				oj=dataLvChieu.get(position);
-				Mutils.startActivity(mct, InsertHCActivity.class, oj,1);
-				
-			}
-		});
+		lv_sang.setOnItemClickListener(Mutils.onClickListView(mct, dataLvSang));
+		lv_chieu.setOnItemClickListener(Mutils.onClickListView(mct, dataLvChieu));
 	}
 
-	
+	@Override
+	public void onBackPressed() {
+		// TODO Auto-generated method stub
+		super.onBackPressed();
+		overridePendingTransition(R.anim.trans_right_in, R.anim.trans_right_out);
+	}
 
 }

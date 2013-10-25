@@ -44,9 +44,7 @@
             android:id="@+id/tv_calendar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/btnCalendar_hanhchinh"
+            android:layout_centerInParent="true"
             android:gravity="center_horizontal"
             android:text="Chọn ngày" />
 
@@ -61,12 +59,14 @@
     </RelativeLayout>
 
     <LinearLayout
-        style="@style/form_f_w"
+        style="@style/form_f_f"
         android:layout_below="@+id/root_calendar"
         android:orientation="vertical"
-        android:weightSum="2" >
+        android:weightSum="4"
+         >
 
         <TextView
+            android:id="@+id/tv_sang"
             style="@style/form_f_w"
             android:background="#0d3327"
             android:gravity="center"
@@ -77,7 +77,7 @@
             android:id="@+id/lv_sang"
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:layout_weight="1" >
+            android:layout_weight="2" >
         </ListView>
 
         <TextView
@@ -87,6 +87,7 @@
             android:textColor="#ffffff" />
 
         <TextView
+            android:id="@+id/tv_chieu"
             style="@style/form_f_w"
             android:background="#0d3327"
             android:gravity="center"
@@ -97,7 +98,7 @@
             android:id="@+id/lv_chieu"
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:layout_weight="1" >
+            android:layout_weight="2" >
         </ListView>
 
         <TextView

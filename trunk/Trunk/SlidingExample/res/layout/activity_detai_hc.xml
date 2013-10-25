@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
@@ -9,6 +9,7 @@
         android:layout_height="wrap_content"
         android:background="@color/background"
         android:gravity="center_horizontal"
+        android:id="@+id/tvTitle"
         android:padding="10dp"
         android:text="Nhân viên hành chính"
         android:textColor="@android:color/white"
@@ -17,6 +18,7 @@
     <ScrollView
         android:id="@+id/scrollView1"
         android:layout_width="match_parent"
+        android:layout_below="@+id/tvTitle"
         android:layout_height="wrap_content" >
 
         <LinearLayout
@@ -28,11 +30,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
+                android:id="@+id/root_calendar"
                 android:background="@drawable/list_item_bg"
                 android:padding="10dp" >
 
                 <TextView
-                    android:id="@+id/tvCalendar_detai_hc"
+                    android:id="@+id/tv_calendar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
@@ -42,7 +45,7 @@
                     android:text="Chọn ngày" />
 
                 <ImageView
-                    android:id="@+id/btnCalendar_detail_hc"
+                   android:id="@+id/btnCalendar_hanhchinh"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -52,6 +55,7 @@
             </RelativeLayout>
 
             <TextView
+                android:id="@+id/tv_sang"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/background"
@@ -62,12 +66,13 @@
                 android:textStyle="bold" />
 
             <ListView
-                android:id="@+id/lvDetail_mor_hc"
+                android:id="@+id/lv_sang"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" >
             </ListView>
 
             <TextView
+                android:id="@+id/tv_chieu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/background"
@@ -78,11 +83,11 @@
                 android:textStyle="bold" />
 
             <ListView
-                android:id="@+id/lvDetail_aft_hc"
+                android:id="@+id/lv_chieu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" >
             </ListView>
         </LinearLayout>
     </ScrollView>
 
-</LinearLayout>
+</RelativeLayout>

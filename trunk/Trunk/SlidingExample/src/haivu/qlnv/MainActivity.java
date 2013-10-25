@@ -6,8 +6,10 @@ import haivu.qlnv.utils.Mcon;
 
 import java.util.ArrayList;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -31,7 +33,7 @@ import com.telpoo.frame.model.ModelListener;
 import com.telpoo.frame.ui.BaseFragmentActivity;
 import com.telpoo.frame.utils.Utils;
 
-public class MainActivity extends BaseFragmentActivity implements ModelListener,Mcon.Group {
+public class MainActivity extends BaseFragmentActivity implements ModelListener, Mcon.Group {
 	public static BaseModel model = null;
 	public static BaseDBSupport db = null;
 	public static int curentGroup = NHOM_HANH_CHINH;
@@ -40,7 +42,7 @@ public class MainActivity extends BaseFragmentActivity implements ModelListener,
 	AdView ads;
 	TextView tvTitle;
 	TextView tvNumber_title;
-	ImageView btnSearch, btnAddActionbar;
+	ImageView btnSearch, btn_add;
 	Button btnAdd_menu;
 	EditText edtSearch;
 	boolean stt_search = false;
@@ -55,6 +57,8 @@ public class MainActivity extends BaseFragmentActivity implements ModelListener,
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		overridePendingTransition(R.anim.trans_left_in, R.anim.trans_left_out);
+		  
 		mct = MainActivity.this;
 		db = DbSupport.getInstance(mct);
 		// setTheme(R.style.Theme_Sherlock_Light_NoActionBar);
@@ -88,10 +92,8 @@ public class MainActivity extends BaseFragmentActivity implements ModelListener,
 		lvContent = (ListView) findViewById(R.id.lvContent);
 		lv_menu = (ListView) menu.findViewById(R.id.lv_menu);
 		arMenu = getResources().getStringArray(R.array.menu_list);
-		MenuListviewAdapter adapter = new MenuListviewAdapter(mct, R.layout.itemlist_menu, arMenu,null);
+		MenuListviewAdapter adapter = new MenuListviewAdapter(mct, R.layout.itemlist_menu, arMenu, null);
 		lv_menu.setAdapter(adapter);
-		
-		
 
 	}
 
@@ -173,6 +175,25 @@ public class MainActivity extends BaseFragmentActivity implements ModelListener,
 				loadingProgress.dismiss();
 			loadingProgress = null;
 		}
+	}
+	
+
+	public void onClickAdd(View v) {
+		if (curentGroup == NHOM_HANH_CHINH)
+			startActivity(new Intent(getBaseContext(), InsertHCActivity.class));
+		else
+		{
+			Intent it = new Intent(getBaseContext(), InsertNVActivity.class);
+			it.putExtra("group", curentGroup);
+			startActivity(it);
+		}
+	}
+	
+	@Override
+	public void onBackPressed() {
+		super.onBackPressed();
+		 overridePendingTransition(R.anim.trans_right_in, R.anim.trans_right_out);
+		   
 	}
 
 }

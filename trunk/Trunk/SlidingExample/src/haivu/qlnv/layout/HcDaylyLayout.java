@@ -6,12 +6,14 @@ import haivu.qlnv.object.Empl;
 import haivu.qlnv.object.HcOj;
 import haivu.qlnv.utils.IdialogDate;
 import haivu.qlnv.utils.Mcon;
+import haivu.qlnv.utils.Mutils;
 import haivu.qlnv.utils.Sdata;
 
 import java.util.ArrayList;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -79,12 +81,24 @@ public class HcDaylyLayout extends BaseActivity implements Mcon.Group {
 				}
 
 			}
+			
+			if(dataLvSang.size()==0){
+				lv_sang.setVisibility(View.GONE);
+				
+			}
+			
+			if(dataLvChieu.size()==0){
+				lv_chieu.setVisibility(View.GONE);
+			}
 
 			adapterSang = new AllAdapter(mct, R.layout.item_list_all, dataLvSang, NHOM_HANH_CHINH);
 			adapterChieu = new AllAdapter(mct, R.layout.item_list_all, dataLvChieu, NHOM_HANH_CHINH);
 
 			lv_sang.setAdapter(adapterSang);
 			lv_chieu.setAdapter(adapterChieu);
+			
+			Mutils.setListViewHeightBasedOnChildren(lv_chieu);
+			Mutils.setListViewHeightBasedOnChildren(lv_sang);
 
 		}
 
