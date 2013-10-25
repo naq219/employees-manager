@@ -71,6 +71,7 @@ public class InsertHCActivity extends BaseActivity implements OnClickListener {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+			overridePendingTransition(R.anim.trans_left_in, R.anim.trans_left_out);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_insert_hanhchinh);
 		calendar = Calendar.getInstance();
@@ -304,11 +305,7 @@ public class InsertHCActivity extends BaseActivity implements OnClickListener {
 		else{
 			
 			adddb = DbSupport.update(ojAdd.get(0), DbTable.EMPL, Empl.ROW_ID);
-			ArrayList<BaseObject> data = DbSupport.getAllOfTable(DbTable.EMPL, Empl.keys_include_rowId);
-			HashMap<Integer, ArrayList<BaseObject>> hmData = Mutils.filterData(data);
-
-			ArrayList<BaseObject> curData = hmData.get(HomeActivity.curentGroup);
-			Sdata.hcDayly = curData;
+			Mutils.updateData();
 
 		}
 		if (!adddb)
@@ -316,6 +313,13 @@ public class InsertHCActivity extends BaseActivity implements OnClickListener {
 		else
 			showToast("Thêm thành công!");
 		ojAdd = new ArrayList<BaseObject>();
+	}
+	
+	@Override
+	public void onBackPressed() {
+		// TODO Auto-generated method stub
+		super.onBackPressed();
+		overridePendingTransition(R.anim.trans_right_in, R.anim.trans_right_out);
 	}
 
 }

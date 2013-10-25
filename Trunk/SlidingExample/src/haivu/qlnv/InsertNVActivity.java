@@ -20,6 +20,8 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -55,6 +57,7 @@ public class InsertNVActivity extends BaseActivity implements OnClickListener, M
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		overridePendingTransition(R.anim.trans_left_in, R.anim.trans_left_out);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_insert_nhanvien);
 
@@ -81,13 +84,13 @@ public class InsertNVActivity extends BaseActivity implements OnClickListener, M
 			btnLuu_nv = (Button) findViewById(R.id.btnLuu_nv);
 			btnLuuVaThem_nv.setText("Hủy");
 			btnLuu_nv.setText("Cập nhật");
-			
+
 			try {
-				group=Integer.parseInt(ojEdit.get(Empl.GROUP));
+				group = Integer.parseInt(ojEdit.get(Empl.GROUP));
 			} catch (Exception e) {
-				Mlog.E("34234234 = Integer.parseInt(ojEdit.get(Empl.GROUP))= "+e);
+				Mlog.E("34234234 = Integer.parseInt(ojEdit.get(Empl.GROUP))= " + e);
 			}
-			
+
 			if (Empl.KEY_ONE_DAY.equalsIgnoreCase(ojEdit.get(Empl.MANYDAY))) {
 				oneday.setChecked(true);
 			}
@@ -159,6 +162,15 @@ public class InsertNVActivity extends BaseActivity implements OnClickListener, M
 
 			@Override
 			public void onNothingSelected(AdapterView<?> arg0) {
+
+			}
+		});
+
+		oneday.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				flag_end_time = isChecked;
 
 			}
 		});
@@ -279,6 +291,13 @@ public class InsertNVActivity extends BaseActivity implements OnClickListener, M
 			showToast("Thành công!");
 		ojAdd = new ArrayList<BaseObject>();
 		finish();
+	}
+	
+	@Override
+	public void onBackPressed() {
+		// TODO Auto-generated method stub
+		super.onBackPressed();
+		overridePendingTransition(R.anim.trans_right_in, R.anim.trans_right_out);
 	}
 
 }

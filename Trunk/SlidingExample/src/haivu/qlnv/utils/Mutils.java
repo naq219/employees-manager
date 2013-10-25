@@ -1,5 +1,7 @@
 package haivu.qlnv.utils;
 
+import haivu.qlnv.HomeActivity;
+import haivu.qlnv.database.DbSupport;
 import haivu.qlnv.object.AdapterOj;
 import haivu.qlnv.object.Empl;
 import haivu.qlnv.object.HcOj;
@@ -10,6 +12,12 @@ import java.util.HashMap;
 
 import android.content.Context;
 import android.content.Intent;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 
 import com.telpoo.frame.object.BaseObject;
 
@@ -145,5 +153,45 @@ public class Mutils implements Mcon.Group {
 		it.putExtra("key", key);
 		ct.startActivity(it);
 	}
+	
+	public static OnItemClickListener onClickListView(final Context context,final ArrayList<BaseObject> dataLv){
+		OnItemClickListener listener=new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+				DialogUtils.confirmEditDelete(context, dataLv.get(arg2));
+				
+			}
+		};
+		
+		return listener;
+	}
+	
+	public static void updateData(){
+		ArrayList<BaseObject> data = DbSupport.getAllOfTable(DbTable.EMPL, Empl.keys_include_rowId);
+		HashMap<Integer, ArrayList<BaseObject>> hmData = Mutils.filterData(data);
+
+		ArrayList<BaseObject> curData = hmData.get(HomeActivity.curentGroup);
+		Sdata.hcDayly = curData;
+	}
+	
+	  public static void setListViewHeightBasedOnChildren(ListView listView) {
+   /*       ListAdapter listAdapter = listView.getAdapter(); 
+          if (listAdapter == null) {
+              // pre-condition
+              return;
+          }
+
+          int totalHeight = 0;
+          for (int i = 0; i < listAdapter.getCount(); i++) {
+              View listItem = listAdapter.getView(i, null, listView);
+              listItem.measure(0, 0);
+              totalHeight += listItem.getMeasuredHeight();
+          }
+
+          ViewGroup.LayoutParams params = listView.getLayoutParams();
+          params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+          listView.setLayoutParams(params);*/
+      }
 
 }
