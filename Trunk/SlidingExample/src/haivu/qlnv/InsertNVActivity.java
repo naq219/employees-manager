@@ -3,6 +3,8 @@ package haivu.qlnv;
 import haivu.qlnv.database.DbSupport;
 import haivu.qlnv.object.Empl;
 import haivu.qlnv.object.NvOj;
+import haivu.qlnv.task.TaskType;
+import haivu.qlnv.task.TaskUser1;
 import haivu.qlnv.utils.DbTable;
 import haivu.qlnv.utils.Mcon;
 
@@ -290,7 +292,9 @@ public class InsertNVActivity extends BaseActivity implements OnClickListener, M
 		else
 			showToast("Thành công!");
 		ojAdd = new ArrayList<BaseObject>();
-		finish();
+		
+		TaskUser1 taskUser1=new TaskUser1(model, TaskType.TASK_UPDATE_DATA	, null, getBaseContext());
+		model.exeTask(null, taskUser1);
 	}
 	
 	@Override

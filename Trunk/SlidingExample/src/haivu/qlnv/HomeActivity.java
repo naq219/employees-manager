@@ -5,7 +5,8 @@ import haivu.qlnv.adapter.MenuListviewAdapter;
 import haivu.qlnv.database.DbSupport;
 import haivu.qlnv.detail.HcDayly;
 import haivu.qlnv.detail.NVDayly;
-import haivu.qlnv.object.Empl;
+import haivu.qlnv.task.TaskType;
+import haivu.qlnv.task.TaskUser1;
 import haivu.qlnv.utils.DbTable;
 import haivu.qlnv.utils.DialogUtils;
 import haivu.qlnv.utils.Mcon;
@@ -17,24 +18,23 @@ import java.util.HashMap;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PowerManager;
-import android.os.PowerManager.WakeLock;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 
 import com.telpoo.frame.object.BaseObject;
-import com.telpoo.frame.ui.BaseActivity;
 import com.telpoo.frame.utils.BUtils;
 import com.telpoo.frame.utils.Mlog;
 import com.telpoo.frame.utils.Utils;
 
-public class HomeActivity extends MainActivity implements OnItemClickListener, Mcon.Group {
+public class HomeActivity extends MainActivity implements OnItemClickListener, Mcon.Group,TaskType {
 	OnClickListener clickListener;
 
 	int count_data = 0;
-	//ArrayList<BaseObject> data;
+	// ArrayList<BaseObject> data;
 
 	ArrayList<BaseObject> dataHC;
 	AllAdapter allAdapter = null;
@@ -49,16 +49,12 @@ public class HomeActivity extends MainActivity implements OnItemClickListener, M
 
 	@Override
 	protected void onResume() {
-		updateUI();
+		updateData();
 		super.onResume();
 	}
 
 	private void init() {
-		/*PowerManager pM = (PowerManager)getSystemService(getBaseContext().POWER_SERVICE);
-		WakeLock wl = pM.newWakeLock(PowerManager.FULL_WAKE_LOCK, "wakeLock");
-		wl.acquire();
-		Sdata.wakelock = wl;*/
-		
+
 		AlarmBroatcast.RegisterAlarmBroadcast(getApplicationContext());
 
 		Utils.saveStringSPR(Mcon.spr.GROUP, NHOM_HANH_CHINH + "", HomeActivity.this);
@@ -83,8 +79,31 @@ public class HomeActivity extends MainActivity implements OnItemClickListener, M
 
 				curentGroup = position;
 				Utils.saveStringSPR(Mcon.spr.GROUP, curentGroup + "", getBaseContext());
-				updateUI();
+				updateData();
 				menu.toggle();
+
+			}
+		});
+
+		ed_search.addTextChangedListener(new TextWatcher() {
+
+			@Override
+			public void onTextChanged(CharSequence s, int arg1, int arg2, int arg3) {
+				openSearch(s.toString());
+
+			}
+
+			@Override
+			public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void afterTextChanged(Editable s) {
+				// if(s.length()==0){
+				// lvContent.clearTextFilter();
+				// }
 
 			}
 		});
@@ -126,15 +145,9 @@ public class HomeActivity extends MainActivity implements OnItemClickListener, M
 
 				case R.id.btnSearch:
 					if (stt_search) {
-						edtSearch.setVisibility(View.GONE);
-						BUtils.hideKeyboard(mct, edtSearch);
-						tvTitle.setVisibility(View.VISIBLE);
-						stt_search = !stt_search;
+						closeSearch();
 					} else {
-						tvTitle.setVisibility(View.INVISIBLE);
-						edtSearch.setVisibility(View.VISIBLE);
-						stt_search = !stt_search;
-						edtSearch.requestFocus();
+						openSearch("");
 					}
 					break;
 				case R.id.btnMenu:
@@ -150,11 +163,45 @@ public class HomeActivity extends MainActivity implements OnItemClickListener, M
 		};
 	}
 
-	public void updateUI() {
+	void openSearch(String key) {
+		tvTitle.setVisibility(View.INVISIBLE);
+		ed_search.setVisibility(View.VISIBLE);
+		stt_search = !stt_search;
+		ed_search.requestFocus();
+		
+		if (key.length() == 0)
+			updateLvContent(curData);
+		else
+			{
+			Sdata.key_search=key;
+			TaskUser1 taskUser1=new TaskUser1(model, TASK_SEARCH, null, mct);
+			model.exeTask(null, taskUser1);
+			}
+		
+	}
+
+	void closeSearch() {
+		ed_search.setVisibility(View.GONE);
+		BUtils.hideKeyboard(mct, ed_search);
+		tvTitle.setVisibility(View.VISIBLE);
+		stt_search = !stt_search;
+		updateLvContent(curData);
+	}
+
+	public void updateData() {
 		showProgressDialog(mct);
-		Mutils.updateData();
-		//data = DbSupport.getAllOfTable(DbTable.EMPL, Empl.keys_include_rowId);
-		hmData = Sdata.hmData;//Mutils.filterData(data);
+		
+		TaskUser1 taskUser1=new TaskUser1(model, TASK_UPDATE_DATA	, null, mct);
+		model.exeTask(null, taskUser1);
+		
+		
+	}
+	
+	public void updateUI(){
+
+		// data = DbSupport.getAllOfTable(DbTable.EMPL,
+		// Empl.keys_include_rowId);
+		hmData = Sdata.hmData;// Mutils.filterData(data);
 
 		curData = hmData.get(curentGroup);
 		Sdata.hcDayly = curData;
@@ -163,9 +210,7 @@ public class HomeActivity extends MainActivity implements OnItemClickListener, M
 
 		tvNumber_title.setText(count_data + "");
 
-		allAdapter.SetItems(curData);
-		allAdapter.notifyDataSetChanged();
-		lvContent.setAdapter(allAdapter);
+		updateLvContent(curData);
 
 		MenuListviewAdapter adapter = new MenuListviewAdapter(mct, R.layout.itemlist_menu, arMenu, hmData);
 		lv_menu.setAdapter(adapter);
@@ -174,6 +219,42 @@ public class HomeActivity extends MainActivity implements OnItemClickListener, M
 
 		AlarmBroatcast.setAlarm(hmData.get(NHOM_HANH_CHINH));
 		closeProgressDialog();
+	}
+		
+
+	private void updateLvContent(ArrayList<BaseObject> datare) {
+		ArrayList<BaseObject> da=new ArrayList<BaseObject>();
+		
+		if(datare!=null){
+			if(datare.size()>0){
+				da=datare;
+			}
+		}
+		
+
+		allAdapter.SetItems(da);
+		allAdapter.notifyDataSetChanged();
+		lvContent.setAdapter(allAdapter);
+		
+
+	}
+	
+	@Override
+	public void onSuccess(int taskType, ArrayList<?> list, String msg) {
+		super.onSuccess(taskType, list, msg);
+		closeProgressDialog();
+		switch (taskType) {
+		case TASK_SEARCH:
+			ArrayList<BaseObject> sOj = (ArrayList<BaseObject>) list;
+			updateLvContent( sOj);
+			
+			break;
+		case TASK_UPDATE_DATA:
+			updateUI();
+			break;
+		default:
+			break;
+		}
 	}
 
 }

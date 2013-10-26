@@ -10,6 +10,7 @@ import haivu.qlnv.object.NvOj;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -21,7 +22,9 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
+import com.telpoo.frame.model.ModelListener;
 import com.telpoo.frame.object.BaseObject;
+import com.telpoo.frame.utils.Mlog;
 
 public class Mutils implements Mcon.Group {
 	public static String pasreDayOfWeek(int id_day) {
@@ -140,36 +143,36 @@ public class Mutils implements Mcon.Group {
 		return "" + value;
 
 	}
-	
-	public static void startActivity(Context ct,Class<?> cl, BaseObject oj){
 
-		Intent it=new Intent(ct, cl);
+	public static void startActivity(Context ct, Class<?> cl, BaseObject oj) {
+
+		Intent it = new Intent(ct, cl);
 		it.putExtra("boj", oj);
 		ct.startActivity(it);
 	}
 
-	public static void startActivity(Context ct,Class<?> cl, BaseObject oj,int key){
+	public static void startActivity(Context ct, Class<?> cl, BaseObject oj, int key) {
 
-		Intent it=new Intent(ct, cl);
+		Intent it = new Intent(ct, cl);
 		it.putExtra("boj", oj);
 		it.putExtra("key", key);
 		ct.startActivity(it);
 	}
-	
-	public static OnItemClickListener onClickListView(final Context context,final ArrayList<BaseObject> dataLv){
-		OnItemClickListener listener=new OnItemClickListener() {
+
+	public static OnItemClickListener onClickListView(final Context context, final ArrayList<BaseObject> dataLv) {
+		OnItemClickListener listener = new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 				DialogUtils.confirmEditDelete(context, dataLv.get(arg2));
-				
+
 			}
 		};
-		
+
 		return listener;
 	}
-	
-	public static void updateData(){
+
+	public static void updateData() {
 		ArrayList<BaseObject> data = DbSupport.getAllOfTable(DbTable.EMPL, Empl.keys_include_rowId);
 		HashMap<Integer, ArrayList<BaseObject>> hmData = Mutils.filterData(data);
 		Sdata.hmData = hmData;
@@ -178,52 +181,83 @@ public class Mutils implements Mcon.Group {
 		Sdata.hanhchinh = hmData.get(Mcon.Group.NHOM_HANH_CHINH);
 		AlarmBroatcast.setAlarm(Sdata.hanhchinh);
 	}
-	
-	  public static void setListViewHeightBasedOnChildren(ListView listView) {
-   /*       ListAdapter listAdapter = listView.getAdapter(); 
-          if (listAdapter == null) {
-              // pre-condition
-              return;
-          }
 
-          int totalHeight = 0;
-          for (int i = 0; i < listAdapter.getCount(); i++) {
-              View listItem = listAdapter.getView(i, null, listView);
-              listItem.measure(0, 0);
-              totalHeight += listItem.getMeasuredHeight();
-          }
+	public static void setListViewHeightBasedOnChildren(ListView listView) {
+		/*
+		 * ListAdapter listAdapter = listView.getAdapter(); if (listAdapter ==
+		 * null) { // pre-condition return; }
+		 * 
+		 * int totalHeight = 0; for (int i = 0; i < listAdapter.getCount(); i++)
+		 * { View listItem = listAdapter.getView(i, null, listView);
+		 * listItem.measure(0, 0); totalHeight += listItem.getMeasuredHeight();
+		 * }
+		 * 
+		 * ViewGroup.LayoutParams params = listView.getLayoutParams();
+		 * params.height = totalHeight + (listView.getDividerHeight() *
+		 * (listAdapter.getCount() - 1)); listView.setLayoutParams(params);
+		 */
+	}
 
-          ViewGroup.LayoutParams params = listView.getLayoutParams();
-          params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
-          listView.setLayoutParams(params);*/
-      }
-	  
-	  public static void generateNotification(Context context, String message, String title,int drawableIcon) {
-	        long when = System.currentTimeMillis();
-	        NotificationManager notificationManager = (NotificationManager)
-	                context.getSystemService(Context.NOTIFICATION_SERVICE);
-	        Notification notification = new Notification(drawableIcon, message, when);
-	        
-	        
-	        Intent notificationIntent = new Intent(context, HomeActivity.class);
-	      //  notificationIntent.setAction(HandyTrailGCM.OPEN_FRAGMENT_ACTION_INCOMMING_MESSAGE);
-	        // set intent so it does not start a new activity
-//	        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
-//	                Intent.FLAG_ACTIVITY_SINGLE_TOP);
-	        PendingIntent intent =
-	                PendingIntent.getActivity(context, 0, notificationIntent, 0);
-	        notification.setLatestEventInfo(context, title, message, intent);
-	        notification.flags |= Notification.FLAG_AUTO_CANCEL;
-	        
-	        // Play default notification sound
-	        notification.defaults |= Notification.DEFAULT_SOUND;
-	        
-	        //notification.sound = Uri.parse("android.resource://" + context.getPackageName() + "your_sound_file_name.mp3");
-	        
-	        // Vibrate if vibrate is enabled
-	        notification.defaults |= Notification.DEFAULT_VIBRATE;
-	        notificationManager.notify(0, notification);      
+	public static void generateNotification(Context context, String message, String title, int drawableIcon) {
+		long when = System.currentTimeMillis();
+		NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+		Notification notification = new Notification(drawableIcon, message, when);
 
-	    }
+		Intent notificationIntent = new Intent(context, HomeActivity.class);
+		// notificationIntent.setAction(HandyTrailGCM.OPEN_FRAGMENT_ACTION_INCOMMING_MESSAGE);
+		// set intent so it does not start a new activity
+		// notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
+		// Intent.FLAG_ACTIVITY_SINGLE_TOP);
+		PendingIntent intent = PendingIntent.getActivity(context, 0, notificationIntent, 0);
+		notification.setLatestEventInfo(context, title, message, intent);
+		notification.flags |= Notification.FLAG_AUTO_CANCEL;
+
+		// Play default notification sound
+		notification.defaults |= Notification.DEFAULT_SOUND;
+
+		// notification.sound = Uri.parse("android.resource://" +
+		// context.getPackageName() + "your_sound_file_name.mp3");
+
+		// Vibrate if vibrate is enabled
+		notification.defaults |= Notification.DEFAULT_VIBRATE;
+		notificationManager.notify(0, notification);
+
+	}
+
+	public static ArrayList<BaseObject> search(ArrayList<BaseObject> ojs, String key) {
+		ArrayList<BaseObject> ojRe = new ArrayList<BaseObject>();
+		for (BaseObject baseObject : ojs) {
+			for (String key1 : Empl.keys) {
+				String ss = baseObject.get(key1);
+				if (compareString(ss, key))
+					ojRe.add(baseObject);
+
+			}
+		}
+
+		return ojRe;
+	}
+
+	private static boolean compareString(String data, String key) {
+		if (data == null)
+			return false;
+		Mlog.T("newData=" + replaceUtf8String(data));
+		return replaceUtf8String(data).contains(replaceUtf8String(key));
+
+	}
+
+	private static String replaceUtf8String(String data) {
+		String newData = "";
+		newData = data.toLowerCase().replaceAll("[\\á\\à\\ả\\ã\\ạ\\â\\ấ\\ầ\\ẩ\\ẫ\\ậ\\ă\\ắ\\ằ\\ẳ\\ẵ\\ặ]", "a");
+		newData.replaceAll("[\\é\\è\\ẻ\\ẽ\\ẹ\\ê\\ế\\ề\\ể\\ễ\\ệ]", "e");
+		newData.replaceAll("[\\í\\ì\\ỉ\\ĩ\\ị]", "i");
+		newData.replaceAll("[\\ó\\ò\\ỏ\\õ\\ọ\\ơ\\ớ\\ờ\\ở\\ỡ\\ợ\\ô\\ố\\ồ\\ổ\\ỗ\\ộ]", "`");
+		newData.replaceAll("[\\í\\ì\\ỉ\\ĩ\\ị]", "i");
+		newData.replaceAll("[\\ú\\ù\\ủ\\ũ\\ụ\\ư\\ứ\\ừ\\ử\\ữ\\ự]", "u");
+		newData.replaceAll("[\\ý\\ỳ\\ỷ\\ỹ\\ỵ]", "y");
+
+		return newData;
+
+	}
 
 }

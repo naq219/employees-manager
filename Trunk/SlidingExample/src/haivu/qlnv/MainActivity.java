@@ -44,7 +44,7 @@ public class MainActivity extends BaseFragmentActivity implements ModelListener,
 	TextView tvNumber_title;
 	ImageView btnSearch, btn_add;
 	Button btnAdd_menu;
-	EditText edtSearch;
+	EditText ed_search;
 	boolean stt_search = false;
 	RadioButton radHC, radLD, radTT, radKD, radKT, radHD;
 
@@ -86,7 +86,7 @@ public class MainActivity extends BaseFragmentActivity implements ModelListener,
 
 		tvTitle = (TextView) findViewById(R.id.tvTitle);
 		tvNumber_title = (TextView) findViewById(R.id.tvNumber_title);
-		edtSearch = (EditText) findViewById(R.id.edtSearch);
+		ed_search = (EditText) findViewById(R.id.ed_search);
 		btnSearch = (ImageView) findViewById(R.id.btnSearch);
 
 		lvContent = (ListView) findViewById(R.id.lvContent);
