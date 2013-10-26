@@ -1,16 +1,10 @@
 package haivu.qlnv.detail;
 
-import haivu.qlnv.InsertNVActivity;
 import haivu.qlnv.R;
 import haivu.qlnv.layout.NVDaylyLayout;
 import haivu.qlnv.utils.DialogUtils;
 import haivu.qlnv.utils.Mutils;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-
-import com.telpoo.frame.object.BaseObject;
 
 public class NVDayly extends NVDaylyLayout {
 

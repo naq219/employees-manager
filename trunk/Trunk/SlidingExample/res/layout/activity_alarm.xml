@@ -11,11 +11,11 @@
 
     <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:background="@color/background" >
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:background="#8CFFFFFF" >
 
         <LinearLayout
             style="@style/form_f_w"
@@ -25,6 +25,7 @@
             <TextView
                 android:id="@+id/tv_title"
                 style="@style/text_label"
+                android:layout_width="fill_parent"
                 android:layout_gravity="center_horizontal"
                 android:padding="10dp"
                 android:text="Nhắc nhở" />
@@ -84,14 +85,12 @@
             </TableLayout>
 
             <Button
+                style="@style/btn"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:background="@drawable/btn_rounded_blue"
                 android:onClick="onClickFinish"
                 android:padding="7dp"
-                android:text="Đồng ý"
-                android:textColor="#ffffff" />
+                android:text="ĐỒNG Ý" />
         </LinearLayout>
     </RelativeLayout>
 

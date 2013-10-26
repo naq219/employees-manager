@@ -46,12 +46,7 @@
 
                 <ImageView
                    android:id="@+id/btnCalendar_hanhchinh"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerVertical="true"
-                    android:src="@android:drawable/ic_menu_today" />
+                      style="@style/img_calendar"/>
             </RelativeLayout>
 
             <TextView

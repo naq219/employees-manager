@@ -5,6 +5,7 @@ import haivu.qlnv.adapter.MenuListviewAdapter;
 import haivu.qlnv.database.DbSupport;
 import haivu.qlnv.detail.HcDayly;
 import haivu.qlnv.detail.NVDayly;
+import haivu.qlnv.object.Empl;
 import haivu.qlnv.task.TaskType;
 import haivu.qlnv.task.TaskUser1;
 import haivu.qlnv.utils.DbTable;
@@ -41,11 +42,13 @@ public class HomeActivity extends MainActivity implements OnItemClickListener, M
 	AllAdapter allAdapter = null;
 	ArrayList<BaseObject> curData;
 	HashMap<Integer, ArrayList<BaseObject>> hmData;
+	ArrayList<BaseObject> dataGrouped=new ArrayList<BaseObject>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		init();
+		startActivity(new Intent(mct, Alarm.class));
 	}
 
 	@Override
@@ -118,7 +121,7 @@ public class HomeActivity extends MainActivity implements OnItemClickListener, M
 		switch (curentGroup) {
 		case NHOM_HANH_CHINH:
 			Sdata.hcDayly = curData;
-			Sdata.hcDayly_dataline = curData.get(position);
+			Sdata.hcDayly_dataline = dataGrouped.get(position);
 			startActivity(new Intent(mct, HcDayly.class));
 			break;
 		case NHOM_HOP_DONG:
@@ -127,7 +130,7 @@ public class HomeActivity extends MainActivity implements OnItemClickListener, M
 		case NHOM_LAP_DAT:
 		case NHOM_THUC_TAP:
 			Sdata.hcDayly = curData;
-			Sdata.hcDayly_dataline = curData.get(position);
+			Sdata.hcDayly_dataline = dataGrouped.get(position);
 			startActivity(new Intent(mct, NVDayly.class));
 
 		default:
@@ -226,22 +229,66 @@ public class HomeActivity extends MainActivity implements OnItemClickListener, M
 		
 
 	private void updateLvContent(ArrayList<BaseObject> datare) {
-		ArrayList<BaseObject> da=new ArrayList<BaseObject>();
+		
 		
 		if(datare!=null){
 			if(datare.size()>0){
-				da=datare;
+				//da=datare;
+				int group=10;
+				try {
+					group=Integer.parseInt(datare.get(0).get(Empl.GROUP));
+					
+				} catch (Exception e) {
+					
+				}
+				
+				if(group==NHOM_HANH_CHINH){
+					dataGrouped=toGroup(datare,Empl.START_DATE);
+				}
+				else dataGrouped=toGroup(datare,Empl.NAME);
 			}
 		}
 		
+	
+		
 
-		allAdapter.SetItems(da);
+		allAdapter.SetItems(dataGrouped);
 		allAdapter.notifyDataSetChanged();
 		lvContent.setAdapter(allAdapter);
-		lvContent.setOnItemLongClickListener(Mutils.onLongClickListView(mct, curData));
+		lvContent.setOnItemLongClickListener(Mutils.onLongClickListView(mct, dataGrouped));
 
 	}
 	
+	private ArrayList<BaseObject> toGroup(ArrayList<BaseObject> datare,String key) {
+		ArrayList<BaseObject> da=new ArrayList<BaseObject>();
+		Boolean[] check=new Boolean[datare.size()];
+		for (int i = 0; i < check.length; i++) {
+			check[i]=false;
+		}
+		
+		for (int i = 0; i < datare.size(); i++) {
+			if(!check[i]) {
+				int count=1;
+				BaseObject oj=datare.get(i);
+				for (int j = i+1; j < datare.size(); j++) {
+					if(oj.get(key).equalsIgnoreCase(datare.get(j).get(key))){
+						count++;
+						check[j]=true;
+						
+					}
+				}
+				
+				oj.set(Empl.COUNT_SAME, count);
+				da.add(oj);
+			}
+			
+				
+			
+		}
+		
+		return da;
+	}
+
 	@Override
 	public void onSuccess(int taskType, ArrayList<?> list, String msg) {
 		super.onSuccess(taskType, list, msg);

@@ -1,237 +1,234 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/my_bg"
     android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/background"
-        android:gravity="center_horizontal"
-        android:paddingBottom="10dp"
-        android:paddingTop="10dp"
-        android:text="THÊM NV HÀNH CHÍNH"
-        android:textColor="@android:color/white"
-        android:textStyle="bold" />
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:scaleType="center"
+        android:src="@drawable/bg" />
 
-    <ScrollView
-        android:id="@+id/scrollView1"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="10dp" >
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/title"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical" >
+            android:layout_height="wrap_content"
+            android:background="@color/background"
+            android:gravity="center_horizontal"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:text="THÊM NV HÀNH CHÍNH"
+            android:textColor="@android:color/white"
+            android:textStyle="bold" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/list_item_bg"
-                android:padding="10dp" >
-
-                <TextView
-                    android:id="@+id/tvCalendar_hanhchinh"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:layout_toLeftOf="@+id/btnCalendar_hanhchinh"
-                    android:gravity="center_horizontal"
-                    android:text="Chọn ngày" />
-
-                <ImageView
-                    android:id="@+id/btnCalendar_hanhchinh"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerVertical="true"
-                    android:src="@android:drawable/ic_menu_today" />
-            </RelativeLayout>
-
-            <RadioGroup
-                android:id="@+id/radioGroup1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/list_item_bg"
-                android:orientation="horizontal" >
-
-                <RadioButton
-                    android:id="@+id/radSang"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:checked="true"
-                    android:text="@string/morning" />
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/background" />
-
-                <RadioButton
-                    android:id="@+id/radChieu"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/afternoon" />
-            </RadioGroup>
+        <ScrollView
+            android:id="@+id/scrollView1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp" >
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/list_item_bg" >
+                android:layout_height="match_parent"
+                android:orientation="vertical" >
 
                 <RelativeLayout
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:background="@drawable/list_item_bg"
                     android:padding="10dp" >
 
-                    <ImageView
-                        android:id="@+id/btnBeginTime_hc"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:src="@android:drawable/ic_menu_recent_history" />
-
                     <TextView
-                        android:id="@+id/tvBeginTime_hc"
+                        android:id="@+id/tvCalendar_hanhchinh"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
-                        android:layout_toLeftOf="@+id/btnBeginTime_hc"
-                        android:gravity="center"
-                        android:text="@string/from" />
-                </RelativeLayout>
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/background" />
-
-                <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:padding="10dp" >
+                        android:layout_toLeftOf="@+id/btnCalendar_hanhchinh"
+                        android:gravity="center_horizontal"
+                        android:text="Chọn ngày" />
 
                     <ImageView
-                        android:id="@+id/btnEndTime_hc"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/btnCalendar_hanhchinh"
+                        style="@style/img_calendar" />
+                </RelativeLayout>
+
+                <RadioGroup
+                    android:id="@+id/radioGroup1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/list_item_bg"
+                    android:orientation="horizontal" >
+
+                    <RadioButton
+                        android:id="@+id/radSang"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:src="@android:drawable/ic_menu_recent_history" />
+                        android:layout_weight="1"
+                        android:checked="true"
+                        android:text="@string/morning" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/background" />
+
+                    <RadioButton
+                        android:id="@+id/radChieu"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/afternoon" />
+                </RadioGroup>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/list_item_bg" >
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="10dp" >
+
+                        <ImageView
+                            android:id="@+id/btnBeginTime_hc"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:src="@android:drawable/ic_menu_recent_history" />
+
+                        <TextView
+                            android:id="@+id/tvBeginTime_hc"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_centerVertical="true"
+                            android:layout_toLeftOf="@+id/btnBeginTime_hc"
+                            android:gravity="center"
+                            android:text="@string/from" />
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/background" />
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="10dp" >
+
+                        <ImageView
+                            android:id="@+id/btnEndTime_hc"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:src="@android:drawable/ic_menu_recent_history" />
+
+                        <TextView
+                            android:id="@+id/tvEndTime_hc"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_centerVertical="true"
+                            android:layout_toLeftOf="@+id/btnEndTime_hc"
+                            android:gravity="center"
+                            android:text="@string/to" />
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/edtInsertWork_hc"
+                    style="@style/ed"
+                    android:layout_marginTop="10dp"
+                    android:ems="10"
+                    android:hint="@string/content_work"
+                    android:lines="4" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/list_item_bg"
+                    android:padding="10dp" >
 
                     <TextView
-                        android:id="@+id/tvEndTime_hc"
+                        android:id="@+id/textView1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
-                        android:layout_toLeftOf="@+id/btnEndTime_hc"
-                        android:gravity="center"
-                        android:text="@string/to" />
+                        android:text="@string/before" />
+
+                    <Spinner
+                        android:id="@+id/spnNhactruoc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/textView1"
+                        android:gravity="center" />
                 </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/repeate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/list_item_bg"
+                    android:padding="10dp" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:text="@string/repeat" />
+
+                    <TextView
+                        android:id="@+id/tvLaplai"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/textView2"
+                        android:text="Chọn ngày lặp lại" />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp" >
+
+                    <Button
+                        android:id="@+id/btnLuuVaThem_hc"
+                        style="@style/btn"
+                        android:layout_width="0dp"
+                        android:layout_marginRight="1dp"
+                        android:layout_weight="1"
+                        android:text="@string/save_and_more" />
+
+                    <Button
+                        android:id="@+id/btnLuu_hc"
+                        style="@style/btn"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:text="@string/save" />
+                </LinearLayout>
             </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
 
-            <EditText
-                android:id="@+id/edtInsertWork_hc"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="@string/content_work"
-                android:lines="4" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/list_item_bg"
-                android:padding="10dp" >
-
-                <TextView
-                    android:id="@+id/textView1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:text="@string/before" />
-
-                <Spinner
-                    android:id="@+id/spnNhactruoc"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_toRightOf="@+id/textView1"
-                    android:gravity="center" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:id="@+id/repeate"
-                android:background="@drawable/list_item_bg"
-                android:padding="10dp" >
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:text="@string/repeat" />
-
-                <TextView
-                    android:id="@+id/tvLaplai"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_toRightOf="@+id/textView2"
-                    android:text="Chọn ngày lặp lại" />
-            </RelativeLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp" >
-
-                <Button
-                    android:id="@+id/btnLuuVaThem_hc"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@color/background"
-                    android:text="@string/save_and_more"
-                    android:textColor="@android:color/white"
-                    android:textStyle="bold" />
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:background="@android:color/white" />
-
-                <Button
-                    android:id="@+id/btnLuu_hc"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@color/background"
-                    android:text="@string/save"
-                    android:textColor="@android:color/white"
-                    android:textStyle="bold" />
-            </LinearLayout>
-        </LinearLayout>
-    </ScrollView>
-
-</LinearLayout>
+</RelativeLayout>

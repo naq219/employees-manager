@@ -1,257 +1,255 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-     android:background="@color/my_bg"
     android:layout_height="match_parent"
+    android:background="@color/my_bg"
     android:orientation="vertical" >
 
-    <EditText
-        android:id="@+id/edtInsertName_nv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="@color/background"
-        android:ems="10"
-        android:gravity="center_horizontal"
-        android:hint="Tên Nhân Viên Lắp Đặt"
-        android:padding="10dp"
-        android:textColor="#ffffff" />
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:scaleType="center"
+        android:src="@drawable/bg" />
 
-    <ScrollView
-        android:id="@+id/scrollView1"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="10dp" >
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
 
-        <LinearLayout
+        <EditText
+            android:id="@+id/edtInsertName_nv"
+            style="@style/ed"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical" >
+            android:layout_height="wrap_content"
+            android:background="@color/background"
+            android:ems="10"
+            android:gravity="center_horizontal"
+            android:hint="Tên Nhân Viên Lắp Đặt"
+            android:padding="10dp"
+            android:textColor="#ffffff"
+            android:textColorHint="#e0e0e0" />
+
+        <ScrollView
+            android:id="@+id/scrollView1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp" >
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/list_item_bg"
-                android:orientation="horizontal" >
+                android:layout_height="match_parent"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/list_item_bg"
+                    android:orientation="horizontal" >
+
+                    <RelativeLayout
+                        android:id="@+id/btn_start_date"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="10dp" >
+
+                        <TextView
+                            android:id="@+id/tv_start_date"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_marginTop="5dp"
+                            android:text="Bắt Đầu"
+                            android:textSize="18sp" />
+
+                        <ImageView
+                            style="@style/img_calendar"
+                            android:layout_alignParentRight="true" />
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/background" />
+
+                    <RelativeLayout
+                        android:id="@+id/lay_end_date"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="10dp" >
+
+                        <TextView
+                            android:id="@+id/tv_end_date"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_marginTop="5dp"
+                            android:text="Kết Thúc"
+                            android:textSize="18sp" />
+
+                        <ImageView
+                            style="@style/img_calendar"
+                            android:layout_alignParentRight="true" />
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/ed_title_content"
+                    style="@style/ed"
+                    android:layout_marginTop="10dp"
+                    android:ems="10"
+                    android:hint="Nhập tên Công Việc"
+                    android:lines="2"
+                    android:paddingLeft="10dp" />
+
+                <RadioGroup
+                    android:id="@+id/radioGroup1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/list_item_bg"
+                    android:orientation="horizontal" >
+
+                    <RadioButton
+                        android:id="@+id/radMoreday"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:checked="true"
+                        android:onClick="Onclickmoreday"
+                        android:text="Nhiều Ngày" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/background" />
+
+                    <RadioButton
+                        android:id="@+id/radOneDay"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:onClick="Onclickoneday"
+                        android:text="Từng Ngày" />
+                </RadioGroup>
+
+                <LinearLayout
+                    android:id="@+id/btnBeginTime_nv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/list_item_bg" >
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="10dp" >
+
+                        <ImageView
+                            android:id="@+id/btnBeginTime_nv1"
+                            style="@style/img_calendar"
+                            android:layout_alignParentRight="true" />
+
+                        <TextView
+                            android:id="@+id/tv_start_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_centerVertical="true"
+                            android:layout_toLeftOf="@+id/btnBeginTime_nv1"
+                            android:text="Bắt Đầu" />
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/background" />
+
+                    <RelativeLayout
+                        android:id="@+id/btnEndTime_nv"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="10dp" >
+
+                        <ImageView
+                            android:id="@+id/btnEndTime_nv11"
+                            style="@style/img_calendar"
+                            android:layout_alignParentRight="true" />
+
+                        <TextView
+                            android:id="@+id/tv_end_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_centerVertical="true"
+                            android:layout_toLeftOf="@+id/btnEndTime_nv11"
+                            android:text="Kết Thúc" />
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/ed_content"
+                    style="@style/ed"
+                    android:layout_marginTop="10dp"
+                    android:ems="10"
+                    android:hint="Nhập nội Dung"
+                    android:lines="4" />
 
                 <RelativeLayout
-                    android:id="@+id/btn_start_date"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/list_item_bg"
                     android:padding="10dp" >
 
                     <TextView
-                        android:id="@+id/tv_start_date"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:layout_marginTop="5dp"
-                        android:text="Bắt Đầu"
-                        android:textSize="18sp" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:src="@android:drawable/ic_menu_today" />
-                </RelativeLayout>
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/background" />
-
-                <RelativeLayout
-                    android:id="@+id/lay_end_date"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:padding="10dp" >
-
-                    <TextView
-                        android:id="@+id/tv_end_date"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:layout_marginTop="5dp"
-                        android:text="Kết Thúc"
-                        android:textSize="18sp" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:src="@android:drawable/ic_menu_today" />
-                </RelativeLayout>
-            </LinearLayout>
-
-            <EditText
-                android:id="@+id/ed_title_content"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:ems="10"
-                android:hint="Nhập tên Công Việc"
-                android:lines="1"
-                android:paddingLeft="10dp" />
-
-            <RadioGroup
-                android:id="@+id/radioGroup1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/list_item_bg"
-                android:orientation="horizontal" >
-
-                <RadioButton
-                    android:id="@+id/radMoreday"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:checked="true"
-                    android:onClick="Onclickmoreday"
-                    android:text="Nhiều Ngày" />
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/background" />
-
-                <RadioButton
-                    android:id="@+id/radOneDay"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:onClick="Onclickoneday"
-                    android:text="Từng Ngày" />
-            </RadioGroup>
-
-            <LinearLayout
-                android:id="@+id/btnBeginTime_nv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/list_item_bg" >
-
-                <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:padding="10dp" >
-
-                    <ImageView
-                        android:id="@+id/btnBeginTime_nv1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:src="@android:drawable/ic_menu_today" />
-
-                    <TextView
-                        android:id="@+id/tv_start_time"
+                        android:id="@+id/textView1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
-                        android:layout_toLeftOf="@+id/btnBeginTime_nv1"
-                        android:text="Bắt Đầu" />
-                </RelativeLayout>
+                        android:text="Nhắc Nhở" />
 
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/background" />
-
-                <RelativeLayout
-                    android:id="@+id/btnEndTime_nv"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:padding="10dp" >
-
-                    <ImageView
-                        android:id="@+id/btnEndTime_nv11"
+                    <Spinner
+                        android:id="@+id/spnNhactruocNV"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:src="@android:drawable/ic_menu_today" />
-
-                    <TextView
-                        android:id="@+id/tv_end_time"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
-                        android:layout_toLeftOf="@+id/btnEndTime_nv11"
-                        android:text="Kết Thúc" />
+                        android:layout_toRightOf="@+id/textView1" />
                 </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp" >
+
+                    <Button
+                        android:id="@+id/btnLuuVaThem_nv"
+                        style="@style/btn"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:onClick="onClickSaveAndNew"
+                        android:text="LƯU &amp; THÊM" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@android:color/white" />
+
+                    <Button
+                        android:id="@+id/btnLuu_nv"
+                        style="@style/btn"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:onClick="OnclickinsertNV"
+                        android:text="LƯU" />
+                </LinearLayout>
             </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
 
-            <EditText
-                android:id="@+id/ed_content"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="Nhập nội Dung"
-                android:lines="4" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/list_item_bg"
-                android:padding="10dp" >
-
-                <TextView
-                    android:id="@+id/textView1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:text="Nhắc Nhở" />
-
-                <Spinner
-                    android:id="@+id/spnNhactruocNV"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_toRightOf="@+id/textView1" />
-            </RelativeLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp" >
-
-                <Button
-                    android:id="@+id/btnLuuVaThem_nv"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@color/background"
-                    android:onClick="onClickSaveAndNew"
-                    android:text="Lưu &amp; Thêm"
-                    android:textColor="@android:color/white"
-                    android:textStyle="bold" />
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:background="@android:color/white" />
-
-                <Button
-                    android:id="@+id/btnLuu_nv"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@color/background"
-                    android:onClick="OnclickinsertNV"
-                    android:text="Lưu"
-                    android:textColor="@android:color/white"
-                    android:textStyle="bold" />
-            </LinearLayout>
-        </LinearLayout>
-    </ScrollView>
-
-</LinearLayout>
+</RelativeLayout>

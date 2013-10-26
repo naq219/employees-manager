@@ -49,8 +49,34 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">#ffffff</item>
-         <item name="android:textSize">18sp</item>
-          <item name="android:textStyle">bold</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="img_calendar">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:src">@drawable/calendar</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_alignParentTop">true</item>
+        <item name="android:layout_centerVertical">true</item>
+    </style>
+
+    <style name="my_bg">
+        <item name="android:background">#F2ffffff</item>
+    </style>
+
+    <style name="ed" parent="my_bg">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="btn">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/btn_rounded_blue</item>
+        <item name="android:textColor">#ffffff</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
 </resources>

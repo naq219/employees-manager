@@ -16,9 +16,12 @@ public class Alarm extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_alarm);
 
-		((TextView) findViewById(R.id.content)).setText(Sdata.alarm_oj.get(Empl.CONTENT));
-		((TextView) findViewById(R.id.date)).setText(Sdata.alarm_oj.get(Empl.START_DATE));
-		((TextView) findViewById(R.id.time)).setText(Sdata.alarm_oj.get(Empl.START_TIME) + "  -  " + Sdata.alarm_oj.get(Empl.END_TIME));
+		if(Sdata.alarm_oj!=null){
+			((TextView) findViewById(R.id.content)).setText(Sdata.alarm_oj.get(Empl.CONTENT));
+			((TextView) findViewById(R.id.date)).setText(Sdata.alarm_oj.get(Empl.START_DATE));
+			((TextView) findViewById(R.id.time)).setText(Sdata.alarm_oj.get(Empl.START_TIME) + "  -  " + Sdata.alarm_oj.get(Empl.END_TIME));
+			
+		}
 
 
 	}

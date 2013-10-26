@@ -5,6 +5,10 @@
     android:layout_height="match_parent"
     android:background="#ffffff"
     tools:context=".MainActivity" >
+    <ImageView android:layout_width="fill_parent"
+        android:src="@drawable/bg"
+        android:scaleType="center"
+        android:layout_height="fill_parent"/>
 
     <RelativeLayout
         android:id="@+id/linearLayout1"
@@ -102,8 +106,8 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/linearLayout1"
         android:layout_marginBottom="5dp"
-        android:layout_marginLeft="1dp"
-        android:layout_marginRight="1dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
         android:layout_marginTop="10dp"
         android:divider="#00ffffff"
         android:dividerHeight="5dp"
