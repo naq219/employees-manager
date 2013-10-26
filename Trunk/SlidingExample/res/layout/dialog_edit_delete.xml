@@ -3,7 +3,8 @@
     xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:background="#ffffff"
+    android:padding="7dp"
+    android:background="#ff000000"
     android:orientation="horizontal" >
 
     <Button

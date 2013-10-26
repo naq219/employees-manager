@@ -8,7 +8,6 @@ import haivu.qlnv.utils.Mutils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
 import android.content.Context;
 import android.view.LayoutInflater;

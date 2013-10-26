@@ -126,10 +126,10 @@ public class DialogUtils implements Mcon.Group {
 		return ls;
 	}
 
-	public static void confirmEditDelete(final Context context,  BaseObject oj) {
-		final String row_id=oj.get(Empl.ROW_ID);
-		Mlog.T("oj.get(Empl.ROW_ID)="+oj.get(Empl.ROW_ID));
-		final BaseObject oj1=oj;
+	public static void confirmEditDelete(final Context context, BaseObject oj) {
+		final String row_id = oj.get(Empl.ROW_ID);
+		Mlog.T("oj.get(Empl.ROW_ID)=" + oj.get(Empl.ROW_ID));
+		final BaseObject oj1 = oj;
 		final Dialog dl = new Dialog(context, android.R.style.Theme_Dialog);
 		dl.getWindow();
 		dl.setCanceledOnTouchOutside(false);
@@ -156,11 +156,11 @@ public class DialogUtils implements Mcon.Group {
 			@Override
 			public void onClick(View arg0) {
 
-				if (DbSupport.deleteRowInTable(DbTable.EMPL, Empl.ROW_ID, row_id)){
+				if (DbSupport.deleteRowInTable(DbTable.EMPL, Empl.ROW_ID, row_id)) {
 					Mutils.updateData();
 					Toast.makeText(context, "Xóa thành công!", Toast.LENGTH_SHORT).show();
-				}
-				else Toast.makeText(context, "Có lỗi xảy ra!", Toast.LENGTH_SHORT).show();
+				} else
+					Toast.makeText(context, "Có lỗi xảy ra!", Toast.LENGTH_SHORT).show();
 				dl.dismiss();
 
 			}

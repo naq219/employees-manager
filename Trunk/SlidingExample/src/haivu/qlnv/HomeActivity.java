@@ -17,12 +17,15 @@ import java.util.HashMap;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.PowerManager;
+import android.os.PowerManager.WakeLock;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 
 import com.telpoo.frame.object.BaseObject;
+import com.telpoo.frame.ui.BaseActivity;
 import com.telpoo.frame.utils.BUtils;
 import com.telpoo.frame.utils.Mlog;
 import com.telpoo.frame.utils.Utils;
@@ -31,7 +34,7 @@ public class HomeActivity extends MainActivity implements OnItemClickListener, M
 	OnClickListener clickListener;
 
 	int count_data = 0;
-	ArrayList<BaseObject> data;
+	//ArrayList<BaseObject> data;
 
 	ArrayList<BaseObject> dataHC;
 	AllAdapter allAdapter = null;
@@ -51,6 +54,12 @@ public class HomeActivity extends MainActivity implements OnItemClickListener, M
 	}
 
 	private void init() {
+		/*PowerManager pM = (PowerManager)getSystemService(getBaseContext().POWER_SERVICE);
+		WakeLock wl = pM.newWakeLock(PowerManager.FULL_WAKE_LOCK, "wakeLock");
+		wl.acquire();
+		Sdata.wakelock = wl;*/
+		
+		AlarmBroatcast.RegisterAlarmBroadcast(getApplicationContext());
 
 		Utils.saveStringSPR(Mcon.spr.GROUP, NHOM_HANH_CHINH + "", HomeActivity.this);
 		// init database
@@ -114,7 +123,7 @@ public class HomeActivity extends MainActivity implements OnItemClickListener, M
 				case R.id.btnAdd_menu:
 					DialogUtils.showDialogChoose(mct);
 					break;
-					
+
 				case R.id.btnSearch:
 					if (stt_search) {
 						edtSearch.setVisibility(View.GONE);
@@ -141,12 +150,11 @@ public class HomeActivity extends MainActivity implements OnItemClickListener, M
 		};
 	}
 
-
 	public void updateUI() {
 		showProgressDialog(mct);
-
-		data = DbSupport.getAllOfTable(DbTable.EMPL, Empl.keys_include_rowId);
-		hmData = Mutils.filterData(data);
+		Mutils.updateData();
+		//data = DbSupport.getAllOfTable(DbTable.EMPL, Empl.keys_include_rowId);
+		hmData = Sdata.hmData;//Mutils.filterData(data);
 
 		curData = hmData.get(curentGroup);
 		Sdata.hcDayly = curData;
@@ -164,9 +172,8 @@ public class HomeActivity extends MainActivity implements OnItemClickListener, M
 
 		tvTitle.setText(Mcon.nameGroup[curentGroup]);
 
+		AlarmBroatcast.setAlarm(hmData.get(NHOM_HANH_CHINH));
 		closeProgressDialog();
 	}
-	
-	
 
 }
