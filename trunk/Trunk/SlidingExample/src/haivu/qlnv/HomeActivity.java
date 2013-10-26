@@ -24,6 +24,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 
 import com.telpoo.frame.object.BaseObject;
 import com.telpoo.frame.utils.BUtils;
@@ -71,6 +72,8 @@ public class HomeActivity extends MainActivity implements OnItemClickListener, M
 		allAdapter = new AllAdapter(mct, R.layout.item_list_all, new ArrayList<BaseObject>(), curentGroup);
 
 		lvContent.setOnItemClickListener(this);
+		
+		
 
 		lv_menu.setOnItemClickListener(new OnItemClickListener() {
 
@@ -189,7 +192,7 @@ public class HomeActivity extends MainActivity implements OnItemClickListener, M
 	}
 
 	public void updateData() {
-		showProgressDialog(mct);
+		//showProgressDialog(mct);
 		
 		TaskUser1 taskUser1=new TaskUser1(model, TASK_UPDATE_DATA	, null, mct);
 		model.exeTask(null, taskUser1);
@@ -235,7 +238,7 @@ public class HomeActivity extends MainActivity implements OnItemClickListener, M
 		allAdapter.SetItems(da);
 		allAdapter.notifyDataSetChanged();
 		lvContent.setAdapter(allAdapter);
-		
+		lvContent.setOnItemLongClickListener(Mutils.onLongClickListView(mct, curData));
 
 	}
 	
