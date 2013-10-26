@@ -117,7 +117,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         ads:adSize="BANNER"
-        ads:adUnitId="a15237f9dde5b8e"
+        ads:adUnitId="a1526bec2aed0f7"
         ads:loadAdOnCreate="true"
         ads:testDevices="TEST_EMULATOR,TEST_DEVICE_ID_GOES_HERE"
         android:gravity="center_horizontal"

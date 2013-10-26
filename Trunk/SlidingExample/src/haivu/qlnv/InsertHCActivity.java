@@ -6,6 +6,8 @@ import haivu.qlnv.object.HcOj;
 import haivu.qlnv.task.TaskType;
 import haivu.qlnv.task.TaskUser1;
 import haivu.qlnv.utils.DbTable;
+import haivu.qlnv.utils.DialogUtils;
+import haivu.qlnv.utils.IListener;
 import haivu.qlnv.utils.Mutils;
 import haivu.qlnv.utils.Sdata;
 
@@ -44,8 +46,9 @@ import com.telpoo.frame.database.BaseDBSupport;
 import com.telpoo.frame.object.BaseObject;
 import com.telpoo.frame.ui.BaseActivity;
 import com.telpoo.frame.utils.Mlog;
+import com.telpoo.frame.utils.Utils;
 
-public class InsertHCActivity extends BaseActivity implements OnClickListener {
+public class InsertHCActivity extends BaseActivity implements OnClickListener, IListener {
 	public static BaseDBSupport db = null;
 	private Context mct = null;
 
@@ -62,8 +65,8 @@ public class InsertHCActivity extends BaseActivity implements OnClickListener {
 	String startDate;// yyyy-mm-dd
 	String startTime, endTime;
 	int morning = 1; // morning =1 , afternoon = 0;
-	boolean isSelected_startTime = false, isSelected_endTime = false;
-	
+	boolean isSelected_startTime = false, isSelected_endTime = false, isSelected_startDate = false;
+	ArrayList<String> dataRepeate = new ArrayList<String>();
 	RelativeLayout repeate;
 
 	// Naq219
@@ -76,7 +79,7 @@ public class InsertHCActivity extends BaseActivity implements OnClickListener {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-			overridePendingTransition(R.anim.trans_left_in, R.anim.trans_left_out);
+		overridePendingTransition(R.anim.trans_left_in, R.anim.trans_left_out);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_insert_hanhchinh);
 		calendar = Calendar.getInstance();
@@ -93,43 +96,45 @@ public class InsertHCActivity extends BaseActivity implements OnClickListener {
 		if (action == 1) // update
 		{
 			ojEdit = it.getExtras().getParcelable("boj");
-			title.setText("SỬA THÔNG TIN NV" );
+			title.setText("SỬA THÔNG TIN NV");
 			btnSaveAndMore.setText("Hủy");
 			btnSave.setText("Cập nhật");
-			
+
 			edtContent.setText(ojEdit.get(Empl.CONTENT));
-			
-			startTime=ojEdit.get(Empl.START_TIME);
+
+			startTime = ojEdit.get(Empl.START_TIME);
 			tvBegin_time.setText(startTime);
-			endTime=ojEdit.get(Empl.END_TIME);
+			endTime = ojEdit.get(Empl.END_TIME);
 			tvEnd_time.setText(endTime);
-			
-			startDate=ojEdit.get(Empl.START_DATE);
+
+			startDate = ojEdit.get(Empl.START_DATE);
 			tvCalendar_hanhChinh.setText(startDate);
-			
-			isSelected_endTime=true;
-			isSelected_startTime=true;
-			
+
+			isSelected_endTime = true;
+			isSelected_startTime = true;
+
 			try {
-				timeAlert=Integer.parseInt(ojEdit.get(Empl.ALERT));
-				
+				timeAlert = Integer.parseInt(ojEdit.get(Empl.ALERT));
+
 			} catch (Exception e) {
-				Mlog.E("=5645656=timeAlert=Integer.parseInt(ojEdit.get(Empl.ALERT));"+e);
+				Mlog.E("=5645656=timeAlert=Integer.parseInt(ojEdit.get(Empl.ALERT));" + e);
 			}
-			
-			if(timeAlert!=0){
-				spnReminder.setContentDescription(timeAlert+" Phút");
+
+			if (timeAlert != 0) {
+				spnReminder.setContentDescription(timeAlert + " Phút");
 			}
-			spnReminder.setContentDescription(timeAlert+" Phút");
-			if("1".equalsIgnoreCase(ojEdit.get(Empl.SESSION))) radChieu.setChecked(true);
-			else radSang.setChecked(true);
-			
+			spnReminder.setContentDescription(timeAlert + " Phút");
+			if ("1".equalsIgnoreCase(ojEdit.get(Empl.SESSION)))
+				radChieu.setChecked(true);
+			else
+				radSang.setChecked(true);
+
 		}
 
 	}
 
 	public void initView() {
-		repeate= (RelativeLayout) findViewById(R.id.repeate);
+		repeate = (RelativeLayout) findViewById(R.id.repeate);
 		btnBeginTime = (ImageView) findViewById(R.id.btnBeginTime_hc);
 
 		title = (TextView) findViewById(R.id.title);
@@ -170,9 +175,8 @@ public class InsertHCActivity extends BaseActivity implements OnClickListener {
 		startDate = calendar.get(Calendar.YEAR) + "-" + (calendar.get(Calendar.MONTH) + 1) + "-" + calendar.get(Calendar.DATE);
 		tvCalendar_hanhChinh.setText(Mutils.pasreDayOfWeek(calendar.get(Calendar.DAY_OF_WEEK)) + ": " + calendar.get(Calendar.DATE) + "/" + (calendar.get(Calendar.MONTH) + 1)
 				+ "/" + calendar.get(Calendar.YEAR));
-		
-		
-		//repeate.setOnClickListener(l);
+
+		repeate.setOnClickListener(this);
 	}
 
 	public void showTimePicker(final TextView tv) {
@@ -232,13 +236,6 @@ public class InsertHCActivity extends BaseActivity implements OnClickListener {
 		return "" + i;
 	}
 
-	public void showDialog() {
-		Dialog dlDay = new Dialog(this);
-		dlDay.requestWindowFeature(Window.FEATURE_NO_TITLE);
-		dlDay.setContentView(R.layout.dialog_day_of_week);
-		// dlDay.
-	}
-
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
@@ -260,6 +257,12 @@ public class InsertHCActivity extends BaseActivity implements OnClickListener {
 				exeSave(1);
 			else
 				finish();
+			break;
+
+		case R.id.repeate:
+
+			DialogUtils.repeateDay(mct, this, startDate);
+
 			break;
 		}
 	}
@@ -302,19 +305,41 @@ public class InsertHCActivity extends BaseActivity implements OnClickListener {
 		}
 	}
 
-	void insertDb(ArrayList<BaseObject> ojAdd) {
-		
-		for (String key : Empl.keys_include_rowId) {
-			Mlog.T(key+"=="+ojAdd.get(0).get(key));
+	void insertDb(ArrayList<BaseObject> ojAdd1) {
+		String key_start_date = Empl.START_DATE;
+		String vl = ojAdd1.get(0).get(key_start_date);
+		dataRepeate.add(vl);
+		ArrayList<BaseObject> ojAddloc = new ArrayList<BaseObject>();
+		// ojAddloc.add(ojAdd1.get(0));
+
+		// BaseObject[] ojAddloc=new BaseObject[dataRepeate.size()];
+		BaseObject temoj;
+
+		for (int i = 0; i < dataRepeate.size(); i++) {
+
+			temoj = new HcOj();
+			for (String key : Empl.keys) {
+				temoj.set(key, ojAdd1.get(0).get(key));
+			}
+			temoj.set(Empl.START_DATE, dataRepeate.get(i));
+			temoj.set(Empl.END_DATE, dataRepeate.get(i));
+
+			ojAddloc.add(temoj);
 		}
-		
+
+		for (BaseObject baseObject : ojAddloc) {
+			for (String key : Empl.keys) {
+				Mlog.T(key + "=" + baseObject.get(key));
+			}
+		}
+
 		boolean adddb;
 		if (action == 0)
-			adddb = DbSupport.addToTable(ojAdd, DbTable.EMPL, false, null);
-		else{
-			
-			adddb = DbSupport.update(ojAdd.get(0), DbTable.EMPL, Empl.ROW_ID);
-			TaskUser1 taskUser1=new TaskUser1(model, TaskType.TASK_UPDATE_DATA	, null, mct);
+			adddb = DbSupport.addToTable(ojAddloc, DbTable.EMPL, false, null);
+		else {
+
+			adddb = DbSupport.update(ojAdd1.get(0), DbTable.EMPL, Empl.ROW_ID);
+			TaskUser1 taskUser1 = new TaskUser1(model, TaskType.TASK_UPDATE_DATA, null, mct);
 			model.exeTask(null, taskUser1);
 
 		}
@@ -323,13 +348,22 @@ public class InsertHCActivity extends BaseActivity implements OnClickListener {
 		else
 			showToast("Thành công!");
 		ojAdd = new ArrayList<BaseObject>();
+		dataRepeate = new ArrayList<String>();
 	}
-	
+
 	@Override
 	public void onBackPressed() {
 		// TODO Auto-generated method stub
 		super.onBackPressed();
 		overridePendingTransition(R.anim.trans_right_in, R.anim.trans_right_out);
+	}
+
+	@Override
+	public void onChange(Object value, int where) {
+		dataRepeate = (ArrayList<String>) value;
+
+		showToast("sdsd" + dataRepeate.size());
+
 	}
 
 }

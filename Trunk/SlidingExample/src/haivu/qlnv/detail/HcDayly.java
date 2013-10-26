@@ -1,17 +1,11 @@
 package haivu.qlnv.detail;
 
-import haivu.qlnv.InsertHCActivity;
 import haivu.qlnv.R;
 import haivu.qlnv.layout.HcDaylyLayout;
 import haivu.qlnv.utils.DialogUtils;
 import haivu.qlnv.utils.IdialogDate;
 import haivu.qlnv.utils.Mutils;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-
-import com.telpoo.frame.object.BaseObject;
 
 public class HcDayly extends HcDaylyLayout {
 	
@@ -40,6 +34,8 @@ public class HcDayly extends HcDaylyLayout {
 		initData();
 		lv_sang.setOnItemClickListener(Mutils.onClickListView(mct, dataLvSang));
 		lv_chieu.setOnItemClickListener(Mutils.onClickListView(mct, dataLvChieu));
+		
+		
 	}
 
 	@Override

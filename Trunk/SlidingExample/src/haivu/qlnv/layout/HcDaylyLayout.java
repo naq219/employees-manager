@@ -54,7 +54,7 @@ public class HcDaylyLayout extends BaseActivity implements Mcon.Group {
 
 	}
 
-	protected void initData() {
+	public void initData() {
 		dataRoot = Sdata.hcDayly;
 		dataLine = Sdata.hcDayly_dataline;
 

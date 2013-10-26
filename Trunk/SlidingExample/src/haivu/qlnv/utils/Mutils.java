@@ -3,12 +3,17 @@ package haivu.qlnv.utils;
 import haivu.qlnv.AlarmBroatcast;
 import haivu.qlnv.HomeActivity;
 import haivu.qlnv.database.DbSupport;
+import haivu.qlnv.detail.HcDayly;
+import haivu.qlnv.detail.NVDayly;
 import haivu.qlnv.object.AdapterOj;
 import haivu.qlnv.object.Empl;
 import haivu.qlnv.object.HcOj;
 import haivu.qlnv.object.NvOj;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Locale;
 
@@ -18,8 +23,10 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.view.View;
+import android.view.View.OnLongClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
 
 import com.telpoo.frame.model.ModelListener;
@@ -56,7 +63,12 @@ public class Mutils implements Mcon.Group {
 		ArrayList<BaseObject> hd = new ArrayList<BaseObject>();
 
 		for (BaseObject baseObject : oj) {
-			int mgr = Integer.parseInt(baseObject.get(Empl.GROUP));
+			int mgr=100;
+			try {
+				 mgr = Integer.parseInt(baseObject.get(Empl.GROUP));
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
 			if (NHOM_HANH_CHINH == mgr)
 				hc.add(baseObject);
 			if (NHOM_HOP_DONG == mgr)
@@ -171,6 +183,20 @@ public class Mutils implements Mcon.Group {
 
 		return listener;
 	}
+	
+	public static OnItemLongClickListener onLongClickListView(final Context context, final ArrayList<BaseObject> dataLv) {
+		OnItemLongClickListener listener=new OnItemLongClickListener() {
+
+			@Override
+			public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+				DialogUtils.confirmEditDelete(context, dataLv.get(arg2));
+				return true;
+				
+			}
+		};
+
+		return listener;
+	}
 
 	public static void updateData() {
 		ArrayList<BaseObject> data = DbSupport.getAllOfTable(DbTable.EMPL, Empl.keys_include_rowId);
@@ -251,13 +277,105 @@ public class Mutils implements Mcon.Group {
 		newData = data.toLowerCase().replaceAll("[\\á\\à\\ả\\ã\\ạ\\â\\ấ\\ầ\\ẩ\\ẫ\\ậ\\ă\\ắ\\ằ\\ẳ\\ẵ\\ặ]", "a");
 		newData.replaceAll("[\\é\\è\\ẻ\\ẽ\\ẹ\\ê\\ế\\ề\\ể\\ễ\\ệ]", "e");
 		newData.replaceAll("[\\í\\ì\\ỉ\\ĩ\\ị]", "i");
-		newData.replaceAll("[\\ó\\ò\\ỏ\\õ\\ọ\\ơ\\ớ\\ờ\\ở\\ỡ\\ợ\\ô\\ố\\ồ\\ổ\\ỗ\\ộ]", "`");
-		newData.replaceAll("[\\í\\ì\\ỉ\\ĩ\\ị]", "i");
+		newData.replaceAll("[\\ó\\ò\\ỏ\\õ\\ọ\\ơ\\ớ\\ờ\\ở\\ỡ\\ợ\\ô\\ố\\ồ\\ổ\\ỗ\\ộ]", "o");
 		newData.replaceAll("[\\ú\\ù\\ủ\\ũ\\ụ\\ư\\ứ\\ừ\\ử\\ữ\\ự]", "u");
 		newData.replaceAll("[\\ý\\ỳ\\ỷ\\ỹ\\ỵ]", "y");
 
 		return newData;
 
+	}
+
+	public static ArrayList<String> getDayInWeek(Boolean[] checks, String start_date) {
+		ArrayList<String> dataRe = new ArrayList<String>();
+		Calendar cal = Calendar.getInstance();
+		cal.setTimeInMillis(System.currentTimeMillis());
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		try {
+			cal.setTime(sdf.parse(start_date));
+		} catch (ParseException e) {
+			Mlog.E("getDayInWeek =3678564=" + e);
+			return dataRe;
+		}
+
+		// cal.get(Calendar.MONDAY)
+		Mlog.T("getDayInWeek=" + cal.getTime());
+
+		cal.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+
+		if (checks[1]) {
+			cal.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+			dataRe.add(convertCalendar2String(cal));
+		}
+		if (checks[2]) {
+			cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+			dataRe.add(convertCalendar2String(cal));
+		}
+		if (checks[3]) {
+			cal.set(Calendar.DAY_OF_WEEK, Calendar.TUESDAY);
+			dataRe.add(convertCalendar2String(cal));
+		}
+		if (checks[4]) {
+			cal.set(Calendar.DAY_OF_WEEK, Calendar.WEDNESDAY);
+			dataRe.add(convertCalendar2String(cal));
+		}
+		if (checks[5]) {
+			cal.set(Calendar.DAY_OF_WEEK, Calendar.THURSDAY);
+			dataRe.add(convertCalendar2String(cal));
+		}
+		if (checks[6]) {
+			cal.set(Calendar.DAY_OF_WEEK, Calendar.FRIDAY);
+			dataRe.add(convertCalendar2String(cal));
+		}
+		if (checks[7]) {
+			cal.set(Calendar.DAY_OF_WEEK, Calendar.SATURDAY);
+			dataRe.add(convertCalendar2String(cal));
+		}
+		for (String string : dataRe) {
+			Mlog.T("getDayInWeek- all day=" + string);
+		}
+
+		return dataRe;
+
+	}
+
+	public static String convertCalendar2String(Calendar cal) {
+		String startDate = cal.get(Calendar.YEAR) + "-" + convertcaca(cal.get(Calendar.MONTH) + 1) + "-" + convertcaca(cal.get(Calendar.DAY_OF_MONTH));
+		return startDate;
+
+	}
+
+	private static String convertcaca(int i) {
+		if (i < 10) {
+			return "0" + i;
+		}
+		return "" + i;
+	}
+	
+	public static void hardUpdateUI(Context ct){
+		updateData();
+		
+		try {
+			((HomeActivity)ct).updateData();
+			return;
+		} catch (Exception e) {
+			
+		}
+		
+		try {
+			((HcDayly)ct).initData();
+			return;
+		} catch (Exception e) {
+			
+		}
+		
+		try {
+			((NVDayly)ct).initData();
+			return;
+		} catch (Exception e) {
+			
+		}
+		
+		
 	}
 
 }

@@ -1,58 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="10dp" >
+    android:layout_height="wrap_content"
+    android:background="@color/background"
+    android:orientation="vertical" >
 
-    <CheckBox
-        android:id="@+id/cbCN"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Chủ nhật" />
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:orientation="vertical" >
 
-    <CheckBox
-        android:id="@+id/cbT2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Thứ 2" />
+        <CheckBox
+            android:id="@+id/t1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Chủ nhật" />
 
-    <CheckBox
-        android:id="@+id/cbT3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Thứ 3" />
+        <CheckBox
+            android:id="@+id/t2"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Thứ 2" />
 
-    <CheckBox
-        android:id="@+id/cbT4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Thứ 4" />
+        <CheckBox
+            android:id="@+id/t3"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Thứ 3" />
 
-    <CheckBox
-        android:id="@+id/cbT5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Thứ 5" />
+        <CheckBox
+            android:id="@+id/t4"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Thứ 4" />
 
-    <CheckBox
-        android:id="@+id/cb6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Thứ 6" />
+        <CheckBox
+            android:id="@+id/t5"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Thứ 5" />
 
-    <CheckBox
-        android:id="@+id/cb7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Thứ 7" />
+        <CheckBox
+            android:id="@+id/t6"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Thứ 6" />
 
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/background"
-        android:text="Đồng ý"
-        android:textColor="@android:color/white" />
+        <CheckBox
+            android:id="@+id/t7"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Thứ 7" />
+
+        <Button
+            android:id="@+id/btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/background"
+            android:text="Đồng ý"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
 
 </LinearLayout>
