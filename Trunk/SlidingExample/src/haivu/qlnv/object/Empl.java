@@ -25,6 +25,7 @@ public class Empl extends BaseObject implements Mcon.Group {
 	public static String END_TIME = keys[9];
 	public static String TITLE_CONTENT = keys[10];
 	public static String ROW_ID = "rowid";
+	public static String COUNT_SAME = "count_same";
 	
 	
 	public static String KEY_SANG = "0";

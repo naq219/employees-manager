@@ -30,8 +30,8 @@
         <item>Nhóm hợp đồng</item>
     </string-array>
 
-    <string name="save">Lưu</string>
-    <string name="save_and_more">Lưu &amp; Thêm</string>
+    <string name="save">LƯU</string>
+    <string name="save_and_more">LƯU &amp; THÊM</string>
     <string name="repeat">Lặp lại: </string>
     <string name="before">Nhắc nhở trước: </string>
     <string name="content_work">Nội dung công việc</string>
@@ -46,8 +46,8 @@
     <string name="add_kd">Thêm nhân viên kinh doanh</string>
     <string name="add_kt">Thêm nhân viên kế toán</string>
     <string name="add_hd">Thêm nhân viên hợp đồng</string>
-    <string name="ok">Chấp nhận</string>
-    <string name="cancel">Hủy bỏ</string>
+    <string name="ok">CHẤP NHẬN</string>
+    <string name="cancel">HỦY BỎ</string>
     <string name="title_activity_hc_dayly">Nhân viên hành chính</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>

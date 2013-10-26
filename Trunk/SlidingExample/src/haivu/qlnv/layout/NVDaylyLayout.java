@@ -92,15 +92,6 @@ public class NVDaylyLayout extends BaseActivity implements Mcon.Group {
 
 			}
 			
-			if(dataLvnhieungay.size()==0){
-				lv_nhieungay.setVisibility(View.GONE);
-				
-			}
-			
-			if(dataLvtungngay.size()==0){
-				lv_tungngay.setVisibility(View.GONE);
-			}
-
 			adapterSang = new AllAdapter(mct, R.layout.item_list_all, dataLvnhieungay, NHOM_HANH_CHINH);
 			adapterChieu = new AllAdapter(mct, R.layout.item_list_all, dataLvtungngay, NHOM_HANH_CHINH);
 

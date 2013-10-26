@@ -63,26 +63,24 @@
                 android:orientation="horizontal" >
 
                 <Button
+                       style="@style/btn"
                     android:id="@+id/btnOK_dialog"
                     android:padding="5dp"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:layout_weight="1"
-                    android:background="@drawable/btn_backgound_selector"
                     android:text="@string/ok"
-                    android:textColor="@android:color/white" />
+                   />
 
                 <Button
+                       style="@style/btn"
                     android:id="@+id/btnCancel_dialog"
                     android:layout_width="0dp"
                     android:padding="5dp"
-                    android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:layout_weight="1"
-                    android:background="@drawable/btn_backgound_selector"
                     android:text="@string/cancel"
-                    android:textColor="@android:color/white" />
+                    />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

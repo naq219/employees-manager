@@ -41,7 +41,6 @@ public class HcDaylyLayout extends BaseActivity implements Mcon.Group {
 		mct = HcDaylyLayout.this;
 		setContentView(R.layout.hanhchinh_dayly);
 		initViewHcDaylyLayout();
-		
 
 	}
 
@@ -61,7 +60,7 @@ public class HcDaylyLayout extends BaseActivity implements Mcon.Group {
 		String keyDate = dataLine.get(Empl.START_DATE);
 		filterDate(keyDate);
 		tv_calendar.setText(dataLine.get(HcOj.START_DATE));
-		
+
 		showToast(dataLine.get(Empl.ROW_ID));
 	}
 
@@ -81,29 +80,18 @@ public class HcDaylyLayout extends BaseActivity implements Mcon.Group {
 				}
 
 			}
-			
-			if(dataLvSang.size()==0){
-				lv_sang.setVisibility(View.GONE);
-				
-			}
-			
-			if(dataLvChieu.size()==0){
-				lv_chieu.setVisibility(View.GONE);
-			}
 
 			adapterSang = new AllAdapter(mct, R.layout.item_list_all, dataLvSang, NHOM_HANH_CHINH);
 			adapterChieu = new AllAdapter(mct, R.layout.item_list_all, dataLvChieu, NHOM_HANH_CHINH);
 
 			lv_sang.setAdapter(adapterSang);
 			lv_chieu.setAdapter(adapterChieu);
-			
+
 			Mutils.setListViewHeightBasedOnChildren(lv_chieu);
 			Mutils.setListViewHeightBasedOnChildren(lv_sang);
 
 		}
 
 	}
-	
-	
 
 }

@@ -206,6 +206,16 @@ public class Mutils implements Mcon.Group {
 		Sdata.hcDayly = curData;
 		Sdata.hanhchinh = hmData.get(Mcon.Group.NHOM_HANH_CHINH);
 		AlarmBroatcast.setAlarm(Sdata.hanhchinh);
+		
+		ArrayList<BaseObject> hcCounted=new ArrayList<BaseObject>();
+		ArrayList<BaseObject> nvCounted=new ArrayList<BaseObject>();
+		//ArrayList<BaseObject> hcData=hmData.get(Mcon.Group.NHOM_HANH_CHINH);
+		
+		//ArrayList<BaseObject> nvData=hmData.get(Mcon.Group.nh);
+		
+		
+		
+		
 	}
 
 	public static void setListViewHeightBasedOnChildren(ListView listView) {

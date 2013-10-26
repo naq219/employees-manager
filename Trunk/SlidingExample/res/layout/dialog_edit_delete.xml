@@ -3,38 +3,37 @@
     xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:padding="7dp"
     android:background="#ff000000"
-    android:orientation="horizontal" >
+    android:orientation="horizontal"
+    android:padding="7dp" >
 
     <Button
         android:id="@+id/edit"
+        style="@style/btn"
         android:layout_width="70dp"
         android:layout_height="wrap_content"
-        android:background="@color/background"
         android:paddingBottom="7dp"
         android:paddingTop="7dp"
-        android:text="Sửa" />
+        android:text="SỬA" />
 
     <Button
         android:id="@+id/delete"
+        style="@style/btn"
         android:layout_width="70dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:background="@color/background"
         android:paddingBottom="7dp"
         android:paddingTop="7dp"
-        android:text="Xóa" />
+        android:text="XÓA" />
 
     <Button
         android:id="@+id/cancel"
-        android:layout_width="70dp
-        "
-        android:layout_height="wrap_content"
+        style="@style/btn"
+        android:layout_width="70dp"
         android:background="@color/background"
         android:paddingBottom="7dp"
         android:paddingTop="7dp"
-        android:text="Hủy" />
+        android:text="HỦY" />
 
 </LinearLayout>
