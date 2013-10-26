@@ -1,5 +1,6 @@
 package haivu.qlnv.utils;
 
+import haivu.qlnv.AlarmBroatcast;
 import haivu.qlnv.HomeActivity;
 import haivu.qlnv.database.DbSupport;
 import haivu.qlnv.object.AdapterOj;
@@ -10,13 +11,14 @@ import haivu.qlnv.object.NvOj;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import com.telpoo.frame.object.BaseObject;
@@ -170,9 +172,11 @@ public class Mutils implements Mcon.Group {
 	public static void updateData(){
 		ArrayList<BaseObject> data = DbSupport.getAllOfTable(DbTable.EMPL, Empl.keys_include_rowId);
 		HashMap<Integer, ArrayList<BaseObject>> hmData = Mutils.filterData(data);
-
+		Sdata.hmData = hmData;
 		ArrayList<BaseObject> curData = hmData.get(HomeActivity.curentGroup);
 		Sdata.hcDayly = curData;
+		Sdata.hanhchinh = hmData.get(Mcon.Group.NHOM_HANH_CHINH);
+		AlarmBroatcast.setAlarm(Sdata.hanhchinh);
 	}
 	
 	  public static void setListViewHeightBasedOnChildren(ListView listView) {
@@ -193,5 +197,33 @@ public class Mutils implements Mcon.Group {
           params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
           listView.setLayoutParams(params);*/
       }
+	  
+	  public static void generateNotification(Context context, String message, String title,int drawableIcon) {
+	        long when = System.currentTimeMillis();
+	        NotificationManager notificationManager = (NotificationManager)
+	                context.getSystemService(Context.NOTIFICATION_SERVICE);
+	        Notification notification = new Notification(drawableIcon, message, when);
+	        
+	        
+	        Intent notificationIntent = new Intent(context, HomeActivity.class);
+	      //  notificationIntent.setAction(HandyTrailGCM.OPEN_FRAGMENT_ACTION_INCOMMING_MESSAGE);
+	        // set intent so it does not start a new activity
+//	        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
+//	                Intent.FLAG_ACTIVITY_SINGLE_TOP);
+	        PendingIntent intent =
+	                PendingIntent.getActivity(context, 0, notificationIntent, 0);
+	        notification.setLatestEventInfo(context, title, message, intent);
+	        notification.flags |= Notification.FLAG_AUTO_CANCEL;
+	        
+	        // Play default notification sound
+	        notification.defaults |= Notification.DEFAULT_SOUND;
+	        
+	        //notification.sound = Uri.parse("android.resource://" + context.getPackageName() + "your_sound_file_name.mp3");
+	        
+	        // Vibrate if vibrate is enabled
+	        notification.defaults |= Notification.DEFAULT_VIBRATE;
+	        notificationManager.notify(0, notification);      
+
+	    }
 
 }

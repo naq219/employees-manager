@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="background">#0891d2</color>
+<!--     <color name="background">#0891d2</color> -->
+  <color name="background">#3B5998</color>
     <color name="background_selected">#32de6b</color>
     <color name="menu_backgroud_grey">#34393d</color>
     <color name="bg_layout_title">#0891d2</color>
@@ -33,4 +34,5 @@
     <color name="barDarkColor">#CECECE</color>
     <color name="barMeduimColor">#DFDEE0</color>
     <color name="barLightColor">#F2F2F2</color>
+    <color name="my_bg">#ffffff</color>
 </resources>
