@@ -14,5 +14,6 @@ public class Sdata {
 	public static HashMap<Integer, ArrayList<BaseObject>> hmData;
 	public static WakeLock wakelock;
 	public static BaseObject alarm_oj;
+	public static String key_search;
 
 }

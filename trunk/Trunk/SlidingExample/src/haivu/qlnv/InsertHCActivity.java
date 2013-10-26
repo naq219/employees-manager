@@ -3,6 +3,8 @@ package haivu.qlnv;
 import haivu.qlnv.database.DbSupport;
 import haivu.qlnv.object.Empl;
 import haivu.qlnv.object.HcOj;
+import haivu.qlnv.task.TaskType;
+import haivu.qlnv.task.TaskUser1;
 import haivu.qlnv.utils.DbTable;
 import haivu.qlnv.utils.Mutils;
 import haivu.qlnv.utils.Sdata;
@@ -32,6 +34,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioButton;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -60,6 +63,8 @@ public class InsertHCActivity extends BaseActivity implements OnClickListener {
 	String startTime, endTime;
 	int morning = 1; // morning =1 , afternoon = 0;
 	boolean isSelected_startTime = false, isSelected_endTime = false;
+	
+	RelativeLayout repeate;
 
 	// Naq219
 	ArrayList<BaseObject> ojAdd = new ArrayList<BaseObject>();
@@ -124,6 +129,7 @@ public class InsertHCActivity extends BaseActivity implements OnClickListener {
 	}
 
 	public void initView() {
+		repeate= (RelativeLayout) findViewById(R.id.repeate);
 		btnBeginTime = (ImageView) findViewById(R.id.btnBeginTime_hc);
 
 		title = (TextView) findViewById(R.id.title);
@@ -164,6 +170,9 @@ public class InsertHCActivity extends BaseActivity implements OnClickListener {
 		startDate = calendar.get(Calendar.YEAR) + "-" + (calendar.get(Calendar.MONTH) + 1) + "-" + calendar.get(Calendar.DATE);
 		tvCalendar_hanhChinh.setText(Mutils.pasreDayOfWeek(calendar.get(Calendar.DAY_OF_WEEK)) + ": " + calendar.get(Calendar.DATE) + "/" + (calendar.get(Calendar.MONTH) + 1)
 				+ "/" + calendar.get(Calendar.YEAR));
+		
+		
+		//repeate.setOnClickListener(l);
 	}
 
 	public void showTimePicker(final TextView tv) {
@@ -305,13 +314,14 @@ public class InsertHCActivity extends BaseActivity implements OnClickListener {
 		else{
 			
 			adddb = DbSupport.update(ojAdd.get(0), DbTable.EMPL, Empl.ROW_ID);
-			Mutils.updateData();
+			TaskUser1 taskUser1=new TaskUser1(model, TaskType.TASK_UPDATE_DATA	, null, mct);
+			model.exeTask(null, taskUser1);
 
 		}
 		if (!adddb)
 			showToast("Có lỗi xảy ra");
 		else
-			showToast("Thêm thành công!");
+			showToast("Thành công!");
 		ojAdd = new ArrayList<BaseObject>();
 	}
 	

@@ -66,7 +66,7 @@ public class AlarmBroatcast {
 		};
 
 		// register the alarm broadcast here
-		intent=new Intent("haivu.qlnv");
+		intent = new Intent("haivu.qlnv");
 		ct.registerReceiver(mReceiver, new IntentFilter("haivu.qlnv"));
 		pendingIntent = PendingIntent.getBroadcast(ct, 0, intent, 0);
 		alarmManager = (AlarmManager) (ct.getSystemService(Context.ALARM_SERVICE));
@@ -79,45 +79,42 @@ public class AlarmBroatcast {
 
 	public static void setAlarm(ArrayList<BaseObject> ojs) {
 		Mlog.D("setAlarm");
-		Long value = null;
-		BaseObject oj_alarm=new BaseObject();
+		Long value = Long.MAX_VALUE;
+		BaseObject oj_alarm = new BaseObject();
 
 		for (int i = 0; i < ojs.size(); i++) {
 			// Long cur = getCalendar(ojs.get(i));
 			BaseObject oj = ojs.get(i);
 			String start_date = oj.get(Empl.START_DATE);
 			String start_time = oj.get(Empl.START_TIME);
-			String time_alert= oj.get(Empl.ALERT);
-			int time_alertint=0;
+			String time_alert = oj.get(Empl.ALERT);
+			int time_alertint = 0;
 			try {
-				time_alertint= Integer.parseInt(time_alert);
+				time_alertint = Integer.parseInt(time_alert);
 			} catch (Exception e) {
-				// TODO: handle exception
+				Mlog.E("setAlarm =876990-=" + e);
 			}
+			if (time_alertint == 0)
+				return;
 			Mlog.D("start_date=" + start_date + "=start_time==" + start_time);
 
 			try {
 
-				// Calendar cal = Calendar.getInstance();
-				// cal.setTimeInMillis(System.currentTimeMillis());
-				// cal.set(Calendar.YEAR, 2013);
-				// cal.set(Calendar.MONTH, 9);
-				// cal.set(Calendar.DAY_OF_MONTH, 26);
-				// cal.set(Calendar.HOUR_OF_DAY, 14);
-				// cal.set(Calendar.MINUTE, 10);
-				// cal.set(Calendar.SECOND, 0);
 				Calendar cal = Calendar.getInstance();
 				cal.setTimeInMillis(System.currentTimeMillis());
 				Long systemtime = cal.getTimeInMillis();
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd.HH:mm");
 				cal.setTime(sdf.parse(start_date + "." + start_time));
 
-				Long cur = cal.getTimeInMillis()-time_alertint*60000;
+				Long cur = cal.getTimeInMillis() - time_alertint * 60000;
 				Mlog.T("so sanh=" + (cur - System.currentTimeMillis()));
 				if (System.currentTimeMillis() < cur) {
-					oj_alarm=ojs.get(i);
-					value = cur;
-					Mlog.T("miaj value=" + value + "cur=" + cur);
+					
+					if(value> cur){
+						value = cur;
+						oj_alarm = ojs.get(i);
+					}
+					
 				}
 			} catch (Exception e) {
 				Mlog.E("=3452=getCalendar" + e);
@@ -127,46 +124,47 @@ public class AlarmBroatcast {
 		}
 
 		if (value != null) {
-			//Mlog.T("so sanh tiep=" + (value - System.currentTimeMillis()));
+			// Mlog.T("so sanh tiep=" + (value - System.currentTimeMillis()));
 
-			if (value > System.currentTimeMillis()){
-//				intent.putExtra("larm_oj", "hehe");
-//				pendingIntent = PendingIntent.getBroadcast(ct, 0, intent, 0);
-				Sdata.alarm_oj=oj_alarm;
+			if (value > System.currentTimeMillis()) {
+				// intent.putExtra("larm_oj", "hehe");
+				// pendingIntent = PendingIntent.getBroadcast(ct, 0, intent, 0);
+				Sdata.alarm_oj = oj_alarm;
 				alarmManager.set(AlarmManager.RTC_WAKEUP, value, pendingIntent);
-				
-				Mlog.T("set rui");
+
+				Mlog.T("set rui:" + oj_alarm.get(Empl.START_TIME));
 			}
 		}
 
 	}
 
-//	public static Long getCalendar(BaseObject oj) {
-//
-//		String start_date = oj.get(Empl.START_DATE);
-//		String start_time = oj.get(Empl.START_TIME);
-//		Mlog.D("start_date=" + start_date + "=start_time==" + start_time);
-//
-//		try {
-//
-//			Calendar cal = Calendar.getInstance();
-//			cal.setTimeInMillis(System.currentTimeMillis());
-//			cal.set(Calendar.YEAR, 2013);
-//			cal.set(Calendar.MONTH, 9);
-//			cal.set(Calendar.DAY_OF_MONTH, 26);
-//			cal.set(Calendar.HOUR_OF_DAY, 14);
-//			cal.set(Calendar.MINUTE, 57);
-//			cal.set(Calendar.SECOND, 0);
-//			Mlog.T("so sanh=" + (cal.getTimeInMillis() - System.currentTimeMillis()));
-//			if (System.currentTimeMillis() < cal.getTimeInMillis())
-//				return cal.getTimeInMillis();
-//		} catch (Exception e) {
-//			Mlog.E("=3452=getCalendar" + e);
-//			e.printStackTrace();
-//		}
-//
-//		return null;
-//
-//	}
+	// public static Long getCalendar(BaseObject oj) {
+	//
+	// String start_date = oj.get(Empl.START_DATE);
+	// String start_time = oj.get(Empl.START_TIME);
+	// Mlog.D("start_date=" + start_date + "=start_time==" + start_time);
+	//
+	// try {
+	//
+	// Calendar cal = Calendar.getInstance();
+	// cal.setTimeInMillis(System.currentTimeMillis());
+	// cal.set(Calendar.YEAR, 2013);
+	// cal.set(Calendar.MONTH, 9);
+	// cal.set(Calendar.DAY_OF_MONTH, 26);
+	// cal.set(Calendar.HOUR_OF_DAY, 14);
+	// cal.set(Calendar.MINUTE, 57);
+	// cal.set(Calendar.SECOND, 0);
+	// Mlog.T("so sanh=" + (cal.getTimeInMillis() -
+	// System.currentTimeMillis()));
+	// if (System.currentTimeMillis() < cal.getTimeInMillis())
+	// return cal.getTimeInMillis();
+	// } catch (Exception e) {
+	// Mlog.E("=3452=getCalendar" + e);
+	// e.printStackTrace();
+	// }
+	//
+	// return null;
+	//
+	// }
 
 }

@@ -3,6 +3,10 @@
  */
 package haivu.qlnv.task;
 
+import haivu.qlnv.HomeActivity;
+import haivu.qlnv.utils.Mutils;
+import haivu.qlnv.utils.Sdata;
+
 import java.util.ArrayList;
 
 import android.content.Context;
@@ -29,9 +33,13 @@ public class TaskUser1 extends BaseTask implements TaskType {
 
 		switch (taskType) {
 
-		case TASK_GET_DATA:
+		case TASK_UPDATE_DATA:
+			Mutils.updateData();
+			return TASK_DONE;
 			
-			
+		case TASK_SEARCH:
+			dataReturn = Mutils.search(Sdata.hmData.get(HomeActivity.curentGroup), Sdata.key_search);
+			return TASK_DONE;
 
 		default:
 
