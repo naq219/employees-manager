@@ -38,6 +38,7 @@ public class TaskUser1 extends BaseTask implements TaskType {
 			return TASK_DONE;
 			
 		case TASK_SEARCH:
+			if(Sdata.hmData!=null&&Sdata.key_search!=null)
 			dataReturn = Mutils.search(Sdata.hmData.get(HomeActivity.curentGroup), Sdata.key_search);
 			return TASK_DONE;
 

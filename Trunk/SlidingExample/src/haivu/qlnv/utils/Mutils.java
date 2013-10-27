@@ -118,7 +118,7 @@ public class Mutils implements Mcon.Group {
 				tem.set(AdapterOj.ALERT, base.get(HcOj.ALERT));
 				tem.set(AdapterOj.CONTENT, base.get(HcOj.CONTENT));
 				tem.set(AdapterOj.COUNT, "0");
-				tem.set(AdapterOj.TIME, base.get(HcOj.START_DATE));
+				tem.set(AdapterOj.TIME, base.get(HcOj.START_TIME)+" - "+base.get(HcOj.END_TIME));
 				oj1.add(tem);
 
 			}
@@ -133,8 +133,8 @@ public class Mutils implements Mcon.Group {
 				BaseObject tem = new BaseObject();
 				tem.set(AdapterOj.ALERT, base.get(NvOj.ALERT));
 				tem.set(AdapterOj.TIME, base.get(NvOj.NAME));
-				tem.set(AdapterOj.COUNT, "0");
-				tem.set(AdapterOj.CONTENT, base.get(NvOj.START_DATE) + " - " + base.get(NvOj.END_DATE));
+				tem.set(AdapterOj.COUNT, base.get(Empl.COUNT_SAME));
+				tem.set(AdapterOj.CONTENT, base.get(NvOj.START_DATE) + " đến " + base.get(NvOj.END_DATE));
 				oj1.add(tem);
 
 			}
@@ -263,7 +263,7 @@ public class Mutils implements Mcon.Group {
 	public static ArrayList<BaseObject> search(ArrayList<BaseObject> ojs, String key) {
 		ArrayList<BaseObject> ojRe = new ArrayList<BaseObject>();
 		for (BaseObject baseObject : ojs) {
-			for (String key1 : Empl.keys) {
+			for (String key1 : Empl.keys_search) {
 				String ss = baseObject.get(key1);
 				if (compareString(ss, key))
 					ojRe.add(baseObject);
@@ -290,6 +290,7 @@ public class Mutils implements Mcon.Group {
 		newData.replaceAll("[\\ó\\ò\\ỏ\\õ\\ọ\\ơ\\ớ\\ờ\\ở\\ỡ\\ợ\\ô\\ố\\ồ\\ổ\\ỗ\\ộ]", "o");
 		newData.replaceAll("[\\ú\\ù\\ủ\\ũ\\ụ\\ư\\ứ\\ừ\\ử\\ữ\\ự]", "u");
 		newData.replaceAll("[\\ý\\ỳ\\ỷ\\ỹ\\ỵ]", "y");
+		//newData.replaceAll(HomeActivity.model, "o");
 
 		return newData;
 
@@ -388,10 +389,10 @@ public class Mutils implements Mcon.Group {
 		
 	}
 	
-	public static Calendar convertString2calendar(String start_date){
+	public static Calendar convertString2calendar(String start_date,String format){
 		Calendar cal = Calendar.getInstance();
 		cal.setTimeInMillis(System.currentTimeMillis());
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat sdf = new SimpleDateFormat(format);
 		try {
 			cal.setTime(sdf.parse(start_date));
 		} catch (ParseException e) {

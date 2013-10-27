@@ -10,7 +10,7 @@
         android:right="7dp"
         android:top="7dp" />
 
-    <corners android:radius="5dp" />
+    <corners android:radius="7dp" />
 
     <size
         android:height="60dp"

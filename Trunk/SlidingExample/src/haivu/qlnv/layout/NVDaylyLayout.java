@@ -38,7 +38,7 @@ public class NVDaylyLayout extends BaseActivity implements Mcon.Group {
 	protected IdialogDate idialogDate;
 	protected AllAdapter adapterSang;
 	protected AllAdapter adapterChieu;
-
+	public static Boolean isFromNVDayly=false;
 	@Override
 	protected void onCreate(Bundle arg0) {
 		super.onCreate(arg0);

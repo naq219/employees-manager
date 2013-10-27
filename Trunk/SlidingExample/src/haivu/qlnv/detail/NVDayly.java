@@ -8,12 +8,11 @@ import haivu.qlnv.utils.Mutils;
 import android.os.Bundle;
 
 public class NVDayly extends NVDaylyLayout {
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		overridePendingTransition(R.anim.trans_left_in, R.anim.trans_left_out);
-
 		root_calendar.setOnClickListener(DialogUtils.datePickerListener(idialogDate, mct));
 
 	}
@@ -21,6 +20,7 @@ public class NVDayly extends NVDaylyLayout {
 	@Override
 	protected void onResume() {
 		super.onResume();
+		isFromNVDayly=true;
 		initData();
 
 		lv_nhieungay.setOnItemClickListener(Mutils.onClickListView(mct, dataLvnhieungay,Empl.ROW_ID));
@@ -33,6 +33,12 @@ public class NVDayly extends NVDaylyLayout {
 		// TODO Auto-generated method stub
 		super.onBackPressed();
 		overridePendingTransition(R.anim.trans_right_in, R.anim.trans_right_out);
+	}
+	
+	@Override
+	protected void onPause() {
+		isFromNVDayly=false;
+		super.onPause();
 	}
 
 }

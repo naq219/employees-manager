@@ -76,7 +76,7 @@
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/btnSearch"
             android:layout_toRightOf="@+id/tvNumber_title"
-            android:background="@drawable/list_item_bg"
+            
             android:hint="Nhập tên tìm kiếm"
             android:padding="5dp"
             android:visibility="gone" />

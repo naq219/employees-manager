@@ -3,7 +3,9 @@ package haivu.qlnv.adapter;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import haivu.qlnv.HomeActivity;
 import haivu.qlnv.R;
+import haivu.qlnv.object.Empl;
 import haivu.qlnv.utils.Mcon;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -100,9 +102,18 @@ public class MenuListviewAdapter extends ArrayAdapter<String> {
 					 getGroup=Mcon.Group.NHOM_HANH_CHINH;
 					break;
 				}
+				int size=0;
 			if(hmData!=null){
-				int size=hmData.get(getGroup).size();
+				
+				if (getGroup == Mcon.Group.NHOM_HANH_CHINH) {
+				size=	HomeActivity.toGroup(hmData.get(getGroup), Empl.START_DATE).size();
+				} else
+					size=	HomeActivity.toGroup(hmData.get(getGroup), Empl.NAME).size();
+				
+				
 				viewHolder.tv_count.setText(size+"");
+				
+				
 			}
 				
 

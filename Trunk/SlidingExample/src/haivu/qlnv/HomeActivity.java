@@ -213,9 +213,7 @@ public class HomeActivity extends MainActivity implements OnItemClickListener, M
 		curData = hmData.get(curentGroup);
 		Sdata.hcDayly = curData;
 
-		count_data = curData.size();
-
-		tvNumber_title.setText(count_data + "");
+		
 
 		updateLvContent(curData);
 
@@ -256,6 +254,9 @@ public class HomeActivity extends MainActivity implements OnItemClickListener, M
 		}
 		else help.setVisibility(View.INVISIBLE);
 		
+		count_data = dataGrouped.size();
+		tvNumber_title.setText(count_data + "");
+		
 		allAdapter.SetItems(dataGrouped);
 		allAdapter.notifyDataSetChanged();
 		lvContent.setAdapter(allAdapter);
@@ -265,7 +266,7 @@ public class HomeActivity extends MainActivity implements OnItemClickListener, M
 
 	}
 
-	private ArrayList<BaseObject> toGroup(ArrayList<BaseObject> datare, String key) {
+	public static ArrayList<BaseObject> toGroup(ArrayList<BaseObject> datare, String key) {
 		ArrayList<BaseObject> da = new ArrayList<BaseObject>();
 		Boolean[] check = new Boolean[datare.size()];
 		for (int i = 0; i < check.length; i++) {
