@@ -2,6 +2,7 @@ package haivu.qlnv.detail;
 
 import haivu.qlnv.R;
 import haivu.qlnv.layout.NVDaylyLayout;
+import haivu.qlnv.object.Empl;
 import haivu.qlnv.utils.DialogUtils;
 import haivu.qlnv.utils.Mutils;
 import android.os.Bundle;
@@ -22,8 +23,8 @@ public class NVDayly extends NVDaylyLayout {
 		super.onResume();
 		initData();
 
-		lv_nhieungay.setOnItemClickListener(Mutils.onClickListView(mct, dataLvnhieungay));
-		lv_tungngay.setOnItemClickListener(Mutils.onClickListView(mct, dataLvtungngay));
+		lv_nhieungay.setOnItemClickListener(Mutils.onClickListView(mct, dataLvnhieungay,Empl.ROW_ID));
+		lv_tungngay.setOnItemClickListener(Mutils.onClickListView(mct, dataLvtungngay,Empl.ROW_ID));
 
 	}
 

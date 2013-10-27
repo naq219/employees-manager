@@ -61,7 +61,7 @@ public class HcDaylyLayout extends BaseActivity implements Mcon.Group {
 		filterDate(keyDate);
 		tv_calendar.setText(dataLine.get(HcOj.START_DATE));
 
-		showToast(dataLine.get(Empl.ROW_ID));
+		
 	}
 
 	protected void filterDate(String keyDate) {

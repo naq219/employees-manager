@@ -171,12 +171,12 @@ public class Mutils implements Mcon.Group {
 		ct.startActivity(it);
 	}
 
-	public static OnItemClickListener onClickListView(final Context context, final ArrayList<BaseObject> dataLv) {
+	public static OnItemClickListener onClickListView(final Context context, final ArrayList<BaseObject> dataLv,final String key) {
 		OnItemClickListener listener = new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-				DialogUtils.confirmEditDelete(context, dataLv.get(arg2));
+				DialogUtils.confirmEditDelete(context, dataLv.get(arg2),key);
 
 			}
 		};
@@ -184,12 +184,12 @@ public class Mutils implements Mcon.Group {
 		return listener;
 	}
 	
-	public static OnItemLongClickListener onLongClickListView(final Context context, final ArrayList<BaseObject> dataLv) {
+	public static OnItemLongClickListener onLongClickListView(final Context context, final ArrayList<BaseObject> dataLv,final String key) {
 		OnItemLongClickListener listener=new OnItemLongClickListener() {
 
 			@Override
 			public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-				DialogUtils.confirmEditDelete(context, dataLv.get(arg2));
+				DialogUtils.confirmEditDelete(context, dataLv.get(arg2),key);
 				return true;
 				
 			}
@@ -387,5 +387,20 @@ public class Mutils implements Mcon.Group {
 		
 		
 	}
+	
+	public static Calendar convertString2calendar(String start_date){
+		Calendar cal = Calendar.getInstance();
+		cal.setTimeInMillis(System.currentTimeMillis());
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		try {
+			cal.setTime(sdf.parse(start_date));
+		} catch (ParseException e) {
+			Mlog.E("getDayInWeek =3678564=" + e);
+			return null;
+		}
+		return cal;
+	}
+	
+
 
 }
