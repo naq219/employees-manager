@@ -1,6 +1,7 @@
 package haivu.qlnv.adapter;
 
 import haivu.qlnv.R;
+import haivu.qlnv.detail.NVDayly;
 import haivu.qlnv.object.AdapterOj;
 import haivu.qlnv.object.Empl;
 import haivu.qlnv.utils.Mcon;
@@ -88,27 +89,43 @@ public class AllAdapter extends ArrayAdapter<BaseObject> {
 
 		TextView content = (TextView) convertView1.findViewById(R.id.content);
 		content.setText(ok.get(AdapterOj.CONTENT));
-
+		
+		/*TextView count = (TextView) convertView1.findViewById(R.id.count);
+		count.setText(ok.get(AdapterOj.CONTENT));*/
+		
+		
+		
 		ImageView img = (ImageView) convertView1.findViewById(R.id.alarm);
 		img.setVisibility(View.INVISIBLE);
 		if (!"0".equalsIgnoreCase(ok.get(Empl.ALERT))) {
 			img.setVisibility(View.VISIBLE);
 		} else {
-			TextView count = (TextView) convertView1.findViewById(R.id.count);
-			String countdt = ok.get(AdapterOj.COUNT);
-			if (!"0".equalsIgnoreCase(countdt)){
-				
-				count.setText(countdt);
-				count.setVisibility(View.VISIBLE);
+			
+		}
+		Calendar cal;
+		if((Mcon.Group.NHOM_HANH_CHINH+"").equalsIgnoreCase(dataA.get(Empl.GROUP)))
+			cal=Mutils.convertString2calendar(dataA.get(Empl.START_DATE)+"."+dataA.get(Empl.START_TIME),"yyyy-MM-dd.HH:mm");
+		else {
+			
+			cal=Mutils.convertString2calendar(dataA.get(Empl.START_DATE),"yyyy-MM-dd");
+			if(!NVDayly.isFromNVDayly){
+			
+				TextView count = (TextView) convertView1.findViewById(R.id.count);
+				String countdt = ok.get(AdapterOj.COUNT);
+				if (!"0".equalsIgnoreCase(countdt)){
+					TextView mcount = (TextView) convertView1.findViewById(R.id.count);
+					mcount.setVisibility(View.VISIBLE);
+					mcount.setText(countdt);
+				}
 			}
+			
 		}
 		
-		Calendar cal=Mutils.convertString2calendar(dataA.get(Empl.START_DATE));
 		if(System.currentTimeMillis()-cal.getTimeInMillis()>0){
 			time.setPaintFlags(time.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 			content.setPaintFlags(time.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-			time.setTypeface(null, Typeface.ITALIC);
-			content.setTypeface(null, Typeface.ITALIC);
+//			time.setTypeface(null, Typeface.ITALIC);
+//			content.setTypeface(null, Typeface.ITALIC);
 
 		}
 

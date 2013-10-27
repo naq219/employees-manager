@@ -12,7 +12,7 @@ public class Empl extends BaseObject implements Mcon.Group {
 
 	public static String[] keys = { "name", "start_date", "end_date", "content", "alert", "manyday", "group1", "session", "start_time", "end_time" ,"title_content"};
 	public static String[] keys_include_rowId = { "name", "start_date", "end_date", "content", "alert", "manyday", "group1", "session", "start_time", "end_time" ,"title_content","rowid"};
-
+	public static String[] keys_search = { "name", "content" ,"title_content"};
 	public static String NAME = keys[0];
 	public static String START_DATE = keys[1];
 	public static String END_DATE = keys[2];
