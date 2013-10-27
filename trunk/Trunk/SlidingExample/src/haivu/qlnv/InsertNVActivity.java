@@ -7,6 +7,7 @@ import haivu.qlnv.task.TaskType;
 import haivu.qlnv.task.TaskUser1;
 import haivu.qlnv.utils.DbTable;
 import haivu.qlnv.utils.Mcon;
+import haivu.qlnv.utils.Mutils;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -47,7 +48,7 @@ public class InsertNVActivity extends BaseActivity implements OnClickListener, M
 	private EditText ed_title_content;
 	private EditText ed_content;
 	private Spinner spnReminder;
-	private boolean flag_start_date, flag_end_date, flag_start_time, flag_end_time;
+	//private boolean flag_start_date, flag_end_date, flag_start_time, flag_end_time;
 	private int group = 1;
 	private int action = 0;
 	BaseObject ojEdit = new BaseObject();
@@ -72,6 +73,10 @@ public class InsertNVActivity extends BaseActivity implements OnClickListener, M
 	private void initData() {
 		Intent it = getIntent();
 		action = it.getIntExtra("key", 0);
+		
+		
+		
+		
 		if (action == 1) {
 			ojEdit = it.getExtras().getParcelable("boj");
 			membername.setText(ojEdit.get(Empl.NAME));
@@ -81,7 +86,7 @@ public class InsertNVActivity extends BaseActivity implements OnClickListener, M
 			endtime.setText(ojEdit.get(Empl.END_TIME));
 			ed_title_content.setText(ojEdit.get(Empl.TITLE_CONTENT));
 			ed_content.setText(ojEdit.get(Empl.CONTENT));
-			flag_start_date = flag_end_date = flag_start_time = flag_end_time = true;
+			//flag_start_date = flag_end_date = flag_start_time = flag_end_time = true;
 			btnLuuVaThem_nv = (Button) findViewById(R.id.btnLuuVaThem_nv);
 			btnLuu_nv = (Button) findViewById(R.id.btnLuu_nv);
 			btnLuuVaThem_nv.setText("Hủy");
@@ -103,8 +108,21 @@ public class InsertNVActivity extends BaseActivity implements OnClickListener, M
 
 	private void initGroup() {
 		group = getIntent().getIntExtra("group", 10);
-		showToast(group + "");
 
+		Calendar cal=Calendar.getInstance();
+		String start_date="";
+		String end_date="";
+		
+		cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+		start_date=Mutils.convertCalendar2String(cal);
+		cal.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+		end_date=Mutils.convertCalendar2String(cal);
+		
+//		cal.set(Calendar.DAY_OF_MONTH, 1);
+//		String firstdayOfMonth=Mutils.convertCalendar2String(cal);
+//		cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+//		String enddayOfMonth=Mutils.convertCalendar2String(cal);
+		
 		switch (group) {
 		case NHOM_HOP_DONG:
 			membername.setHint("Tên nhân viên hợp đồng");
@@ -117,6 +135,7 @@ public class InsertNVActivity extends BaseActivity implements OnClickListener, M
 			break;
 		case NHOM_LAP_DAT:
 			membername.setHint("Tên nhân viên lắp đặt");
+			
 			break;
 		case NHOM_THUC_TAP:
 			membername.setHint("Tên nhân viên thực tập");
@@ -125,6 +144,11 @@ public class InsertNVActivity extends BaseActivity implements OnClickListener, M
 		default:
 			break;
 		}
+		
+		startdate.setText(start_date);
+		enddate.setText(end_date);
+		starttime.setText(start_date);
+		endtime.setText(end_date);
 
 	}
 
@@ -172,7 +196,7 @@ public class InsertNVActivity extends BaseActivity implements OnClickListener, M
 
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				flag_end_time = isChecked;
+				//flag_end_time = isChecked;
 
 			}
 		});
@@ -189,7 +213,7 @@ public class InsertNVActivity extends BaseActivity implements OnClickListener, M
 	public void Onclickoneday(View v) {
 		if (((RadioButton) v).isChecked()) {
 			RelativeLayout gr2 = (RelativeLayout) findViewById(R.id.btnEndTime_nv);
-			gr2.setVisibility(View.INVISIBLE);
+			gr2.setVisibility(View.GONE);
 		}
 	}
 
@@ -208,23 +232,23 @@ public class InsertNVActivity extends BaseActivity implements OnClickListener, M
 				case R.id.btn_start_date:
 					TextView tvstartdate1 = (TextView) findViewById(R.id.tv_start_date);
 					tvstartdate1.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
-					flag_start_date = true;
+					//flag_start_date = true;
 
 					break;
 				case R.id.lay_end_date:
 					TextView tvenddate1 = (TextView) findViewById(R.id.tv_end_date);
 					tvenddate1.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
-					flag_end_date = true;
+					//flag_end_date = true;
 					break;
 				case R.id.btnBeginTime_nv:
 					TextView tvstartdate2 = (TextView) findViewById(R.id.tv_start_time);
 					tvstartdate2.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
-					flag_start_time = true;
+					//flag_start_time = true;
 					break;
 				case R.id.btnEndTime_nv:
 					TextView tvenddate2 = (TextView) findViewById(R.id.tv_end_time);
 					tvenddate2.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
-					flag_end_time = true;
+					//flag_end_time = true;
 					break;
 				default:
 					break;
@@ -237,6 +261,7 @@ public class InsertNVActivity extends BaseActivity implements OnClickListener, M
 	public void OnclickinsertNV(View v) {
 
 		exeSave();
+		finish();
 	}
 
 	public void onClickSaveAndNew(View v) {
@@ -250,7 +275,13 @@ public class InsertNVActivity extends BaseActivity implements OnClickListener, M
 
 	private void exeSave() {
 
-		if (!flag_start_date || !flag_end_date || !flag_start_time || !flag_end_time || ed_content.getText().toString().length() == 0
+//		if (!flag_start_date || !flag_end_date || !flag_start_time || !flag_end_time || ed_content.getText().toString().length() == 0
+//				|| ed_title_content.getText().toString().length() == 0) {
+//			showToast("Cần phải nhập đầy đủ thông tin");
+//			return;
+//		}
+		
+		if ( ed_content.getText().toString().length() == 0
 				|| ed_title_content.getText().toString().length() == 0) {
 			showToast("Cần phải nhập đầy đủ thông tin");
 			return;

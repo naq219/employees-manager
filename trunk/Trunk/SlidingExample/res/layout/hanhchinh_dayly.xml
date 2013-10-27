@@ -3,8 +3,14 @@
     xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-     android:background="@color/my_bg"
+    android:background="@color/my_bg"
     tools:context=".MainActivity" >
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:scaleType="center"
+        android:src="@drawable/bg" />
 
     <RelativeLayout
         android:id="@+id/lay_calenda"
@@ -37,72 +43,129 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/lay_calenda"
-        android:layout_margin="10dp"
-        android:background="@drawable/list_item_bg"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/bg_corner"
         android:padding="5dp" >
 
         <TextView
             android:id="@+id/tv_calendar"
+            style="@style/text_label"
             android:layout_width="wrap_content"
-            android:textColor="#000000"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:gravity="center_horizontal"
-            android:text="Chọn ngày" />
+            android:text="Chọn ngày"
+            android:textColor="#ffffff" />
 
         <ImageView
             android:id="@+id/btnCalendar_hanhchinh"
-             style="@style/img_calendar"/>
+            style="@style/img_calendar" />
     </RelativeLayout>
 
+    <View
+        style="@style/form_f_w"
+        android:layout_height="5dp"
+        android:layout_above="@+id/tempbod"
+        android:background="@color/background" />
+
+    <View
+        style="@style/form_f_w"
+        android:layout_height="5dp"
+        android:layout_below="@+id/tempbod"
+        android:background="#ff00ff" />
+
     <LinearLayout
+        android:id="@+id/tempbod"
         style="@style/form_f_f"
         android:layout_below="@+id/root_calendar"
         android:orientation="vertical"
-        android:weightSum="4"
-         >
+        android:weightSum="4" >
 
         <TextView
             android:id="@+id/tv_sang"
             style="@style/form_f_w"
-            android:background="#0d3327"
+            android:background="@color/background"
             android:gravity="center"
+            android:paddingBottom="2dp"
+            android:paddingTop="2dp"
             android:text="Sáng"
-            android:textColor="#ffffff" />
+            android:textColor="#ffffff"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
-        <ListView
-            android:id="@+id/lv_sang"
-            android:layout_width="fill_parent"
+        <RelativeLayout
+            style="@style/form_f_w"
             android:layout_height="0dp"
             android:layout_weight="2" >
-        </ListView>
 
-        <TextView
-            style="@style/form_f_w"
-            android:background="#ffffff"
-            android:text="Sáng"
-            android:textColor="#ffffff" />
+            <ListView
+                android:id="@+id/lv_sang"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/bg_corner0"
+                android:cacheColorHint="@null"
+                android:divider="@android:color/transparent"
+                android:dividerHeight="10.0sp" >
+            </ListView>
+
+            <View
+                style="@style/form_f_w"
+                android:layout_height="5dp"
+                android:background="@color/background" />
+            <View
+                style="@style/form_f_w"
+                android:layout_height="5dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="11dp"
+                android:layout_marginRight="11dp"
+                android:background="@color/background" />
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/tv_chieu"
             style="@style/form_f_w"
-            android:background="#0d3327"
+            android:layout_marginLeft="11dp"
+            android:layout_marginRight="11dp"
+            android:background="@color/background"
             android:gravity="center"
+            android:paddingBottom="2dp"
+            android:paddingTop="2dp"
             android:text="Chiều"
-            android:textColor="#ffffff" />
+            android:textColor="#ffffff"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
-        <ListView
-            android:id="@+id/lv_chieu"
-            android:layout_width="fill_parent"
+        <RelativeLayout
+            style="@style/form_f_w"
             android:layout_height="0dp"
             android:layout_weight="2" >
-        </ListView>
 
-        <TextView
-            style="@style/form_f_w"
-            android:background="#ffffff"
-            android:text="Sáng"
-            android:textColor="#ffffff" />
+            <ListView
+                android:id="@+id/lv_chieu"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/bg_corner0"
+                android:cacheColorHint="@null"
+                android:divider="@android:color/transparent"
+                android:layout_marginBottom="3dp"
+                android:dividerHeight="10.0sp" >
+            </ListView>
+
+            <View
+                style="@style/form_f_w"
+                android:layout_height="5dp"
+                 android:layout_marginLeft="11dp"
+                android:layout_marginRight="11dp"
+                android:background="@color/background" />
+
+            
+        </RelativeLayout>
     </LinearLayout>
 
 </RelativeLayout>

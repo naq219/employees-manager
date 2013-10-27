@@ -21,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,6 +54,8 @@ public class MainActivity extends BaseFragmentActivity implements ModelListener,
 	ProgressDialog loadingProgress;
 	ListView lv_menu;
 	String[] arMenu;
+	RelativeLayout root;
+	RelativeLayout help;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +97,7 @@ public class MainActivity extends BaseFragmentActivity implements ModelListener,
 		arMenu = getResources().getStringArray(R.array.menu_list);
 		MenuListviewAdapter adapter = new MenuListviewAdapter(mct, R.layout.itemlist_menu, arMenu, null);
 		lv_menu.setAdapter(adapter);
+		help=(RelativeLayout) findViewById(R.id.help);
 
 	}
 
@@ -191,9 +195,8 @@ public class MainActivity extends BaseFragmentActivity implements ModelListener,
 	
 	@Override
 	public void onBackPressed() {
+		overridePendingTransition(R.anim.trans_right_in, R.anim.trans_right_out);
 		super.onBackPressed();
-		 overridePendingTransition(R.anim.trans_right_in, R.anim.trans_right_out);
-		   
 	}
 
 }

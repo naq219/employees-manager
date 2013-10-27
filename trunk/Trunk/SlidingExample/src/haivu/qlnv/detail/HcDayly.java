@@ -2,6 +2,7 @@ package haivu.qlnv.detail;
 
 import haivu.qlnv.R;
 import haivu.qlnv.layout.HcDaylyLayout;
+import haivu.qlnv.object.Empl;
 import haivu.qlnv.utils.DialogUtils;
 import haivu.qlnv.utils.IdialogDate;
 import haivu.qlnv.utils.Mutils;
@@ -30,8 +31,8 @@ public class HcDayly extends HcDaylyLayout {
 	protected void onResume() {
 		super.onResume();
 		initData();
-		lv_sang.setOnItemClickListener(Mutils.onClickListView(mct, dataLvSang));
-		lv_chieu.setOnItemClickListener(Mutils.onClickListView(mct, dataLvChieu));
+		lv_sang.setOnItemClickListener(Mutils.onClickListView(mct, dataLvSang,Empl.ROW_ID));
+		lv_chieu.setOnItemClickListener(Mutils.onClickListView(mct, dataLvChieu,Empl.ROW_ID));
 
 	}
 

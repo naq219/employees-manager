@@ -15,24 +15,28 @@ import haivu.qlnv.utils.Mutils;
 import haivu.qlnv.utils.Sdata;
 
 import java.util.ArrayList;
+import java.util.Currency;
 import java.util.HashMap;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.RelativeLayout;
 
 import com.telpoo.frame.object.BaseObject;
 import com.telpoo.frame.utils.BUtils;
 import com.telpoo.frame.utils.Mlog;
 import com.telpoo.frame.utils.Utils;
 
-public class HomeActivity extends MainActivity implements OnItemClickListener, Mcon.Group,TaskType {
+public class HomeActivity extends MainActivity implements OnItemClickListener, Mcon.Group, TaskType {
 	OnClickListener clickListener;
 
 	int count_data = 0;
@@ -42,13 +46,14 @@ public class HomeActivity extends MainActivity implements OnItemClickListener, M
 	AllAdapter allAdapter = null;
 	ArrayList<BaseObject> curData;
 	HashMap<Integer, ArrayList<BaseObject>> hmData;
-	ArrayList<BaseObject> dataGrouped=new ArrayList<BaseObject>();
+	ArrayList<BaseObject> dataGrouped = new ArrayList<BaseObject>();
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		init();
-		startActivity(new Intent(mct, Alarm.class));
+		//startActivity(new Intent(mct, Alarm.class));
 	}
 
 	@Override
@@ -75,8 +80,6 @@ public class HomeActivity extends MainActivity implements OnItemClickListener, M
 		allAdapter = new AllAdapter(mct, R.layout.item_list_all, new ArrayList<BaseObject>(), curentGroup);
 
 		lvContent.setOnItemClickListener(this);
-		
-		
 
 		lv_menu.setOnItemClickListener(new OnItemClickListener() {
 
@@ -174,16 +177,15 @@ public class HomeActivity extends MainActivity implements OnItemClickListener, M
 		ed_search.setVisibility(View.VISIBLE);
 		stt_search = !stt_search;
 		ed_search.requestFocus();
-		
+
 		if (key.length() == 0)
 			updateLvContent(curData);
-		else
-			{
-			Sdata.key_search=key;
-			TaskUser1 taskUser1=new TaskUser1(model, TASK_SEARCH, null, mct);
+		else {
+			Sdata.key_search = key;
+			TaskUser1 taskUser1 = new TaskUser1(model, TASK_SEARCH, null, mct);
 			model.exeTask(null, taskUser1);
-			}
-		
+		}
+
 	}
 
 	void closeSearch() {
@@ -195,15 +197,14 @@ public class HomeActivity extends MainActivity implements OnItemClickListener, M
 	}
 
 	public void updateData() {
-		//showProgressDialog(mct);
-		
-		TaskUser1 taskUser1=new TaskUser1(model, TASK_UPDATE_DATA	, null, mct);
+		// showProgressDialog(mct);
+
+		TaskUser1 taskUser1 = new TaskUser1(model, TASK_UPDATE_DATA, null, mct);
 		model.exeTask(null, taskUser1);
-		
-		
+
 	}
-	
-	public void updateUI(){
+
+	public void updateUI() {
 
 		// data = DbSupport.getAllOfTable(DbTable.EMPL,
 		// Empl.keys_include_rowId);
@@ -226,66 +227,69 @@ public class HomeActivity extends MainActivity implements OnItemClickListener, M
 		AlarmBroatcast.setAlarm(hmData.get(NHOM_HANH_CHINH));
 		closeProgressDialog();
 	}
-		
 
 	private void updateLvContent(ArrayList<BaseObject> datare) {
-		
-		
-		if(datare!=null){
-			if(datare.size()>0){
-				//da=datare;
-				int group=10;
+
+		if (datare != null) {
+			if (datare.size() > 0) {
+				// da=datare;
+				int group = 10;
 				try {
-					group=Integer.parseInt(datare.get(0).get(Empl.GROUP));
-					
+					group = Integer.parseInt(datare.get(0).get(Empl.GROUP));
+
 				} catch (Exception e) {
-					
+
 				}
-				
-				if(group==NHOM_HANH_CHINH){
-					dataGrouped=toGroup(datare,Empl.START_DATE);
-				}
-				else dataGrouped=toGroup(datare,Empl.NAME);
+
+				if (group == NHOM_HANH_CHINH) {
+					dataGrouped = toGroup(datare, Empl.START_DATE);
+				} else
+					dataGrouped = toGroup(datare, Empl.NAME);
 			}
+			else dataGrouped=new ArrayList<BaseObject>();
 		}
 		
-	
+		else dataGrouped=new ArrayList<BaseObject>();
 		
-
+		if(dataGrouped.size()==0){
+			help.setVisibility(View.VISIBLE);
+		}
+		else help.setVisibility(View.INVISIBLE);
+		
 		allAdapter.SetItems(dataGrouped);
 		allAdapter.notifyDataSetChanged();
 		lvContent.setAdapter(allAdapter);
-		lvContent.setOnItemLongClickListener(Mutils.onLongClickListView(mct, dataGrouped));
+		if(curentGroup==NHOM_HANH_CHINH)
+		lvContent.setOnItemLongClickListener(Mutils.onLongClickListView(mct, dataGrouped,Empl.START_DATE));
+		else lvContent.setOnItemLongClickListener(Mutils.onLongClickListView(mct, dataGrouped,Empl.NAME));
 
 	}
-	
-	private ArrayList<BaseObject> toGroup(ArrayList<BaseObject> datare,String key) {
-		ArrayList<BaseObject> da=new ArrayList<BaseObject>();
-		Boolean[] check=new Boolean[datare.size()];
+
+	private ArrayList<BaseObject> toGroup(ArrayList<BaseObject> datare, String key) {
+		ArrayList<BaseObject> da = new ArrayList<BaseObject>();
+		Boolean[] check = new Boolean[datare.size()];
 		for (int i = 0; i < check.length; i++) {
-			check[i]=false;
+			check[i] = false;
 		}
-		
+
 		for (int i = 0; i < datare.size(); i++) {
-			if(!check[i]) {
-				int count=1;
-				BaseObject oj=datare.get(i);
-				for (int j = i+1; j < datare.size(); j++) {
-					if(oj.get(key).equalsIgnoreCase(datare.get(j).get(key))){
+			if (!check[i]) {
+				int count = 1;
+				BaseObject oj = datare.get(i);
+				for (int j = i + 1; j < datare.size(); j++) {
+					if (oj.get(key).equalsIgnoreCase(datare.get(j).get(key))) {
 						count++;
-						check[j]=true;
-						
+						check[j] = true;
+
 					}
 				}
-				
+
 				oj.set(Empl.COUNT_SAME, count);
 				da.add(oj);
 			}
-			
-				
-			
+
 		}
-		
+
 		return da;
 	}
 
@@ -296,8 +300,8 @@ public class HomeActivity extends MainActivity implements OnItemClickListener, M
 		switch (taskType) {
 		case TASK_SEARCH:
 			ArrayList<BaseObject> sOj = (ArrayList<BaseObject>) list;
-			updateLvContent( sOj);
-			
+			updateLvContent(sOj);
+
 			break;
 		case TASK_UPDATE_DATA:
 			updateUI();
@@ -306,5 +310,22 @@ public class HomeActivity extends MainActivity implements OnItemClickListener, M
 			break;
 		}
 	}
+
+//	@Override
+//	public void onBackPressed() {
+//		super.onBackPressed();
+//		root.getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
+//			@Override
+//			public void onGlobalLayout() {
+//				int heightDiff = root.getRootView().getHeight() - root.getHeight();
+//				if (heightDiff != 100) { // if more than 100 pixels, its
+//											// probably a keyboard...
+//					;
+//				}
+//			}
+//		});
+//
+//		
+//	}
 
 }

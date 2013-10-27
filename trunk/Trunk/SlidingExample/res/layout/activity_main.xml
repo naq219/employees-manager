@@ -1,14 +1,17 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
+    android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff"
     tools:context=".MainActivity" >
-    <ImageView android:layout_width="fill_parent"
-        android:src="@drawable/bg"
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
         android:scaleType="center"
-        android:layout_height="fill_parent"/>
+        android:src="@drawable/bg" />
 
     <RelativeLayout
         android:id="@+id/linearLayout1"
@@ -47,18 +50,18 @@
         <ImageView
             android:id="@+id/btnSearch"
             android:layout_width="40dp"
-            android:paddingLeft="18dp"
             android:layout_height="40dp"
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/btnAddActionBar"
+            android:paddingLeft="18dp"
             android:src="@drawable/ic_menu_search_holo_dark" />
 
         <TextView
             android:id="@+id/tvTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="20dp"
             android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
             android:layout_toLeftOf="@+id/btnAddActionBar"
             android:layout_toRightOf="@+id/tvNumber_title"
             android:gravity="center"
@@ -96,6 +99,27 @@
                 android:layout_height="27dp"
                 android:background="@drawable/feed_icon" />
         </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:id="@+id/help"
+        android:visibility="invisible"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/linearLayout1"
+        
+        android:background="@drawable/chat" >
+
+        <TextView
+            android:padding="5dp"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="5dp"
+            android:textColor="#ffffff"
+            android:text="Bấm vào đây để thêm" />
     </RelativeLayout>
 
     <ListView

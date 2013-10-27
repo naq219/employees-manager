@@ -30,8 +30,8 @@
     <Button
         android:id="@+id/cancel"
         style="@style/btn"
+        
         android:layout_width="70dp"
-        android:background="@color/background"
         android:paddingBottom="7dp"
         android:paddingTop="7dp"
         android:text="HỦY" />

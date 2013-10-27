@@ -7,9 +7,12 @@ import haivu.qlnv.utils.Mcon;
 import haivu.qlnv.utils.Mutils;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import android.content.Context;
+import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,8 +22,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.telpoo.frame.object.BaseObject;
+import com.telpoo.frame.utils.Utils;
 
-public class AllAdapter extends ArrayAdapter<BaseObject> implements Filterable{
+public class AllAdapter extends ArrayAdapter<BaseObject> {
 
 	private List<BaseObject> data;
 	private Context mcontext;
@@ -80,6 +84,7 @@ public class AllAdapter extends ArrayAdapter<BaseObject> implements Filterable{
 		}
 		TextView time = (TextView) convertView1.findViewById(R.id.time);
 		time.setText(ok.get(AdapterOj.TIME));
+		
 
 		TextView content = (TextView) convertView1.findViewById(R.id.content);
 		content.setText(ok.get(AdapterOj.CONTENT));
@@ -96,6 +101,15 @@ public class AllAdapter extends ArrayAdapter<BaseObject> implements Filterable{
 				count.setText(countdt);
 				count.setVisibility(View.VISIBLE);
 			}
+		}
+		
+		Calendar cal=Mutils.convertString2calendar(dataA.get(Empl.START_DATE));
+		if(System.currentTimeMillis()-cal.getTimeInMillis()>0){
+			time.setPaintFlags(time.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+			content.setPaintFlags(time.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+			time.setTypeface(null, Typeface.ITALIC);
+			content.setTypeface(null, Typeface.ITALIC);
+
 		}
 
 		return convertView1;

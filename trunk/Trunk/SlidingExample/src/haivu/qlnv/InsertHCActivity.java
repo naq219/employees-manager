@@ -52,7 +52,7 @@ public class InsertHCActivity extends BaseActivity implements OnClickListener, I
 	public static BaseDBSupport db = null;
 	private Context mct = null;
 
-	TextView tvCalendar_hanhChinh, tvBegin_time, tvEnd_time, tvRepeat, title;
+	TextView tvCalendar_hanhChinh, tvBegin_time, tvEnd_time, tv_repeate, title;
 	Calendar calendar;
 	ListView lvDayOfWeek;
 	ImageView btnBeginTime, btnEndTime, btnDate;
@@ -154,8 +154,8 @@ public class InsertHCActivity extends BaseActivity implements OnClickListener, I
 		radChieu = (RadioButton) findViewById(R.id.radChieu);
 		radSang = (RadioButton) findViewById(R.id.radSang);
 		spnReminder = (Spinner) findViewById(R.id.spnNhactruoc);
-		tvRepeat = (TextView) findViewById(R.id.tvLaplai);
-		tvRepeat.setOnClickListener(this);
+		tv_repeate = (TextView) findViewById(R.id.tv_repeate);
+	
 		ArrayAdapter<String> adapterReminder = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, this.getResources().getStringArray(R.array.reminder));
 		spnReminder.setAdapter(adapterReminder);
 		spnReminder.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -296,6 +296,7 @@ public class InsertHCActivity extends BaseActivity implements OnClickListener, I
 					finish();
 				else {
 					edtContent.setText("");
+					tv_repeate.setText("Chọn ngày lặp lại");
 				}
 
 			}
@@ -361,7 +362,7 @@ public class InsertHCActivity extends BaseActivity implements OnClickListener, I
 	@Override
 	public void onChange(Object value, int where) {
 		dataRepeate = (ArrayList<String>) value;
-
+		tv_repeate.setText("Đã chọn ngày lặp lại");
 		showToast("sdsd" + dataRepeate.size());
 
 	}
