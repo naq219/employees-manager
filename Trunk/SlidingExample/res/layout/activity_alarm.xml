@@ -20,7 +20,7 @@
         <LinearLayout
             style="@style/form_f_w"
             android:orientation="vertical"
-            android:background="@drawable/bg_round"
+            android:background="#000000"
             android:padding="10dp" >
 
             <TextView
@@ -51,6 +51,7 @@
 
                     <TextView
                         android:id="@+id/content"
+                        android:text="Version 1.0"
                         style="@style/text_alert" >
                     </TextView>
                 </TableRow>

@@ -10,9 +10,9 @@ public class Empl extends BaseObject implements Mcon.Group {
 
 	}
 
-	public static String[] keys = { "name", "start_date", "end_date", "content", "alert", "manyday", "group1", "session", "start_time", "end_time" ,"title_content"};
-	public static String[] keys_include_rowId = { "name", "start_date", "end_date", "content", "alert", "manyday", "group1", "session", "start_time", "end_time" ,"title_content","rowid"};
-	public static String[] keys_search = { "name", "content" ,"title_content"};
+	public static String[] keys = { "name", "start_date", "end_date", "content", "alert", "manyday", "group1", "session", "start_time", "end_time" ,};
+	public static String[] keys_include_rowId = { "name", "start_date", "end_date", "content", "alert", "manyday", "group1", "session", "start_time", "end_time" ,"rowid"};
+	public static String[] keys_search = { "name", "content" };
 	public static String NAME = keys[0];
 	public static String START_DATE = keys[1];
 	public static String END_DATE = keys[2];
@@ -23,7 +23,7 @@ public class Empl extends BaseObject implements Mcon.Group {
 	public static String SESSION = keys[7];
 	public static String START_TIME = keys[8];
 	public static String END_TIME = keys[9];
-	public static String TITLE_CONTENT = keys[10];
+	//public static String TITLE_CONTENT = keys[10];
 	public static String ROW_ID = "rowid";
 	public static String COUNT_SAME = "count_same";
 	

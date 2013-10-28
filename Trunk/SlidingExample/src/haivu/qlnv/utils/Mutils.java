@@ -63,9 +63,9 @@ public class Mutils implements Mcon.Group {
 		ArrayList<BaseObject> hd = new ArrayList<BaseObject>();
 
 		for (BaseObject baseObject : oj) {
-			int mgr=100;
+			int mgr = 100;
 			try {
-				 mgr = Integer.parseInt(baseObject.get(Empl.GROUP));
+				mgr = Integer.parseInt(baseObject.get(Empl.GROUP));
 			} catch (Exception e) {
 				// TODO: handle exception
 			}
@@ -118,7 +118,10 @@ public class Mutils implements Mcon.Group {
 				tem.set(AdapterOj.ALERT, base.get(HcOj.ALERT));
 				tem.set(AdapterOj.CONTENT, base.get(HcOj.CONTENT));
 				tem.set(AdapterOj.COUNT, "0");
-				tem.set(AdapterOj.TIME, base.get(HcOj.START_TIME)+" - "+base.get(HcOj.END_TIME));
+				if (HomeActivity.isFromHomeActivity)
+					tem.set(AdapterOj.TIME, base.get(HcOj.START_DATE));
+				else
+					tem.set(AdapterOj.TIME, base.get(HcOj.START_TIME) + " - " + base.get(HcOj.END_TIME));
 				oj1.add(tem);
 
 			}
@@ -171,27 +174,27 @@ public class Mutils implements Mcon.Group {
 		ct.startActivity(it);
 	}
 
-	public static OnItemClickListener onClickListView(final Context context, final ArrayList<BaseObject> dataLv,final String key) {
+	public static OnItemClickListener onClickListView(final Context context, final ArrayList<BaseObject> dataLv, final String key) {
 		OnItemClickListener listener = new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-				DialogUtils.confirmEditDelete(context, dataLv.get(arg2),key);
+				DialogUtils.confirmEditDelete(context, dataLv.get(arg2), key);
 
 			}
 		};
 
 		return listener;
 	}
-	
-	public static OnItemLongClickListener onLongClickListView(final Context context, final ArrayList<BaseObject> dataLv,final String key) {
-		OnItemLongClickListener listener=new OnItemLongClickListener() {
+
+	public static OnItemLongClickListener onLongClickListView(final Context context, final ArrayList<BaseObject> dataLv, final String key) {
+		OnItemLongClickListener listener = new OnItemLongClickListener() {
 
 			@Override
 			public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-				DialogUtils.confirmEditDelete(context, dataLv.get(arg2),key);
+				DialogUtils.confirmEditDelete(context, dataLv.get(arg2), key);
 				return true;
-				
+
 			}
 		};
 
@@ -206,16 +209,13 @@ public class Mutils implements Mcon.Group {
 		Sdata.hcDayly = curData;
 		Sdata.hanhchinh = hmData.get(Mcon.Group.NHOM_HANH_CHINH);
 		AlarmBroatcast.setAlarm(Sdata.hanhchinh);
-		
-		ArrayList<BaseObject> hcCounted=new ArrayList<BaseObject>();
-		ArrayList<BaseObject> nvCounted=new ArrayList<BaseObject>();
-		//ArrayList<BaseObject> hcData=hmData.get(Mcon.Group.NHOM_HANH_CHINH);
-		
-		//ArrayList<BaseObject> nvData=hmData.get(Mcon.Group.nh);
-		
-		
-		
-		
+
+		ArrayList<BaseObject> hcCounted = new ArrayList<BaseObject>();
+		ArrayList<BaseObject> nvCounted = new ArrayList<BaseObject>();
+		// ArrayList<BaseObject> hcData=hmData.get(Mcon.Group.NHOM_HANH_CHINH);
+
+		// ArrayList<BaseObject> nvData=hmData.get(Mcon.Group.nh);
+
 	}
 
 	public static void setListViewHeightBasedOnChildren(ListView listView) {
@@ -290,7 +290,7 @@ public class Mutils implements Mcon.Group {
 		newData.replaceAll("[\\ó\\ò\\ỏ\\õ\\ọ\\ơ\\ớ\\ờ\\ở\\ỡ\\ợ\\ô\\ố\\ồ\\ổ\\ỗ\\ộ]", "o");
 		newData.replaceAll("[\\ú\\ù\\ủ\\ũ\\ụ\\ư\\ứ\\ừ\\ử\\ữ\\ự]", "u");
 		newData.replaceAll("[\\ý\\ỳ\\ỷ\\ỹ\\ỵ]", "y");
-		//newData.replaceAll(HomeActivity.model, "o");
+		// newData.replaceAll(HomeActivity.model, "o");
 
 		return newData;
 
@@ -361,35 +361,34 @@ public class Mutils implements Mcon.Group {
 		}
 		return "" + i;
 	}
-	
-	public static void hardUpdateUI(Context ct){
+
+	public static void hardUpdateUI(Context ct) {
 		updateData();
-		
+
 		try {
-			((HomeActivity)ct).updateData();
+			((HomeActivity) ct).updateData();
 			return;
 		} catch (Exception e) {
-			
+
 		}
-		
+
 		try {
-			((HcDayly)ct).initData();
+			((HcDayly) ct).initData();
 			return;
 		} catch (Exception e) {
-			
+
 		}
-		
+
 		try {
-			((NVDayly)ct).initData();
+			((NVDayly) ct).initData();
 			return;
 		} catch (Exception e) {
-			
+
 		}
-		
-		
+
 	}
-	
-	public static Calendar convertString2calendar(String start_date,String format){
+
+	public static Calendar convertString2calendar(String start_date, String format) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTimeInMillis(System.currentTimeMillis());
 		SimpleDateFormat sdf = new SimpleDateFormat(format);
@@ -402,6 +401,10 @@ public class Mutils implements Mcon.Group {
 		return cal;
 	}
 	
-
-
+	public static Boolean compareTime(String time1,String time2,String format){
+		Calendar cal1= convertString2calendar(time1, format);
+		Calendar cal2= convertString2calendar(time2, format);
+		return (cal1.getTimeInMillis()>cal2.getTimeInMillis());
+		
+	}
 }

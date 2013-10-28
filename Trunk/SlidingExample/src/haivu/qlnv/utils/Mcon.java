@@ -20,6 +20,7 @@ public class Mcon {
 	
 	public static String[] nameGroup={"NHÂN VIÊN HÀNH CHÍNH","NHÂN VIÊN THỰC TẬP","NHÂN VIÊN LẮP ĐẶT","NHÂN VIÊN KINH DOANH",
 		"NHÂN VIÊN KẾ TOÁN","NHÂN VIÊN HỢP ĐỒNG"};
-	
+	public static String dateFormat="yyyy-MM-dd";
+	public static String dateTimeFormat="yyy-MM-dd.HH:mm";
 	
 }
