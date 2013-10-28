@@ -23,6 +23,7 @@ import android.app.TimePickerDialog;
 import android.app.TimePickerDialog.OnTimeSetListener;
 import android.content.Context;
 import android.content.Intent;
+import android.media.audiofx.NoiseSuppressor;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -155,7 +156,7 @@ public class InsertHCActivity extends BaseActivity implements OnClickListener, I
 		radSang = (RadioButton) findViewById(R.id.radSang);
 		spnReminder = (Spinner) findViewById(R.id.spnNhactruoc);
 		tv_repeate = (TextView) findViewById(R.id.tv_repeate);
-	
+
 		ArrayAdapter<String> adapterReminder = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, this.getResources().getStringArray(R.array.reminder));
 		spnReminder.setAdapter(adapterReminder);
 		spnReminder.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -197,8 +198,13 @@ public class InsertHCActivity extends BaseActivity implements OnClickListener, I
 					startTime = hourOfDay + ":" + minute;
 					isSelected_startTime = true;
 				} else if (tv == tvEnd_time) {
+
 					tv.setText("Đến " + hourOfDay + ":" + minute);
 					endTime = hourOfDay + ":" + minute;
+					if (Mutils.compareTime(startDate + "." + startTime, startDate + "." + endTime, "yyy-MM-dd.HH:mm")) {
+						showToast("Thời bắt đầu không được lớn hơn thời gian kết thúc");
+						return;
+					}
 					isSelected_endTime = true;
 				}
 
@@ -273,6 +279,8 @@ public class InsertHCActivity extends BaseActivity implements OnClickListener, I
 			if (edtContent.getText().toString().equals("") || edtContent.getText().toString() == null) {
 				Toast.makeText(this, "Chưa nhập nội dung công việc!", Toast.LENGTH_SHORT).show();
 			} else {
+
+				// if()
 
 				BaseObject oj = new HcOj();
 				oj.set(Empl.CONTENT, edtContent.getText() + "");

@@ -95,14 +95,14 @@
                     </RelativeLayout>
                 </LinearLayout>
 
-                <EditText
-                    android:id="@+id/ed_title_content"
-                    style="@style/ed"
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:ems="10"
-                    android:hint="Công việc chi tiết"
-                    android:lines="2"
-                    android:paddingLeft="10dp" />
+                    android:background="@drawable/list_item_bg"
+                    android:paddingLeft="10dp"
+                    android:gravity="center"
+                    android:text="Công việc chi tiết" />
 
                 <RadioGroup
                     android:id="@+id/radioGroup1"
@@ -173,7 +173,6 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                       
                         android:padding="10dp" >
 
                         <ImageView

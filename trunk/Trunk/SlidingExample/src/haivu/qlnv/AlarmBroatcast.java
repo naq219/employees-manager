@@ -104,7 +104,8 @@ public class AlarmBroatcast {
 					Long systemtime = cal.getTimeInMillis();
 					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd.HH:mm");
 					cal.setTime(sdf.parse(start_date + "." + start_time));
-
+							
+					
 					Long cur = cal.getTimeInMillis() - time_alertint * 60000;
 					Mlog.T("so sanh=" + (cur - System.currentTimeMillis()));
 					if (System.currentTimeMillis() < cur) {
@@ -114,24 +115,26 @@ public class AlarmBroatcast {
 							oj_alarm = ojs.get(i);
 						}
 						
+						if (value != null) {
+							// Mlog.T("so sanh tiep=" + (value - System.currentTimeMillis()));
+
+							if (value > System.currentTimeMillis()) {
+								// intent.putExtra("larm_oj", "hehe");
+								// pendingIntent = PendingIntent.getBroadcast(ct, 0, intent, 0);
+								Sdata.alarm_oj = oj_alarm;
+								alarmManager.set(AlarmManager.RTC_WAKEUP, value, pendingIntent);
+
+								Mlog.T("set rui:" + oj_alarm.get(Empl.START_TIME));
+							}
+						}
+						
 					}
 				} catch (Exception e) {
 					Mlog.E("=3452=getCalendar" + e);
 					e.printStackTrace();
 				}
 				
-				if (value != null) {
-					// Mlog.T("so sanh tiep=" + (value - System.currentTimeMillis()));
-
-					if (value > System.currentTimeMillis()) {
-						// intent.putExtra("larm_oj", "hehe");
-						// pendingIntent = PendingIntent.getBroadcast(ct, 0, intent, 0);
-						Sdata.alarm_oj = oj_alarm;
-						alarmManager.set(AlarmManager.RTC_WAKEUP, value, pendingIntent);
-
-						Mlog.T("set rui:" + oj_alarm.get(Empl.START_TIME));
-					}
-				}
+				
 			}
 				
 			

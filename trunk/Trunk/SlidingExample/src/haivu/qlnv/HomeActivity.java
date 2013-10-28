@@ -15,7 +15,6 @@ import haivu.qlnv.utils.Mutils;
 import haivu.qlnv.utils.Sdata;
 
 import java.util.ArrayList;
-import java.util.Currency;
 import java.util.HashMap;
 
 import android.content.Intent;
@@ -25,11 +24,8 @@ import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemLongClickListener;
-import android.widget.RelativeLayout;
 
 import com.telpoo.frame.object.BaseObject;
 import com.telpoo.frame.utils.BUtils;
@@ -39,6 +35,7 @@ import com.telpoo.frame.utils.Utils;
 public class HomeActivity extends MainActivity implements OnItemClickListener, Mcon.Group, TaskType {
 	OnClickListener clickListener;
 
+	public static Boolean isFromHomeActivity = false;
 	int count_data = 0;
 	// ArrayList<BaseObject> data;
 
@@ -47,19 +44,25 @@ public class HomeActivity extends MainActivity implements OnItemClickListener, M
 	ArrayList<BaseObject> curData;
 	HashMap<Integer, ArrayList<BaseObject>> hmData;
 	ArrayList<BaseObject> dataGrouped = new ArrayList<BaseObject>();
-	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		init();
-		//startActivity(new Intent(mct, Alarm.class));
+		// startActivity(new Intent(mct, Alarm.class));
 	}
 
 	@Override
 	protected void onResume() {
+		isFromHomeActivity=true;
 		updateData();
 		super.onResume();
+	}
+	
+	@Override
+	protected void onPause() {
+		isFromHomeActivity=false;
+		super.onPause();
 	}
 
 	private void init() {
@@ -73,6 +76,7 @@ public class HomeActivity extends MainActivity implements OnItemClickListener, M
 			Mlog.E("init database fail!!");
 
 		initView();
+
 		IniOnclick();
 		btnAdd_menu.setOnClickListener(clickListener);
 		btnMenu.setOnClickListener(clickListener);
@@ -110,9 +114,6 @@ public class HomeActivity extends MainActivity implements OnItemClickListener, M
 
 			@Override
 			public void afterTextChanged(Editable s) {
-				// if(s.length()==0){
-				// lvContent.clearTextFilter();
-				// }
 
 			}
 		});
@@ -196,6 +197,25 @@ public class HomeActivity extends MainActivity implements OnItemClickListener, M
 		updateLvContent(curData);
 	}
 
+	@Override
+	public void onSuccess(int taskType, ArrayList<?> list, String msg) {
+		super.onSuccess(taskType, list, msg);
+		closeProgressDialog();
+		switch (taskType) {
+		case TASK_SEARCH:
+			ArrayList<BaseObject> sOj = (ArrayList<BaseObject>) list;
+			updateLvContent(sOj);
+
+			break;
+		case TASK_UPDATE_DATA:
+
+			updateUI();
+			break;
+		default:
+			break;
+		}
+	}
+
 	public void updateData() {
 		// showProgressDialog(mct);
 
@@ -212,8 +232,6 @@ public class HomeActivity extends MainActivity implements OnItemClickListener, M
 
 		curData = hmData.get(curentGroup);
 		Sdata.hcDayly = curData;
-
-		
 
 		updateLvContent(curData);
 
@@ -243,26 +261,28 @@ public class HomeActivity extends MainActivity implements OnItemClickListener, M
 					dataGrouped = toGroup(datare, Empl.START_DATE);
 				} else
 					dataGrouped = toGroup(datare, Empl.NAME);
-			}
-			else dataGrouped=new ArrayList<BaseObject>();
+			} else
+				dataGrouped = new ArrayList<BaseObject>();
 		}
-		
-		else dataGrouped=new ArrayList<BaseObject>();
-		
-		if(dataGrouped.size()==0){
+
+		else
+			dataGrouped = new ArrayList<BaseObject>();
+
+		if (dataGrouped.size() == 0) {
 			help.setVisibility(View.VISIBLE);
-		}
-		else help.setVisibility(View.INVISIBLE);
-		
+		} else
+			help.setVisibility(View.INVISIBLE);
+
 		count_data = dataGrouped.size();
 		tvNumber_title.setText(count_data + "");
-		
+
 		allAdapter.SetItems(dataGrouped);
 		allAdapter.notifyDataSetChanged();
 		lvContent.setAdapter(allAdapter);
-		if(curentGroup==NHOM_HANH_CHINH)
-		lvContent.setOnItemLongClickListener(Mutils.onLongClickListView(mct, dataGrouped,Empl.START_DATE));
-		else lvContent.setOnItemLongClickListener(Mutils.onLongClickListView(mct, dataGrouped,Empl.NAME));
+		if (curentGroup == NHOM_HANH_CHINH)
+			lvContent.setOnItemLongClickListener(Mutils.onLongClickListView(mct, dataGrouped, Empl.START_DATE));
+		else
+			lvContent.setOnItemLongClickListener(Mutils.onLongClickListView(mct, dataGrouped, Empl.NAME));
 
 	}
 
@@ -293,40 +313,4 @@ public class HomeActivity extends MainActivity implements OnItemClickListener, M
 
 		return da;
 	}
-
-	@Override
-	public void onSuccess(int taskType, ArrayList<?> list, String msg) {
-		super.onSuccess(taskType, list, msg);
-		closeProgressDialog();
-		switch (taskType) {
-		case TASK_SEARCH:
-			ArrayList<BaseObject> sOj = (ArrayList<BaseObject>) list;
-			updateLvContent(sOj);
-
-			break;
-		case TASK_UPDATE_DATA:
-			updateUI();
-			break;
-		default:
-			break;
-		}
-	}
-
-//	@Override
-//	public void onBackPressed() {
-//		super.onBackPressed();
-//		root.getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
-//			@Override
-//			public void onGlobalLayout() {
-//				int heightDiff = root.getRootView().getHeight() - root.getHeight();
-//				if (heightDiff != 100) { // if more than 100 pixels, its
-//											// probably a keyboard...
-//					;
-//				}
-//			}
-//		});
-//
-//		
-//	}
-
 }
