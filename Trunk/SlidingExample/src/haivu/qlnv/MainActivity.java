@@ -2,19 +2,18 @@ package haivu.qlnv;
 
 import haivu.qlnv.adapter.MenuListviewAdapter;
 import haivu.qlnv.database.DbSupport;
+import haivu.qlnv.utils.IListener;
 import haivu.qlnv.utils.Mcon;
+import haivu.qlnv.utils.myEdittext;
 
 import java.util.ArrayList;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -32,6 +31,7 @@ import com.telpoo.frame.database.BaseDBSupport;
 import com.telpoo.frame.model.BaseModel;
 import com.telpoo.frame.model.ModelListener;
 import com.telpoo.frame.ui.BaseFragmentActivity;
+import com.telpoo.frame.utils.BUtils;
 import com.telpoo.frame.utils.Utils;
 
 public class MainActivity extends BaseFragmentActivity implements ModelListener, Mcon.Group {
@@ -45,7 +45,7 @@ public class MainActivity extends BaseFragmentActivity implements ModelListener,
 	TextView tvNumber_title;
 	ImageView btnSearch, btn_add;
 	Button btnAdd_menu;
-	EditText ed_search;
+	myEdittext ed_search;
 	boolean stt_search = false;
 	RadioButton radHC, radLD, radTT, radKD, radKT, radHD;
 
@@ -61,7 +61,7 @@ public class MainActivity extends BaseFragmentActivity implements ModelListener,
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		overridePendingTransition(R.anim.trans_left_in, R.anim.trans_left_out);
-		  
+
 		mct = MainActivity.this;
 		db = DbSupport.getInstance(mct);
 		// setTheme(R.style.Theme_Sherlock_Light_NoActionBar);
@@ -89,7 +89,9 @@ public class MainActivity extends BaseFragmentActivity implements ModelListener,
 
 		tvTitle = (TextView) findViewById(R.id.tvTitle);
 		tvNumber_title = (TextView) findViewById(R.id.tvNumber_title);
-		ed_search = (EditText) findViewById(R.id.ed_search);
+		ed_search = (myEdittext) findViewById(R.id.ed_search);
+		
+
 		btnSearch = (ImageView) findViewById(R.id.btnSearch);
 
 		lvContent = (ListView) findViewById(R.id.lvContent);
@@ -97,7 +99,7 @@ public class MainActivity extends BaseFragmentActivity implements ModelListener,
 		arMenu = getResources().getStringArray(R.array.menu_list);
 		MenuListviewAdapter adapter = new MenuListviewAdapter(mct, R.layout.itemlist_menu, arMenu, null);
 		lv_menu.setAdapter(adapter);
-		help=(RelativeLayout) findViewById(R.id.help);
+		help = (RelativeLayout) findViewById(R.id.help);
 
 	}
 
@@ -180,23 +182,23 @@ public class MainActivity extends BaseFragmentActivity implements ModelListener,
 			loadingProgress = null;
 		}
 	}
-	
 
 	public void onClickAdd(View v) {
 		if (curentGroup == NHOM_HANH_CHINH)
 			startActivity(new Intent(getBaseContext(), InsertHCActivity.class));
-		else
-		{
+		else {
 			Intent it = new Intent(getBaseContext(), InsertNVActivity.class);
 			it.putExtra("group", curentGroup);
 			startActivity(it);
 		}
 	}
-	
+
 	@Override
 	public void onBackPressed() {
 		overridePendingTransition(R.anim.trans_right_in, R.anim.trans_right_out);
 		super.onBackPressed();
 	}
+	
+	
 
 }
