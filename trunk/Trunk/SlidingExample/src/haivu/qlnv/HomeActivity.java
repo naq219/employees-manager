@@ -10,6 +10,7 @@ import haivu.qlnv.task.TaskType;
 import haivu.qlnv.task.TaskUser1;
 import haivu.qlnv.utils.DbTable;
 import haivu.qlnv.utils.DialogUtils;
+import haivu.qlnv.utils.IListener;
 import haivu.qlnv.utils.Mcon;
 import haivu.qlnv.utils.Mutils;
 import haivu.qlnv.utils.Sdata;
@@ -54,14 +55,14 @@ public class HomeActivity extends MainActivity implements OnItemClickListener, M
 
 	@Override
 	protected void onResume() {
-		isFromHomeActivity=true;
+		isFromHomeActivity = true;
 		updateData();
 		super.onResume();
 	}
-	
+
 	@Override
 	protected void onPause() {
-		isFromHomeActivity=false;
+		isFromHomeActivity = false;
 		super.onPause();
 	}
 
@@ -115,6 +116,14 @@ public class HomeActivity extends MainActivity implements OnItemClickListener, M
 			@Override
 			public void afterTextChanged(Editable s) {
 
+			}
+		});
+
+		ed_search.setOnEditTextImeBackListener(new IListener() {
+
+			@Override
+			public void onChange(Object value, int where) {
+				closeSearch();
 			}
 		});
 
