@@ -402,8 +402,10 @@ public class Mutils implements Mcon.Group {
 	}
 	
 	public static Boolean compareTime(String time1,String time2,String format){
+		
 		Calendar cal1= convertString2calendar(time1, format);
 		Calendar cal2= convertString2calendar(time2, format);
+		Mlog.D("compareTime - time1="+time1+" - time2="+time2+" - format="+format );
 		return (cal1.getTimeInMillis()>cal2.getTimeInMillis());
 		
 	}

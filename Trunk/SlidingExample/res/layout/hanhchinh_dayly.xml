@@ -12,6 +12,7 @@
         android:scaleType="center"
         android:src="@drawable/bg" />
 
+				
     <RelativeLayout
         android:id="@+id/lay_calenda"
         android:layout_width="match_parent"

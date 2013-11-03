@@ -187,7 +187,14 @@ public class InsertHCActivity extends BaseActivity implements OnClickListener, I
 			public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
 				// TODO Auto-generated method stub
 				if (tv == tvBegin_time) {
-					tv.setText("Từ " + hourOfDay + ":" + minute);
+					startTime = hourOfDay + ":" + minute;
+					if (isSelected_endTime&&Mutils.compareTime(startDate + "." + startTime, startDate + "." + endTime, "yyy-MM-dd.HH:mm")) {
+						showToast("Thời bắt đầu không được lớn hơn thời gian kết thúc");
+						return;
+					}
+					
+					
+					
 					if (0 <= hourOfDay && hourOfDay <= 12) {
 						radSang.setChecked(true);
 						morning = 1;
@@ -195,17 +202,19 @@ public class InsertHCActivity extends BaseActivity implements OnClickListener, I
 						radChieu.setChecked(true);
 						morning = 0;
 					}
-					startTime = hourOfDay + ":" + minute;
+					
 					isSelected_startTime = true;
+					tv.setText("Từ " + hourOfDay + ":" + minute);
 				} else if (tv == tvEnd_time) {
 
-					tv.setText("Đến " + hourOfDay + ":" + minute);
+				
 					endTime = hourOfDay + ":" + minute;
-					if (Mutils.compareTime(startDate + "." + startTime, startDate + "." + endTime, "yyy-MM-dd.HH:mm")) {
+					if (isSelected_startTime&&Mutils.compareTime(startDate + "." + startTime, startDate + "." + endTime, "yyy-MM-dd.HH:mm")) {
 						showToast("Thời bắt đầu không được lớn hơn thời gian kết thúc");
 						return;
 					}
 					isSelected_endTime = true;
+					tv.setText("Đến " + hourOfDay + ":" + minute);
 				}
 
 			}
