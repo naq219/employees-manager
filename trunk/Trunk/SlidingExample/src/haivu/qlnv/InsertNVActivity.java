@@ -53,7 +53,7 @@ public class InsertNVActivity extends BaseActivity implements OnClickListener, M
 	private int action = 0;
 	BaseObject ojEdit = new BaseObject();
 	Button btnLuuVaThem_nv, btnLuu_nv;
-	String start_date, start_time, end_date, end_time;
+	String start_date = "Bắt đầu", start_time = "Bắt đầu", end_date = "Kết thúc", end_time = "kết thúc";
 	int timeAlert = 0;
 	int[] arrayAlert = { 0, 5, 10, 20, 30, 60 };
 
@@ -246,8 +246,8 @@ public class InsertNVActivity extends BaseActivity implements OnClickListener, M
 					TextView tvstartdate1 = (TextView) findViewById(R.id.tv_start_date);
 
 					start_date = year + "-" + (monthOfYear + 1) + "-" + dayOfMonth;
-					
-					if (flag_end_date&&Mutils.compareTime(start_date, end_date, Mcon.dateFormat)) {
+
+					if (flag_end_date && Mutils.compareTime(start_date, end_date, Mcon.dateFormat)) {
 						showToast("Ngày bắt đầu không được lớn hơn ngày kết thúc");
 						flag_start_date = false;
 						return;
@@ -256,18 +256,18 @@ public class InsertNVActivity extends BaseActivity implements OnClickListener, M
 					flag_start_date = true;
 
 					break;
-					
+
 				case R.id.lay_end_date:
 
 					TextView tvenddate1 = (TextView) findViewById(R.id.tv_end_date);
 					end_date = year + "-" + (monthOfYear + 1) + "-" + dayOfMonth;
-					
-					if(!flag_start_date) {
+
+					if (!flag_start_date) {
 						showToast("Nhập ngày bắt đầu trước");
 						flag_end_date = false;
 						return;
 					}
-					
+
 					if (Mutils.compareTime(start_date, end_date, Mcon.dateFormat)) {
 						showToast("Ngày bắt đầu không được lớn hơn ngày kết thúc");
 						flag_end_date = false;
@@ -275,63 +275,62 @@ public class InsertNVActivity extends BaseActivity implements OnClickListener, M
 					}
 					tvenddate1.setText(end_date);
 					flag_end_date = true;
-					
+
 					break;
 				case R.id.btnBeginTime_nv:
-					
-					if(!flag_start_date||!flag_end_date) {
+
+					if (!flag_start_date || !flag_end_date) {
 						showToast("Dữ liệu trước chưa nhập đầy đủ");
 						flag_start_time = false;
 						return;
 					}
-					
-					
-					
+
 					TextView tvstartdate2 = (TextView) findViewById(R.id.tv_start_time);
 					start_time = year + "-" + (monthOfYear + 1) + "-" + dayOfMonth;
-					if (Mutils.compareTime(start_date, start_time, Mcon.dateFormat) || Mutils.compareTime(end_time, end_date, Mcon.dateFormat)) {
+					if (Mutils.compareTime(start_date, start_time, Mcon.dateFormat) || Mutils.compareTime(start_time, end_date, Mcon.dateFormat)) {
 						showToast("Ngày phải nằm trong khoảng ngày bắt đầu và ngày kết thúc của công việc");
 						flag_start_time = false;
 						return;
 					}
-					if(flag_end_time)
-						if(Mutils.compareTime(start_time, end_time, Mcon.dateFormat)){
+					if (flag_end_time)
+						if (Mutils.compareTime(start_time, end_time, Mcon.dateFormat)) {
 							showToast("Ngày bắt đầu không được lớn hơn ngày kết thúc");
 							flag_start_time = false;
 							return;
 						}
-					
+
 					tvstartdate2.setText(start_time);
 					flag_start_time = true;
-					
+
 					break;
 				case R.id.btnEndTime_nv:
-					if(!flag_start_time||flag_end_date) {
+					end_time = year + "-" + (monthOfYear + 1) + "-" + dayOfMonth;
+					if (!flag_start_date || !flag_end_date) {
 						showToast("Dữ liệu trước chưa nhập đầy đủ");
-						flag_start_time = false;
+						flag_end_time = false;
 						return;
 					}
-					
-					if(flag_start_time)
-						if(Mutils.compareTime(start_time, end_time, Mcon.dateFormat)){
+
+					if (flag_start_time)
+						if (Mutils.compareTime(start_time, end_time, Mcon.dateFormat)) {
 							showToast("Ngày bắt đầu không được lớn hơn ngày kết thúc");
 							flag_end_time = false;
 							return;
 						}
+
 					
 					
-					TextView tvenddate2 = (TextView) findViewById(R.id.tv_end_time);
-					end_time = year + "-" + (monthOfYear + 1) + "-" + dayOfMonth;
-					
-					if (Mutils.compareTime(start_time, end_time, Mcon.dateFormat) || Mutils.compareTime(end_time, end_date, Mcon.dateFormat))
+
+					if (Mutils.compareTime(start_date, end_time, Mcon.dateFormat) || Mutils.compareTime(end_time, end_date, Mcon.dateFormat))
 
 					{
 						showToast("Ngày phải nằm trong khoảng ngày bắt đầu và ngày kết thúc của công việc");
 						flag_end_time = false;
 						return;
 					}
+					TextView tvenddate2 = (TextView) findViewById(R.id.tv_end_time);
 					tvenddate2.setText(end_time);
-					 flag_end_time = true;
+					flag_end_time = true;
 					break;
 				default:
 					break;
@@ -343,8 +342,8 @@ public class InsertNVActivity extends BaseActivity implements OnClickListener, M
 
 	public void OnclickinsertNV(View v) {
 
-		if(exeSave())
-		finish();
+		if (exeSave())
+			finish();
 	}
 
 	public void onClickSaveAndNew(View v) {
@@ -358,11 +357,10 @@ public class InsertNVActivity extends BaseActivity implements OnClickListener, M
 
 	private Boolean exeSave() {
 
-		 if (!flag_start_date || !flag_end_date || !flag_start_time ||
-		 !flag_end_time ) {
-		 showToast("Cần phải nhập đầy đủ thông tin");
-		 return false;
-		 }
+		if (!flag_start_date || !flag_end_date || !flag_start_time || !flag_end_time) {
+			showToast("Cần phải nhập đầy đủ thông tin");
+			return false;
+		}
 
 		if (ed_content.getText().toString().length() == 0) {
 			showToast("Cần phải nhập đầy đủ thông tin");

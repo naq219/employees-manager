@@ -61,7 +61,7 @@
                             android:layout_alignParentLeft="true"
                             android:layout_marginTop="5dp"
                             android:text="Bắt Đầu"
-                            android:textSize="18sp" />
+                           />
 
                         <ImageView
                             style="@style/img_calendar"
@@ -87,7 +87,7 @@
                             android:layout_alignParentLeft="true"
                             android:layout_marginTop="5dp"
                             android:text="Kết Thúc"
-                            android:textSize="18sp" />
+                             />
 
                         <ImageView
                             style="@style/img_calendar"
