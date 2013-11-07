@@ -63,11 +63,17 @@ public class InsertNVActivity extends BaseActivity implements OnClickListener, M
 		overridePendingTransition(R.anim.trans_left_in, R.anim.trans_left_out);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_insert_nhanvien);
+		
 
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		
 		initView();
 		initGroup();
 		initData();
-
 	}
 
 	private void initData() {
@@ -105,12 +111,13 @@ public class InsertNVActivity extends BaseActivity implements OnClickListener, M
 
 	private void initGroup() {
 		group = getIntent().getIntExtra("group", 10);
-
+		flag_start_date = flag_end_date = flag_start_time = flag_end_time = true;
 		Calendar cal = Calendar.getInstance();
 
 		switch (group) {
 		case NHOM_HOP_DONG:
 			membername.setHint("Tên nhân viên hợp đồng");
+			flag_start_date = flag_end_date = flag_start_time = flag_end_time = false;
 			break;
 		case NHOM_KE_TOAN:
 			membername.setHint("Tên nhân viên kế toán");
@@ -118,7 +125,7 @@ public class InsertNVActivity extends BaseActivity implements OnClickListener, M
 			cal.set(Calendar.MONTH, 0);
 			cal.set(Calendar.DAY_OF_MONTH, 1);
 			start_date = Mutils.convertCalendar2String(cal);
-			cal.set(Calendar.MONTH, 1);
+			cal.set(Calendar.MONTH, 11);
 			cal.set(Calendar.DAY_OF_MONTH, cal.getActualMaximum(Calendar.DAY_OF_MONTH));
 			end_date = Mutils.convertCalendar2String(cal);
 			start_time = start_date;
@@ -152,6 +159,7 @@ public class InsertNVActivity extends BaseActivity implements OnClickListener, M
 			break;
 		case NHOM_THUC_TAP:
 			membername.setHint("Tên nhân viên thực tập");
+			flag_start_date = flag_end_date = flag_start_time = flag_end_time = false;
 			break;
 
 		default:
@@ -414,6 +422,7 @@ public class InsertNVActivity extends BaseActivity implements OnClickListener, M
 		// TODO Auto-generated method stub
 		super.onBackPressed();
 		overridePendingTransition(R.anim.trans_right_in, R.anim.trans_right_out);
+		finish();
 	}
 
 }
