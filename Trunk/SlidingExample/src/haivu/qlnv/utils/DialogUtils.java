@@ -131,7 +131,7 @@ public class DialogUtils implements Mcon.Group {
 		return ls;
 	}
 
-	public static void confirmEditDelete(final Context context, BaseObject oj,final String key) {
+	public static void confirmEditDelete(final Context context, final BaseObject oj,final String key) {
 		final String row_id = oj.get(key);
 		Mlog.T("oj.get(Empl.ROW_ID)=" + oj.get(Empl.ROW_ID));
 		final BaseObject oj1 = oj;
@@ -149,7 +149,10 @@ public class DialogUtils implements Mcon.Group {
 
 			@Override
 			public void onClick(View arg0) {
+				if("0".equalsIgnoreCase(oj.get(Empl.CATEGORY)))
 				Mutils.startActivity(context, InsertHCActivity.class, oj1, 1);
+				else Mutils.startActivity(context, InsertNVActivity.class, oj1, 1);
+				
 
 				dl.dismiss();
 				Mutils.hardUpdateUI(context);

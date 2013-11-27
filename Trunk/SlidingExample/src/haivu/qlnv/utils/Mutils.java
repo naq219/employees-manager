@@ -174,6 +174,7 @@ public class Mutils implements Mcon.Group {
 		ct.startActivity(it);
 	}
 
+	
 	public static OnItemClickListener onClickListView(final Context context, final ArrayList<BaseObject> dataLv, final String key) {
 		OnItemClickListener listener = new OnItemClickListener() {
 
