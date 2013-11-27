@@ -9,21 +9,16 @@ import haivu.qlnv.utils.DbTable;
 import haivu.qlnv.utils.DialogUtils;
 import haivu.qlnv.utils.IListener;
 import haivu.qlnv.utils.Mutils;
-import haivu.qlnv.utils.Sdata;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
 
-import android.R.integer;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
-import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.app.TimePickerDialog.OnTimeSetListener;
 import android.content.Context;
 import android.content.Intent;
-import android.media.audiofx.NoiseSuppressor;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -32,6 +27,8 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -47,9 +44,9 @@ import com.telpoo.frame.database.BaseDBSupport;
 import com.telpoo.frame.object.BaseObject;
 import com.telpoo.frame.ui.BaseActivity;
 import com.telpoo.frame.utils.Mlog;
-import com.telpoo.frame.utils.Utils;
 
-public class InsertHCActivity extends BaseActivity implements OnClickListener, IListener {
+public class InsertHCActivity extends BaseActivity implements OnClickListener,
+		IListener {
 	public static BaseDBSupport db = null;
 	private Context mct = null;
 
@@ -66,7 +63,8 @@ public class InsertHCActivity extends BaseActivity implements OnClickListener, I
 	String startDate;// yyyy-mm-dd
 	String startTime, endTime;
 	int morning = 1; // morning =1 , afternoon = 0;
-	boolean isSelected_startTime = false, isSelected_endTime = false, isSelected_startDate = false;
+	boolean isSelected_startTime = false, isSelected_endTime = false,
+			isSelected_startDate = false;
 	ArrayList<String> dataRepeate = new ArrayList<String>();
 	RelativeLayout repeate;
 
@@ -118,7 +116,8 @@ public class InsertHCActivity extends BaseActivity implements OnClickListener, I
 				timeAlert = Integer.parseInt(ojEdit.get(Empl.ALERT));
 
 			} catch (Exception e) {
-				Mlog.E("=5645656=timeAlert=Integer.parseInt(ojEdit.get(Empl.ALERT));" + e);
+				Mlog.E("=5645656=timeAlert=Integer.parseInt(ojEdit.get(Empl.ALERT));"
+						+ e);
 			}
 
 			if (timeAlert != 0) {
@@ -154,15 +153,19 @@ public class InsertHCActivity extends BaseActivity implements OnClickListener, I
 		tvEnd_time = (TextView) findViewById(R.id.tvEndTime_hc);
 		radChieu = (RadioButton) findViewById(R.id.radChieu);
 		radSang = (RadioButton) findViewById(R.id.radSang);
+
 		spnReminder = (Spinner) findViewById(R.id.spnNhactruoc);
 		tv_repeate = (TextView) findViewById(R.id.tv_repeate);
 
-		ArrayAdapter<String> adapterReminder = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, this.getResources().getStringArray(R.array.reminder));
+		ArrayAdapter<String> adapterReminder = new ArrayAdapter<String>(this,
+				android.R.layout.simple_dropdown_item_1line, this
+						.getResources().getStringArray(R.array.reminder));
 		spnReminder.setAdapter(adapterReminder);
 		spnReminder.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 			@Override
-			public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+			public void onItemSelected(AdapterView<?> arg0, View arg1,
+					int arg2, long arg3) {
 				timeAlert = arrayAlert[arg2];
 
 			}
@@ -173,52 +176,104 @@ public class InsertHCActivity extends BaseActivity implements OnClickListener, I
 			}
 		});
 		tvCalendar_hanhChinh = (TextView) findViewById(R.id.tvCalendar_hanhchinh);
-		startDate = calendar.get(Calendar.YEAR) + "-" + (calendar.get(Calendar.MONTH) + 1) + "-" + calendar.get(Calendar.DATE);
-		tvCalendar_hanhChinh.setText(Mutils.pasreDayOfWeek(calendar.get(Calendar.DAY_OF_WEEK)) + ": " + calendar.get(Calendar.DATE) + "/" + (calendar.get(Calendar.MONTH) + 1)
-				+ "/" + calendar.get(Calendar.YEAR));
+		startDate = calendar.get(Calendar.YEAR) + "-"
+				+ (calendar.get(Calendar.MONTH) + 1) + "-"
+				+ calendar.get(Calendar.DATE);
+		tvCalendar_hanhChinh.setText(Mutils.pasreDayOfWeek(calendar
+				.get(Calendar.DAY_OF_WEEK))
+				+ ": "
+				+ calendar.get(Calendar.DATE)
+				+ "/"
+				+ (calendar.get(Calendar.MONTH) + 1)
+				+ "/"
+				+ calendar.get(Calendar.YEAR));
 
 		repeate.setOnClickListener(this);
+
+		radChieu.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+
+			@Override
+			public void onCheckedChanged(CompoundButton arg0, boolean arg1) {
+
+				resetTime();
+			}
+		});
+
+		radSang.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView,
+					boolean isChecked) {
+
+				resetTime();
+			}
+		});
+	}
+
+	private void resetTime() {
+		isSelected_startTime = false;
+		tvBegin_time.setText("Từ:")  ;
+		isSelected_endTime = false;
+		tvEnd_time.setText("Đến:")  ;
 	}
 
 	public void showTimePicker(final TextView tv) {
-		timePickerDialog = new TimePickerDialog(this, new OnTimeSetListener() {
+		timePickerDialog = new TimePickerDialog(
+				this,
+				new OnTimeSetListener() {
 
-			@Override
-			public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-				// TODO Auto-generated method stub
-				if (tv == tvBegin_time) {
-					startTime = hourOfDay + ":" + minute;
-					if (isSelected_endTime&&Mutils.compareTime(startDate + "." + startTime, startDate + "." + endTime, "yyy-MM-dd.HH:mm")) {
-						showToast("Thời bắt đầu không được lớn hơn thời gian kết thúc");
-						return;
-					}
-					
-					
-					
-					if (0 <= hourOfDay && hourOfDay <= 12) {
-						radSang.setChecked(true);
-						morning = 1;
-					} else {
-						radChieu.setChecked(true);
-						morning = 0;
-					}
-					
-					isSelected_startTime = true;
-					tv.setText("Từ " + hourOfDay + ":" + minute);
-				} else if (tv == tvEnd_time) {
+					@Override
+					public void onTimeSet(TimePicker view, int hourOfDay,
+							int minute) {
+						// TODO Auto-generated method stub
+						if (tv == tvBegin_time) {
 
-				
-					endTime = hourOfDay + ":" + minute;
-					if (isSelected_startTime&&Mutils.compareTime(startDate + "." + startTime, startDate + "." + endTime, "yyy-MM-dd.HH:mm")) {
-						showToast("Thời bắt đầu không được lớn hơn thời gian kết thúc");
-						return;
-					}
-					isSelected_endTime = true;
-					tv.setText("Đến " + hourOfDay + ":" + minute);
-				}
+							if (hourOfDay < 12 && !radSang.isChecked()) {
+								showToast("Giờ bắt đầu phải thuộc buổi chiều");
+								return;
+							}
+							if (hourOfDay > 12 && !radChieu.isChecked()) {
+								showToast("Giờ bắt đầu phải thuộc buổi sáng");
+								return;
+							}
 
-			}
-		}, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true);
+							startTime = hourOfDay + ":" + minute;
+							if (isSelected_endTime
+									&& Mutils.compareTime(startDate + "."
+											+ startTime, startDate + "."
+											+ endTime, "yyy-MM-dd.HH:mm")) {
+								showToast("Thời bắt đầu không được lớn hơn thời gian kết thúc");
+								return;
+							}
+
+							if (0 <= hourOfDay && hourOfDay <= 12) {
+								// radSang.setChecked(true);
+								morning = 1;
+							} else {
+								// radChieu.setChecked(true);
+								morning = 0;
+							}
+
+							isSelected_startTime = true;
+							tv.setText("Từ " + hourOfDay + ":" + minute);
+						} else if (tv == tvEnd_time) {
+
+							endTime = hourOfDay + ":" + minute;
+							if (isSelected_startTime
+									&& Mutils.compareTime(startDate + "."
+											+ startTime, startDate + "."
+											+ endTime, "yyy-MM-dd.HH:mm")) {
+								showToast("Thời bắt đầu không được lớn hơn thời gian kết thúc");
+								return;
+							}
+							isSelected_endTime = true;
+							tv.setText("Đến " + hourOfDay + ":" + minute);
+						}
+
+					}
+				}, calendar.get(Calendar.HOUR_OF_DAY), calendar
+						.get(Calendar.MINUTE),
+				true);
 		timePickerDialog.show();
 	}
 
@@ -227,20 +282,28 @@ public class InsertHCActivity extends BaseActivity implements OnClickListener, I
 		datePickerDialog = new DatePickerDialog(this, new OnDateSetListener() {
 
 			@Override
-			public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+			public void onDateSet(DatePicker view, int year, int monthOfYear,
+					int dayOfMonth) {
 
 				Calendar c = Calendar.getInstance();
 				c.set(year, monthOfYear, dayOfMonth);
 
 				if (c.get(Calendar.DAY_OF_WEEK) == 1) {
-					tvCalendar_hanhChinh.setText("Chủ nhật: " + convert(dayOfMonth) + "/" + convert(monthOfYear + 1) + "/" + year);
+					tvCalendar_hanhChinh.setText("Chủ nhật: "
+							+ convert(dayOfMonth) + "/"
+							+ convert(monthOfYear + 1) + "/" + year);
 				} else {
-					tvCalendar_hanhChinh.setText("Thứ " + c.get(Calendar.DAY_OF_WEEK) + ": " + convert(dayOfMonth) + "/" + convert(monthOfYear + 1) + "/" + year);
+					tvCalendar_hanhChinh.setText("Thứ "
+							+ c.get(Calendar.DAY_OF_WEEK) + ": "
+							+ convert(dayOfMonth) + "/"
+							+ convert(monthOfYear + 1) + "/" + year);
 				}
 
-				startDate = year + "-" + convert(monthOfYear + 1) + "-" + convert(dayOfMonth);
+				startDate = year + "-" + convert(monthOfYear + 1) + "-"
+						+ convert(dayOfMonth);
 			}
-		}, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+		}, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
+				calendar.get(Calendar.DAY_OF_MONTH));
 		datePickerDialog.show();
 	}
 
@@ -283,43 +346,54 @@ public class InsertHCActivity extends BaseActivity implements OnClickListener, I
 	}
 
 	void exeSave(int where) {
-		if (isSelected_startTime) {
+		if (!isSelected_startTime) {
+			Toast.makeText(this, "Chưa chọn giờ bắt đầu!", Toast.LENGTH_SHORT)
+					.show();
+			return;
 
-			if (edtContent.getText().toString().equals("") || edtContent.getText().toString() == null) {
-				Toast.makeText(this, "Chưa nhập nội dung công việc!", Toast.LENGTH_SHORT).show();
-			} else {
+		}
 
-				// if()
+		if (!isSelected_endTime) {
+			Toast.makeText(this, "Chưa chọn giờ kết thúc!", Toast.LENGTH_SHORT)
+					.show();
+			return;
 
-				BaseObject oj = new HcOj();
-				oj.set(Empl.CONTENT, edtContent.getText() + "");
-				oj.set(Empl.START_DATE, startDate);
-				oj.set(Empl.START_TIME, startTime);
-				oj.set(Empl.END_TIME, endTime);
-				oj.set(Empl.END_DATE, startDate);
-				oj.set(Empl.ALERT, timeAlert + "");
+		}
 
-				if (action == 1)
-					oj.set(Empl.ROW_ID, ojEdit.get(Empl.ROW_ID));
+		if (edtContent.getText().toString().equals("")
+				|| edtContent.getText().toString() == null) {
+			Toast.makeText(this, "Chưa nhập nội dung công việc!",
+					Toast.LENGTH_SHORT).show();
+		} else {
 
-				if (radChieu.isChecked())
-					oj.set(Empl.SESSION, 1 + "");
-				else
-					oj.set(Empl.SESSION, 0 + "");
-				ojAdd.add(oj);
+			// if()
 
-				insertDb(ojAdd);
-				if (where == 0)
-					finish();
-				else {
-					edtContent.setText("");
-					tv_repeate.setText("Chọn ngày lặp lại");
-				}
+			BaseObject oj = new HcOj();
+			oj.set(Empl.CONTENT, edtContent.getText() + "");
+			oj.set(Empl.START_DATE, startDate);
+			oj.set(Empl.START_TIME, startTime);
+			oj.set(Empl.END_TIME, endTime);
+			oj.set(Empl.END_DATE, startDate);
+			oj.set(Empl.ALERT, timeAlert + "");
+			oj.set(Empl.CATEGORY, "0");
 
+			if (action == 1)
+				oj.set(Empl.ROW_ID, ojEdit.get(Empl.ROW_ID));
+
+			if (radChieu.isChecked())
+				oj.set(Empl.SESSION, 1 + "");
+			else
+				oj.set(Empl.SESSION, 0 + "");
+			ojAdd.add(oj);
+
+			insertDb(ojAdd);
+			if (where == 0)
+				finish();
+			else {
+				edtContent.setText("");
+				tv_repeate.setText("Chọn ngày lặp lại");
 			}
 
-		} else {
-			Toast.makeText(this, "Chưa chọn giờ bắt đầu!", Toast.LENGTH_SHORT).show();
 		}
 	}
 
@@ -357,7 +431,8 @@ public class InsertHCActivity extends BaseActivity implements OnClickListener, I
 		else {
 
 			adddb = DbSupport.update(ojAdd1.get(0), DbTable.EMPL, Empl.ROW_ID);
-			TaskUser1 taskUser1 = new TaskUser1(model, TaskType.TASK_UPDATE_DATA, null, mct);
+			TaskUser1 taskUser1 = new TaskUser1(model,
+					TaskType.TASK_UPDATE_DATA, null, mct);
 			model.exeTask(null, taskUser1);
 
 		}

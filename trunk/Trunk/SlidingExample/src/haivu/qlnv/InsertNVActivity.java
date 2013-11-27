@@ -56,6 +56,7 @@ public class InsertNVActivity extends BaseActivity implements OnClickListener, M
 	String start_date = "Bắt đầu", start_time = "Bắt đầu", end_date = "Kết thúc", end_time = "kết thúc";
 	int timeAlert = 0;
 	int[] arrayAlert = { 0, 5, 10, 20, 30, 60 };
+	 boolean isOneday=false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -120,6 +121,8 @@ public class InsertNVActivity extends BaseActivity implements OnClickListener, M
 			flag_start_date = flag_end_date = flag_start_time = flag_end_time = false;
 			break;
 		case NHOM_KE_TOAN:
+			
+			// default in a year
 			membername.setHint("Tên nhân viên kế toán");
 
 			cal.set(Calendar.MONTH, 0);
@@ -133,6 +136,8 @@ public class InsertNVActivity extends BaseActivity implements OnClickListener, M
 
 			break;
 		case NHOM_KINH_DOANH:
+			
+			//default in quarter
 			membername.setHint("Tên nhân viên kinh doanh");
 
 			int currQuarter = (int) (cal.get(Calendar.MONTH)) / 3 + 1;
@@ -147,6 +152,8 @@ public class InsertNVActivity extends BaseActivity implements OnClickListener, M
 			end_time = end_date;
 			break;
 		case NHOM_LAP_DAT:
+			
+			//default in a month
 			membername.setHint("Tên nhân viên lắp đặt");
 
 			cal.set(Calendar.DAY_OF_MONTH, 1);
@@ -158,8 +165,17 @@ public class InsertNVActivity extends BaseActivity implements OnClickListener, M
 
 			break;
 		case NHOM_THUC_TAP:
+			
+			cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+			start_date = Mutils.convertCalendar2String(cal);
+			
+			cal.add(Calendar.DAY_OF_MONTH, 6);
+			end_date = Mutils.convertCalendar2String(cal);
+			start_time=start_date;
+			end_time=end_date;
+			
 			membername.setHint("Tên nhân viên thực tập");
-			flag_start_date = flag_end_date = flag_start_time = flag_end_time = false;
+			//flag_start_date = flag_end_date = flag_start_time = flag_end_time = false;
 			break;
 
 		default:
@@ -213,11 +229,13 @@ public class InsertNVActivity extends BaseActivity implements OnClickListener, M
 			}
 		});
 
+		
 		oneday.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				// flag_end_time = isChecked;
+				 flag_end_time = isChecked;
+				 isOneday=isChecked;
 
 			}
 		});
@@ -300,13 +318,14 @@ public class InsertNVActivity extends BaseActivity implements OnClickListener, M
 						flag_start_time = false;
 						return;
 					}
-					if (flag_end_time)
+					if (flag_end_time&&!isOneday)
 						if (Mutils.compareTime(start_time, end_time, Mcon.dateFormat)) {
 							showToast("Ngày bắt đầu không được lớn hơn ngày kết thúc");
 							flag_start_time = false;
 							return;
 						}
 
+					
 					tvstartdate2.setText(start_time);
 					flag_start_time = true;
 
@@ -382,6 +401,7 @@ public class InsertNVActivity extends BaseActivity implements OnClickListener, M
 		oj.set(NvOj.END_DATE, enddate.getText() + "");
 		oj.set(NvOj.END_TIME, endtime.getText() + "");
 		oj.set(NvOj.GROUP, group + "");
+		oj.set(NvOj.CATEGORY, "1");
 		if (moreday.isChecked())
 			oj.set(NvOj.MANYDAY, 0 + "");
 		else
